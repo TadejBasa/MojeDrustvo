@@ -24,13 +24,6 @@
 .welcome p{font-size: 20px;
     margin: 0 auto 30px;}
 
-footer {
-  background: black;
-  color: white;
-
-  text-align: center;
-  padding: 20px;}
-
 .events {
   padding: 50px 25px;}
 
@@ -46,8 +39,6 @@ footer {
 .dogodek-kartica {
 
   border-radius: 7px;
-
-  overflow: hidden;
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 
@@ -79,3 +70,9 @@ footer {
 .navbar .nav-link.active {
   color: green;
   font-weight: 600;}
+
+footer {
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 20px;}
