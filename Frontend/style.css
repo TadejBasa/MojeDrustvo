@@ -1,3 +1,81 @@
-#menu{
-    color: red;
-}
+.welcome {
+  min-height: 85vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  
+  background: linear-gradient(135deg, #064e3b, #14b8a6);
+
+  color: white;
+
+  padding: 40px 20px;
+
+  font-family: 'Poppins', sans-serif;}
+
+.welcome h1{
+  font-size: 48px;
+  font-weight: 900;
+  max-width: 900px;
+  margin: 0 auto 20px;}
+
+.welcome p{font-size: 20px;
+    margin: 0 auto 30px;}
+
+footer {
+  background: black;
+  color: white;
+
+  text-align: center;
+  padding: 20px;}
+
+.events {
+  padding: 50px 25px;}
+
+.events h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+
+  margin-bottom: 50px;}
+
+.events p {
+  color: #64748b;}
+
+.dogodek-kartica {
+
+  border-radius: 7px;
+
+  overflow: hidden;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  transition: 0.25s ease;
+
+  padding: 20px;}
+
+.dogodek-kartica:hover {
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.10);}
+
+  .navbar {
+  background: white;
+
+  padding: 30px 40px;
+
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);}
+
+  .nav-link {
+  font-weight: 500;
+
+  margin: 0 8px;
+
+  color: #334155;}
+
+.navbar .nav-link:hover {
+  color: #16a34a;}
+
+.navbar .nav-link.active {
+  color: green;
+  font-weight: 600;}
