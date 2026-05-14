@@ -76,3 +76,19 @@ footer {
   color: white;
   text-align: center;
   padding: 20px;}
+
+.stran{
+  background: linear-gradient(135deg, #064e3b, #14b8a6);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer{
+  margin-top: auto;
+}
+
+main{
+  flex: 1;
+}
+

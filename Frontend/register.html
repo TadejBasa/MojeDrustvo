@@ -1,51 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="html" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Registracija - Moje Društvo</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary menu">
-  <div class="container-fluid menu">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<body class="stran html">
+<header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Moje Društvo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="#">Domov</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">Dogodki</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Novice</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Prijava</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success" type="submit">Išči</button>
+    </form>
+  </div>
+</div>
+</nav>
+</header>
+
+<main>
+  <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Ime</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Priimek</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Uporabniško ime</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Geslo</label>
+          <input type="password" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum rojstva</label>
+          <input type="date" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          Registracija
+        </button>
       </form>
     </div>
   </div>
-</nav>
-
-<div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Email address</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
 </div>
+</main>
+
+<footer class="footer">
+  <p>Moje Društvo 2026</p>
+</footer>
+
 
     
 </body>
