@@ -40,32 +40,39 @@
   <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <form>
+      <form id="registracijaForm">
         <div class="mb-3">
-          <label class="form-label">Ime</label>
-          <input type="text" class="form-control">
+          <div id="vseError"></div>
+          <label for="ime" class="form-label">Ime</label>
+          <input type="text" class="form-control" id="ime">
+          <div id="imeError"></div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Priimek</label>
-          <input type="text" class="form-control">
+          <label for="priimek" class="form-label">Priimek</label>
+          <input type="text" class="form-control" id="priimek">
+          <div id="priimekError"></div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Uporabniško ime</label>
-          <input type="text" class="form-control">
+          <label for="uporabniskoIme" class="form-label">Uporabniško ime</label>
+          <input type="text" class="form-control" id="uporabniskoIme">
+          <div id="uporabniskoError"></div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email">
+          <div id="emailError"></div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Geslo</label>
-          <input type="password" class="form-control">
+          <label for="geslo" class="form-label">Geslo</label>
+          <input type="password" class="form-control" id="geslo">
+          <div id="gesloError"></div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Datum rojstva</label>
-          <input type="date" class="form-control">
+          <label for="datumRojstva" class="form-label">Datum rojstva</label>
+          <input type="date" class="form-control" id="datumRojstva">
+          <div id="rojstvoError"></div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">
+        <button type="submit" class="btn btn-success btn-primary w-100">
           Registracija
         </button>
       </form>
@@ -82,4 +89,5 @@
     
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="registracija.js" defer></script>
 </html>
