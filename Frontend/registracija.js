@@ -3,7 +3,7 @@ const forma = document.getElementById("registracijaForm");
 console.log("test 1");
 
 forma.addEventListener("submit", function (event) {
-  event.preventDefault();
+  //event.preventDefault();
 
   const vseError = document.getElementById("vseError");
 
@@ -82,7 +82,7 @@ let starostUporabnika = danes.getFullYear() - rojstvo.getFullYear();
 const mesecRazlika = danes.getMonth() - rojstvo.getMonth();
 
 if (mesecRazlika < 0 || (mesecRazlika === 0 && danes.getDate() < rojstvo.getDate())) {
-    starost--;
+    starostUporabnika--;
 }
 
 if (starost < 18) {
@@ -100,5 +100,5 @@ if (starost < 18) {
   };
 
   vseError.textContent = "Registracija uspesna";
-  forma.reset();
+  forma.submit();
 });

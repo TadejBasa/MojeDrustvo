@@ -1,3 +1,45 @@
+<?php
+require_once 'config.php';
+
+$napaka = "";
+$uspeh = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $ime = trim($_POST["ime"]);
+    $priimek = trim($_POST["priimek"]);
+    $username = trim($_POST["username"]);
+    $email = trim($_POST["email"]);
+    $geslo = $_POST["geslo"];
+    $datum_rojstva = $_POST["datum_rojstva"];
+
+    $geslo_hash = password_hash($geslo, PASSWORD_DEFAULT);
+    $vloga = "clan";
+
+    $sql = "INSERT INTO uporabnik
+    (ime, priimek, username, email, geslo_hash, vloga, datum_rojstva)
+    VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "sssssss",
+        $ime,
+        $priimek,
+        $username,
+        $email,
+        $geslo_hash,
+        $vloga,
+        $datum_rojstva
+    );
+
+    mysqli_stmt_execute($stmt);
+
+    $uspeh = "Registracija uspešna";
+}
+?>
+
 <!DOCTYPE html>
 <html class="html" lang="en">
 <head>
@@ -21,10 +63,10 @@
           <a class="nav-link active" aria-current="page" href="index.html">Domov</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="objave.html">Objave</a>
+          <a class="nav-link" href="objave.php">Objave</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="login.html">Prijava</a>
+          <a class="nav-link" href="login.php">Prijava</a>
         </li>
       </ul>
     <form class="d-flex" role="search">
@@ -40,36 +82,36 @@
   <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <form id="registracijaForm">
+      <form id="registracijaForm" method="POST" action="register.php">
         <div class="mb-3">
           <div id="vseError"></div>
           <label for="ime" class="form-label">Ime</label>
-          <input type="text" class="form-control" id="ime">
+          <input type="text" class="form-control" id="ime" name="ime">
           <div id="imeError"></div>
         </div>
         <div class="mb-3">
           <label for="priimek" class="form-label">Priimek</label>
-          <input type="text" class="form-control" id="priimek">
+          <input type="text" class="form-control" id="priimek" name="priimek">
           <div id="priimekError"></div>
         </div>
         <div class="mb-3">
           <label for="uporabniskoIme" class="form-label">Uporabniško ime</label>
-          <input type="text" class="form-control" id="uporabniskoIme">
+          <input type="text" class="form-control" id="uporabniskoIme" name="username">
           <div id="uporabniskoError"></div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email">
+          <input type="email" class="form-control" id="email" name="email">
           <div id="emailError"></div>
         </div>
         <div class="mb-3">
           <label for="geslo" class="form-label">Geslo</label>
-          <input type="password" class="form-control" id="geslo">
+          <input type="password" class="form-control" id="geslo" name="geslo">
           <div id="gesloError"></div>
         </div>
         <div class="mb-3">
           <label for="datumRojstva" class="form-label">Datum rojstva</label>
-          <input type="date" class="form-control" id="datumRojstva">
+          <input type="date" class="form-control" id="datumRojstva" name="datum_rojstva">
           <div id="rojstvoError"></div>
         </div>
         <button type="submit" class="btn btn-success btn-primary w-100">
