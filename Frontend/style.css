@@ -16,16 +16,16 @@
   font-family: 'Poppins', sans-serif;}
 
 .welcome h1{
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 900;
   max-width: 900px;
   margin: 0 auto 20px;}
 
-.welcome p{font-size: 20px;
+.welcome p{font-size: 1.1rem;
     margin: 0 auto 30px;}
 
 .events {
-  padding: 50px 25px;}
+  padding: 4rem 1.5rem;}
 
 .events h2 {
   font-size: 2.5rem;
@@ -38,13 +38,13 @@
 
 .dogodek-kartica {
 
-  border-radius: 7px;
+  border-radius: 0.5rem;;
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 
   transition: 0.25s ease;
 
-  padding: 20px;}
+  padding: 1.25rem;}
 
 .dogodek-kartica:hover {
   cursor: pointer;
@@ -53,14 +53,14 @@
   .navbar {
   background: white;
 
-  padding: 30px 40px;
+  padding: 1.2rem 2rem;
 
   box-shadow: 0 2px 15px rgba(0,0,0,0.05);}
 
   .nav-link {
   font-weight: 500;
 
-  margin: 0 8px;
+  margin: 0 0.5rem;
 
   color: #334155;}
 
@@ -75,7 +75,7 @@ footer {
   background: black;
   color: white;
   text-align: center;
-  padding: 20px;}
+  padding: 1.5rem;}
 
 .stran{
   background: linear-gradient(135deg, #064e3b, #14b8a6);
@@ -91,4 +91,3 @@ footer {
 main{
   flex: 1;
 }
-
