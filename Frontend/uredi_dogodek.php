@@ -68,18 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<header>
-  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.php">Moje Društvo</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="admin.php">← Nazaj na admin</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
+<?php include 'header.php'; ?>
 
 <main class="container py-5">
   <h2 class="mb-4">Uredi dogodek</h2>
@@ -157,9 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </main>
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
-  <p class="mb-0">Moje društvo</p>
-</footer>
+<?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

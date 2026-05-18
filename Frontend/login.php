@@ -48,23 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="stran">
 
-<header>
-  <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.php">Moje Društvo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.php">Domov</a></li>
-          <li class="nav-item"><a class="nav-link" href="objave.php">Objave</a></li>
-          <li class="nav-item"><a class="nav-link active" href="login.php">Prijava</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
+<?php include 'header.php';?>
 
 <main>
   <div class="container mt-5">
@@ -103,9 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </main>
 
-<footer>
-  <p>Moje Društvo 2026</p>
-</footer>
+<?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

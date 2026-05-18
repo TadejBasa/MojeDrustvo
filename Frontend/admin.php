@@ -286,9 +286,7 @@ $prijave  = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as d_nas
   </div>
 </main>
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
-  <p class="mb-0">© 2026 Moje društvo</p>
-</footer>
+<?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
