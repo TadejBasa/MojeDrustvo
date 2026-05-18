@@ -122,8 +122,8 @@ $prijave  = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as d_nas
 
   <div class="tab-content">
 
-    <div class="tab-pane fade show active" id="dogodki">
-      <h4>Dodaj dogodek</h4>
+    <div class="tab-pane fade show active " id="dogodki">
+      <h4 class = "mb-4">Dodaj dogodek</h4>
       <form method="POST" class="row g-3 mb-4 p-3 border rounded bg-light">
         <div class="col-md-6">
           <input type="text" name="naslov" class="form-control" placeholder="Naslov *" required>
@@ -138,10 +138,10 @@ $prijave  = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as d_nas
           <textarea name="opis" class="form-control" placeholder="Opis" rows="2"></textarea>
         </div>
         <div class="col-md-2">
-          <input type="number" name="cena" class="form-control" placeholder="Cena (€)" value="0" min="0" step="0.01">
+          <input type="number" name="cena" class="form-control" placeholder="Cena" min="0" step="0.01">
         </div>
         <div class="col-md-2">
-          <input type="number" name="st_mest" class="form-control" placeholder="Mesta" value="0" min="0">
+          <input type="number" name="st_mest" class="form-control" placeholder="Stevilo mest" min="0">
         </div>
         <div class="col-md-2">
           <select name="vrsta" class="form-select">
@@ -191,7 +191,7 @@ $prijave  = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as d_nas
         <thead><tr><th>Član</th><th>Dogodek</th><th>Datum prijave</th><th>Akcije</th></tr></thead>
         <tbody>
           <?php if (mysqli_num_rows($prijave) == 0): ?>
-            <tr><td colspan="4" class="text-muted">Ni prijav v čakanju.</td></tr>
+            <tr><td colspan="4" class="text-muted">Ni prijav za odobritev</td></tr>
           <?php endif; ?>
           <?php while ($p = mysqli_fetch_assoc($prijave)): ?>
           <tr>
@@ -287,7 +287,7 @@ $prijave  = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as d_nas
 </main>
 
 <footer class="bg-dark text-white text-center p-3 mt-5">
-  <p class="mb-0">© 2026 Moje društvo</p>
+  <p class="mb-0">Moje društvo</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
