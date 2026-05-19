@@ -4,48 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Document</title>
-
-    <style>
-    footer a {
-        color: inherit;
-        text-decoration: none;}
-    </style>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Zacetna stran</title>
 </head>
 <body>
   
 <?php include 'header.php'; ?>
 
-<section class="welcome">
-  <div class="container-uvod">
-    <div class="welcome-vsebina">
-
-      <h1>Dobrodošli</h1>
-      <p>Spremljajte prihajajoče dogodke in aktivnosti!</p>
-    
+<section class="welcome flex flex-col items-center gap-4">
+  <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg p-6">
+    <div class="welcome-vsebina flex items-center gap-4">
+      <h1>ŠPORTNO DRUŠTVO FERI ⚽</h1>
     </div>
+    <p>Pridružite se največjemu športnemu društvu na Mariborski univerzi!</p>
+  </div>
+  <div>
+    <button class="btn-glow">Pridruži se nam!</button>
   </div>
 </section>
 
-<section class="events">
-  <div class="container-events">
-    <div class="events-vsebina">
-      <h2>
-        Prihajajoči dogodki
-      </h2>
-
-      <div
-        class="row g-4"
-        id="dogodki-container"></div>
-    </div>
+<section class="opis pt-20">
+  <div class="flex flex-col p-8 w-full mx-auto md:flex-row" style="max-width: 90%;" data-aos="fade-up">
+      <div class="flex flex-col md:p-6 leading-normal flex-1">
+          <h5 class="naslovOpis mb-6 text-8xl font-bold tracking-tight text-gray-800 leading-tight">O DRUŠTVU</h5>
+          <div class="flex flex-col justify-center gap-4">
+              <p class="text-4xl text-gray-600 leading-relaxed font-medium mt-8 opisBesedilo">Športno društvo FERI je študentska organizacija, ki združuje študente 
+                                                            Fakultete za elektrotehniko, računalništvo in informatiko v Mariboru. 
+                                                            Naš cilj je spodbujati športno aktivnost, zdravi način življenja in 
+                                                            športni duh med študenti. Organiziramo različne športne dogodke, 
+                                                            tekmovanja in rekreativne aktivnosti skozi vse leto. Pridruži se nam 
+                                                            in postani del naše rastoče skupnosti!</p>
+          </div>
+      </div>
+      <div class="w-full md:w-1/2 mt-4 md:mt-0">
+          <img class="object-cover w-full h-56 md:h-full rounded-xl" src="https://feri.um.si/site/assets/files/11467/2__meduniverzitetno_sportno_tekmovanje_79_of_152_-min.jpg" alt="">
+      </div>
   </div>
 </section>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width: 70%; margin: 6rem auto 4rem auto;" data-aos="flip-down">
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-3 ">Več kot 10 športnih oddelkov</h3>
+    <hr class="mb-4">
+    <p class="text-gray-600 leading-relaxed">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-3">500+ aktivnih članov</h3>
+    <hr class="mb-4">
+    <p class="text-gray-600 leading-relaxed">Spoznaj nove prijatelje in postani del živahne skupnosti 500+ aktivnih študentov. Skupaj gradimo prijetno vzdušje na fakulteti.</p>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-3">Dogodki skozi celo leto</h3>
+    <hr class="mb-4">
+    <p class="text-gray-600 leading-relaxed">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
+  </div>
+
+</div>
 
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 <script src="script.js"></script>
 </body>
 </html>
