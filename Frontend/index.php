@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="trianglify.bundle.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Zacetna stran</title>
 </head>
@@ -30,6 +31,53 @@
   </div>
 </section>
 
+<div class="slider">
+	<div class="slide-track">
+		<div class="slide">
+			<img src="https://www.elektro-maribor.si/media/5605/em_dd_logo_ver_duo_rgb.jpg" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://sd-sanacije.si/wp-content/uploads/2014/09/Logo-color-Sava.jpg-RGB_1.jpg" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://www.automotivetestingtechnologyinternational.com/wp-content/uploads/2021/01/dewesoft-logo-2.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://www.elektro-celje.si/si/files/default/EL_Celje/Mediji/Logotipi%20in%20ostalo%20gradivo/ElektroCelje_CGP_LOGO_horizontal-01.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide" style = "margin-right: 50px">
+			<img src="https://www.ligna.de/apollo/ligna_2025/obs/Grafik/A1410895/LOG_DE0_1410895_4973817.png.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://epik-prihodnost.si/uploads/7691c5b9395d2d6300e8e855f6dd1226/geni-logo.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide" style = "margin-left: 120px">
+			<img src="https://www.acs-giz.si/wp-content/uploads/2025/07/FERI_logo-feri-brez-napisa-moder_a.png" height="100" width="250" alt="" />
+		</div>
+    <div class="slide">
+			<img src="https://www.elektro-maribor.si/media/5605/em_dd_logo_ver_duo_rgb.jpg" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://sd-sanacije.si/wp-content/uploads/2014/09/Logo-color-Sava.jpg-RGB_1.jpg" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://www.automotivetestingtechnologyinternational.com/wp-content/uploads/2021/01/dewesoft-logo-2.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://www.elektro-celje.si/si/files/default/EL_Celje/Mediji/Logotipi%20in%20ostalo%20gradivo/ElektroCelje_CGP_LOGO_horizontal-01.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide" style = "margin-right: 50px">
+			<img src="https://www.ligna.de/apollo/ligna_2025/obs/Grafik/A1410895/LOG_DE0_1410895_4973817.png.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide">
+			<img src="https://epik-prihodnost.si/uploads/7691c5b9395d2d6300e8e855f6dd1226/geni-logo.png" height="100" width="250" alt="" />
+		</div>
+		<div class="slide" style = "margin-left: 120px">
+			<img src="https://www.acs-giz.si/wp-content/uploads/2025/07/FERI_logo-feri-brez-napisa-moder_a.png" height="100" width="250" alt="" />
+		</div>
+	</div>
+</div>
+<div class="fade-bottom"></div>
 <section class="opis pt-20">
   <div class="flex flex-col p-8 w-full mx-auto md:flex-row" style="max-width: 90%;" data-aos="fade-up">
       <div class="flex flex-col md:p-6 leading-normal flex-1">
@@ -51,24 +99,25 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width: 70%; margin: 6rem auto 4rem auto;" data-aos="flip-down">
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-2xl font-bold text-gray-800 mb-3 ">Več kot 10 športnih oddelkov</h3>
+    <h3 class="text-4xl font-bold text-gray-800 mb-3 ">Več kot 10 športnih oddelkov</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
+    <p class="text-gray-600 leading-relaxed text-2xl">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
   </div>
 
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-2xl font-bold text-gray-800 mb-3">500+ aktivnih članov</h3>
+    <h3 class="text-4xl font-bold text-gray-800 mb-3">500+ aktivnih članov</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed">Spoznaj nove prijatelje in postani del živahne skupnosti 500+ aktivnih študentov. Skupaj gradimo prijetno vzdušje na fakulteti.</p>
+    <p class="text-gray-600 leading-relaxed text-2xl">Spoznaj nove prijatelje in postani del živahne skupnosti 500+ aktivnih študentov. Skupaj gradimo prijetno vzdušje na fakulteti.</p>
   </div>
 
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-2xl font-bold text-gray-800 mb-3">Dogodki skozi celo leto</h3>
+    <h3 class="text-4xl font-bold text-gray-800 mb-3">Dogodki skozi celo leto</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
+    <p class="text-gray-600 leading-relaxed text-2xl">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
   </div>
-
 </div>
+
+
 
 <?php include 'footer.php'; ?>
 
