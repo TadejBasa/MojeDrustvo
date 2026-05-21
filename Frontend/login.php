@@ -46,45 +46,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Prijava - Moje Društvo</title>
 </head>
-<body class="stran">
+<body class="stran min-h-screen flex flex-col bg-[url('slike/test_wawe.svg')] bg-cover bg-center">
 
 <?php include 'header.php';?>
 
-<main>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-5">
-
-        <div class="card shadow p-4">
-          <h2 class="mb-4 text-center">Prijava</h2>
-
-          <?php if ($napaka): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($napaka) ?></div>
-          <?php endif; ?>
-
-          <form method="POST" action="login.php">
-            <div class="mb-3">
-              <label class="form-label">Uporabniško ime ali email</label>
-              <input type="text" name="vhod" class="form-control" required
-                     value="<?= htmlspecialchars($_POST['vhod'] ?? '') ?>">
+<main class="flex-1 min-h-[110vh] flex items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 class="text-3xl font-bold text-center mb-6">Prijava</h2>
+        <?php if ($napaka): ?>
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
+                <?= htmlspecialchars($napaka) ?>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Geslo</label>
-              <input type="password" name="geslo" class="form-control" required>
+        <?php endif; ?>
+        <form method="POST" action="login.php" class="space-y-4">
+            <div>
+                <label class="block mb-2 font-medium">Uporabniško ime ali email</label>
+                <input type="text" name="vhod" class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500" required value="<?= htmlspecialchars($_POST['vhod'] ?? '') ?>">
             </div>
-            <button type="submit" class="btn btn-success w-100">Prijava</button>
-          </form>
-
-          <hr>
-          <p class="text-center mb-0">
-            Nimaš računa?
-            <a href="register.php">Registracija</a>
-          </p>
-        </div>
-
-      </div>
+            <div>
+                <label class="block mb-2 font-medium">Geslo</label>
+                <input type="password" name="geslo" class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+            </div>
+            <button type="submit" class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition">
+                Prijava
+            </button>
+        </form>
+        <hr class="my-6">
+        <p class="text-center"> Nimaš računa?
+            <a href="register.php" class="text-green-600 font-semibold hover:underline">
+              Registracija
+            </a>
+        </p>
     </div>
-  </div>
 </main>
 
 <?php include 'footer.php'; ?>
