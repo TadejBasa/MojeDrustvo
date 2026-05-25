@@ -1,5 +1,11 @@
 <?php
+session_start();
 require_once 'config.php';
+
+if (isset($_SESSION["uporabnik_id"])) {
+    header("Location: index.php");
+    exit();
+}
 
 $napaka = "";
 $uspeh = "";
@@ -34,7 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $datum_rojstva
     );
 
-    mysqli_stmt_execute($stmt);
+    if(mysqli_stmt_execute($stmt)){
+      $uspeh = "Registracija uspešna";
+    }else{
+      $napaka = "Napaka pri registraciji";
+    }
 
     $uspeh = "Registracija uspešna";
 }

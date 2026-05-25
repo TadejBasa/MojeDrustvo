@@ -2,6 +2,11 @@
 session_start();
 require_once 'config.php';
 
+if (isset($_SESSION["uporabnik_id"])) {
+    header("Location: index.php");
+    exit();
+}
+
 $napaka = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -15,10 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ss", $vhod, $vhod);
         mysqli_stmt_execute($stmt);
+
         $rezultat  = mysqli_stmt_get_result($stmt);
         $uporabnik = mysqli_fetch_assoc($rezultat);
 
         if ($uporabnik && password_verify($geslo, $uporabnik["geslo_hash"])) {
+            session_regenerate_id(true);
             $_SESSION["uporabnik_id"] = $uporabnik["id"];
             $_SESSION["ime"]          = $uporabnik["ime"];
             $_SESSION["username"]     = $uporabnik["username"];
@@ -49,10 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <script src="trianglify.bundle.js"></script><title>Prijava - Moje Društvo</title>
+    <script src="trianglify.bundle.js"></script>
+    <title>Prijava - Moje Društvo</title>
     <link href="style.css" rel="stylesheet">
     <script src="geslo.js" defer></script>
-  </head>
+</head>
 <body class="stran min-h-screen flex flex-col">
 
 <?php include 'header.php';?>

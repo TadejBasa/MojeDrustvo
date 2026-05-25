@@ -1,3 +1,7 @@
+<?php
+$prijavljen = isset($_SESSION["uporabnik_id"]);
+$jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
+?>
 <nav class="bg-gray-100">
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex justify-between">
@@ -21,9 +25,31 @@
         </div>
       </div>
 
-      <div class="hidden md:flex items-center space-x-1 font-bold">
-        <a href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">Prijava</a>
-      </div>
+    <div class="hidden md:flex items-center space-x-3 font-bold">
+
+    <?php if(isset($_SESSION["uporabnik_id"])): ?>
+
+    <span class="text-gray-700">
+        <?= htmlspecialchars($_SESSION["username"]) ?>
+    </span>
+
+    <?php if($_SESSION["vloga"] == "admin"): ?>
+        <a href="admin.php" class="py-2 px-3 bg-blue-500 hover:bg-blue-400 text-white rounded transition duration-300">
+            Admin
+        </a>
+      <?php endif; ?>
+        <a href="profil.php" class="py-2 px-3 bg-green-500 hover:bg-green-400 text-white rounded transition duration-300">
+          Profil
+        </a>
+        <a href="odjava.php" class="py-2 px-3 bg-red-500 hover:bg-red-400 text-white rounded transition duration-300">
+          Odjava
+        </a>
+      <?php else: ?>
+        <a href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
+          Prijava
+        </a>
+      <?php endif; ?>
+    </div>
 
       <!-- mobile button goes here -->
       <div class="md:hidden flex items-center">
