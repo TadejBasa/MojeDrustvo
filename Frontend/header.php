@@ -13,17 +13,63 @@
 
         <div class="hidden md:flex items-center space-x-1 font-bold">
           
-          <a href="index.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Domov</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Dogodki</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Novice</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Obvestila</a>
-          <a href="kontakt.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Kontakt</a>
+          <a href="index.php" class="nav-link">Domov</a>
+          <a href="dogodki.php" class="nav-link">Dogodki</a>
+          <a href="objave.php" class="nav-link">Novice</a>
+          <a href="objave.php" class="nav-link">Obvestila</a>
+          <a href="kontakt.php" class="nav-link">Kontakt</a>
         </div>
       </div>
 
-      <div class="hidden md:flex items-center space-x-1 font-bold">
-        <a href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">Prijava</a>
-      </div>
+      <div class="hidden md:flex items-center space-x-3 font-bold">
+
+<?php if (isset($_SESSION["uporabnik_id"])): ?>
+
+  <div class="relative">
+
+    <button id="profileButton">
+      <img
+        src="slike/deafult_user.jpg"
+        alt="Profil"
+        class="h-10 w-10 rounded-full object-cover border-2 border-gray-300 hover:border-slate-500 transition"
+      >
+    </button>
+
+    <div id="profileMenu"
+      class="hidden absolute right-0 mt-3 w-52 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
+
+      <a href="profil.html"
+        class="block px-4 py-2 hover:bg-gray-100">
+        Moj račun
+      </a>
+
+      <a href="#"
+        class="block px-4 py-2 hover:bg-gray-100">
+        Moji dogodki
+      </a>
+
+      <hr class="my-2">
+
+      <a href="logout_success.php"
+        class="block px-4 py-2 text-red-600 hover:bg-red-50">
+        Odjava
+      </a>
+
+    </div>
+
+  </div>
+
+<?php else: ?>
+
+  <!-- LOGIN -->
+  <a href="login.php"
+    class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
+    Prijava
+  </a>
+
+<?php endif; ?>
+
+</div>
 
       <!-- mobile button goes here -->
       <div class="md:hidden flex items-center">

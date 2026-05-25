@@ -27,9 +27,21 @@
               <div>
                   <h2 class="mb-6 text-sm font-semibold text-heading text-gray-900 uppercase">Navigacija</h2>
                   <ul class="text-body font-medium">
-                      <li class="mb-4">
-                          <a href="login.php" class="footer-link">Prijava</a>
-                      </li>
+            
+            <?php if (isset($_SESSION["uporabnik_id"])): ?>
+
+                <li class="mb-4">
+                    <a href="profil.html" class="footer-link">Moj račun</a>
+                </li>
+                
+            <?php else: ?>
+
+            <li class="mb-4">
+                <a href="login.php" class="footer-link">Prijava</a>
+            </li>
+
+            <?php endif; ?>
+
                       <li>
                           <a href="index.php" class="footer-link">Domov</a>
                       </li>

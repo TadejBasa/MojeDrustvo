@@ -16,8 +16,16 @@
     <title>Zacetna stran</title>
 </head>
 <body>
-  
-<?php include 'header.php'; ?>
+
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+
+  // $_SESSION["uporabnik_id"] = 1;
+}
+
+include 'header.php';
+?>
 
 <section class="welcome flex flex-col items-center gap-4">
   <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg p-6">
