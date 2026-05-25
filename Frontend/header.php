@@ -17,18 +17,17 @@ $jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
 
         <div class="hidden md:flex items-center space-x-1 font-bold">
           
-          <a href="index.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Domov</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Dogodki</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Novice</a>
-          <a href="objave.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Obvestila</a>
-          <a href="kontakt.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">Kontakt</a>
+          <a href="index.php" class="nav-link">Domov</a>
+          <a href="dogodki.php" class="nav-link">Dogodki</a>
+          <a href="objave.php" class="nav-link">Novice</a>
+          <a href="objave.php" class="nav-link">Obvestila</a>
+          <a href="kontakt.php" class="nav-link">Kontakt</a>
         </div>
       </div>
 
     <div class="hidden md:flex items-center space-x-3 font-bold">
 
     <?php if(isset($_SESSION["uporabnik_id"])): ?>
-
     <span class="text-gray-700">
         <?= htmlspecialchars($_SESSION["username"]) ?>
     </span>
@@ -50,7 +49,6 @@ $jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
         </a>
       <?php endif; ?>
     </div>
-
       <!-- mobile button goes here -->
       <div class="md:hidden flex items-center">
         <button class="mobile-menu-button">
