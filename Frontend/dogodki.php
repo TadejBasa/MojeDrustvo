@@ -1,0 +1,158 @@
+<?php
+session_start();
+require_once 'config.php';
+
+$izbrana_vrsta = $_GET["vrsta"] ?? "vse";
+
+$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javen = 1";
+
+if ($izbrana_vrsta != "vse") {
+    $vrsta_varna = mysqli_real_escape_string($conn, $izbrana_vrsta);
+    $pogoj .= " AND vrsta = '$vrsta_varna'";
+}
+
+$dogodki = mysqli_query($conn, "SELECT * FROM dogodek $pogoj ORDER BY datum_cas ASC");
+
+$sporocilo = "";
+if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
+    $id_dogodka = (int)$_POST["dogodek_id"];
+    $id_uporabnika = $_SESSION["uporabnik_id"];
+
+    $obstojna = mysqli_query($conn, "SELECT id FROM prijava WHERE uporabnik_id = $id_uporabnika AND dogodek_id = $id_dogodka");
+    if (mysqli_num_rows($obstojna) > 0) {
+        $sporocilo = "Ze si prijavljen na ta dogodek.";
+    } else {
+        mysqli_query($conn, "INSERT INTO prijava (uporabnik_id, dogodek_id, status) VALUES ($id_uporabnika, $id_dogodka, 'cakanje')");
+        $sporocilo = "Prijava uspesna! Caka na potrditev admina.";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link href="style.css" rel="stylesheet">
+    <title>Dogodki - Moje Društvo</title>
+    <style>
+        .kartica-dogodek {
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            transition: box-shadow 0.2s;
+        }
+        .kartica-dogodek:hover {
+            box-shadow: 0 4px 20px rgba(59,130,246,0.2);
+        }
+        .slika-dogodek {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .brez-slike {
+            height: 200px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+            font-size: 14px;
+            border-radius: 10px 10px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+<?php include 'header.php'; ?>
+
+<main class="container py-5">
+    <h2 class="mb-4">Dogodki</h2>
+
+    <?php if ($sporocilo): ?>
+        <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
+    <?php endif; ?>
+
+    <?php if (!isset($_SESSION["uporabnik_id"])): ?>
+        <div class="alert alert-warning">
+            <a href="login.php">Prijavi se</a> za prijavo na dogodke.
+        </div>
+    <?php endif; ?>
+
+    <div class="mb-4 d-flex gap-2 flex-wrap">
+        <?php
+        $vrste = ["vse" => "Vsi", "pohod" => "Pohodi", "delavnica" => "Delavnice", "izlet" => "Izleti", "akcija" => "Akcije", "drugo" => "Drugo"];
+        foreach ($vrste as $vrednost => $oznaka):
+            $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
+        ?>
+            <a href="dogodki.php?vrsta=<?= $vrednost ?>" class="btn btn-sm <?= $aktiven ?>">
+                <?= $oznaka ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="row g-4">
+        <?php if (mysqli_num_rows($dogodki) == 0): ?>
+            <p class="text-muted">Ni dogodkov.</p>
+        <?php endif; ?>
+
+        <?php while ($dogodek = mysqli_fetch_assoc($dogodki)): ?>
+        <div class="col-md-4">
+            <div class="card kartica-dogodek h-100">
+                <div class="card-header fw-bold fs-5">
+                    <?= htmlspecialchars($dogodek["naslov"]) ?>
+                </div>
+
+                <?php if (!empty($dogodek["slika_url"])): ?>
+                    <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">
+                <?php else: ?>
+                    <div class="brez-slike">Ni slike</div>
+                <?php endif; ?>
+
+                <div class="card-body">
+                    <p class="text-muted mb-1">
+                        <small><?= date("d. m. Y H:i", strtotime($dogodek["datum_cas"])) ?></small>
+                    </p>
+                    <?php if (!empty($dogodek["lokacija"])): ?>
+                        <p class="text-muted mb-1">
+                            <small><?= htmlspecialchars($dogodek["lokacija"]) ?></small>
+                        </p>
+                    <?php endif; ?>
+                    <?php if (!empty($dogodek["opis"])): ?>
+                        <p class="card-text mt-2"><?= htmlspecialchars($dogodek["opis"]) ?></p>
+                    <?php endif; ?>
+                    <div class="mt-2 d-flex gap-1">
+                        <span class="badge bg-secondary"><?= htmlspecialchars($dogodek["vrsta"]) ?></span>
+                        <?php if ($dogodek["cena"] > 0): ?>
+                            <span class="badge bg-info text-dark"><?= number_format($dogodek["cena"], 2) ?> EUR</span>
+                        <?php else: ?>
+                            <span class="badge bg-success">Brezplacno</span>
+                        <?php endif; ?>
+                        <?php if ($dogodek["st_mest"] > 0): ?>
+                            <span class="badge bg-light text-dark"><?= $dogodek["st_mest"] ?> mest</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <?php if (isset($_SESSION["uporabnik_id"])): ?>
+                        <form method="POST">
+                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+                            <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
+                        </form>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endwhile; ?>
+    </div>
+</main>
+
+<?php include 'footer.php'; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -36,7 +36,7 @@ include 'header.php';
     <p>Pridružite se največjemu športnemu društvu na Mariborski univerzi!</p>
   </div>
   <div>
-    <button class="btn-glow">Pridruži se nam!</button>
+    <button onclick = "location.href = 'register.php'" class="btn-glow">Pridruži se nam!</button>
   </div>
 </section>
 
@@ -106,7 +106,7 @@ include 'header.php';
   </div>
 </section>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width: 70%; margin: 6rem auto 4rem auto;" data-aos="flip-down">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width: 70%; margin: 6rem auto 0rem auto;" data-aos="flip-down">
   <div class="bg-white rounded-2xl shadow-lg p-6">
     <h3 class="text-4xl font-bold text-gray-800 mb-3 ">Več kot 10 športnih oddelkov</h3>
     <hr class="mb-4">
@@ -124,7 +124,24 @@ include 'header.php';
     <hr class="mb-4">
     <p class="text-gray-600 leading-relaxed text-2xl">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
   </div>
+</div> 
+<div class="galerija">
+    <img id="glavna-slika" src="https://feri.um.si/site/assets/files/9709/feri_finale_web-5.jpg" alt="Slika 1">
+ 
+    <img src="https://feri.um.si/site/assets/files/9709/feri_finale_web-5.jpg" alt="Slika 1" class="slicicica aktivna" onclick="zamenjaj(this)">
+    <img src="https://feri.um.si/site/assets/files/11467/2__meduniverzitetno_sportno_tekmovanje_23_of_152_-min.jpg" alt="Slika 2" class="slicicica" onclick="zamenjaj(this)">
+    <img src="https://feri.um.si/site/assets/files/9709/feri_finale_web-8.jpg" alt="Slika 3" class="slicicica" onclick="zamenjaj(this)">
+    <img src="https://feri.um.si/site/assets/files/11467/2__meduniverzitetno_sportno_tekmovanje_48_of_152_-min.jpg" alt="Slika 4" class="slicicica" onclick="zamenjaj(this)">
+    <img src="https://feri.um.si/site/assets/files/11467/2__meduniverzitetno_sportno_tekmovanje_145_of_152_-min.jpg" alt="Slika 5" class="slicicica" onclick="zamenjaj(this)">
+    <img src="https://feri.um.si/site/assets/files/9709/feri_finale_web-7.jpg" alt="Slika 6" class="slicicica" onclick="zamenjaj(this)">
 </div>
+<div class="flex justify-center mt-4 mb-8">
+    <button onclick="location.href='register.php'" class="btn-glow">Pridruži se ekipi!</button>
+</div>
+
+<script src="galerija.js"></script>
+
+
 
 
 

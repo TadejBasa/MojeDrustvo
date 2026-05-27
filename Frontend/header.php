@@ -16,7 +16,6 @@ $jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
         </div>
 
         <div class="hidden md:flex items-center space-x-1 font-bold">
-          
           <a href="index.php" class="nav-link">Domov</a>
           <a href="dogodki.php" class="nav-link">Dogodki</a>
           <a href="objave.php" class="nav-link">Novice</a>
