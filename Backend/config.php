@@ -27,7 +27,6 @@ foreach ($dogodkiStart as $s) {
                              VALUES ('$s[0]', '$s[1]', '$s[2]', '$s[3]', $s[4], $s[5], '$s[6]','$s[7]', 1, $kreator_id)");
     }
 }
-=======
 
 >>>>>>> 5c8e4f2a8d17d5ac896b4011abee3a516db91fc4
 mysqli_set_charset($conn, "utf8");
