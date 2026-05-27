@@ -1,11 +1,9 @@
 <?php
 require_once '../Backend/objave_backend.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +16,6 @@ require_once '../Backend/objave_backend.php';
         .kartica-obvestilo { border-left: 4px solid #ef4444; }
         .kartica-vabilo    { border-left: 4px solid #22c55e; }
     </style>
-
 </head>
 <body>
 
@@ -27,7 +24,7 @@ require_once '../Backend/objave_backend.php';
 <main class="container py-5">
     <h2 class="mb-4">Objave</h2>
 
-    <?php if (!isset($_SESSION["uporabnik_id"])): ?>
+    <?php if (!$uporabnik): ?>
         <div class="alert alert-info">
             <a href="login.php">Prijavi se</a> za ogled privatnih objav.
         </div>
@@ -35,7 +32,6 @@ require_once '../Backend/objave_backend.php';
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
-        $tipi = ["vse" => "Vse", "novica" => "Novice", "obvestilo" => "Obvestila", "vabilo" => "Vabila"];
         foreach ($tipi as $vrednost => $oznaka):
             $aktiven = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>

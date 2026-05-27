@@ -1,33 +1,5 @@
 <?php
-
-session_start();
-require_once '../Backend/config.php';
-
-$izbrana_vrsta = $_GET["vrsta"] ?? "vse";
-
-$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javen = 1";
-
-if ($izbrana_vrsta != "vse") {
-    $vrsta_varna = mysqli_real_escape_string($conn, $izbrana_vrsta);
-    $pogoj .= " AND vrsta = '$vrsta_varna'";
-}
-
-$dogodki = mysqli_query($conn, "SELECT * FROM dogodek $pogoj ORDER BY datum_cas ASC");
-
-$sporocilo = "";
-if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
-    $id_dogodka = (int)$_POST["dogodek_id"];
-    $id_uporabnika = $_SESSION["uporabnik_id"];
-
-    $obstojna = mysqli_query($conn, "SELECT id FROM prijava WHERE uporabnik_id = $id_uporabnika AND dogodek_id = $id_dogodka");
-    if (mysqli_num_rows($obstojna) > 0) {
-        $sporocilo = "Ze si prijavljen na ta dogodek.";
-    } else {
-        mysqli_query($conn, "INSERT INTO prijava (uporabnik_id, dogodek_id, status) VALUES ($id_uporabnika, $id_dogodka, 'cakanje')");
-        $sporocilo = "Prijava uspesna! Caka na potrditev admina.";
-    }
-}
-
+require_once '../Backend/dogodki_backend.php';
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -51,7 +23,7 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
         <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
     <?php endif; ?>
 
-    <?php if (!isset($_SESSION["uporabnik_id"])): ?>
+    <?php if (!$uporabnik): ?>
         <div class="alert alert-warning">
             <a href="login.php">Prijavi se</a> za prijavo na dogodke.
         </div>
@@ -59,7 +31,6 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
-        $vrste = ["vse" => "Vsi", "pohod" => "Pohodi", "delavnica" => "Delavnice", "izlet" => "Izleti", "turnir" => "Turnirji", "drugo" => "Drugo"];
         foreach ($vrste as $vrednost => $oznaka):
             $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>
@@ -113,12 +84,12 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
                 </div>
 
                 <div class="card-footer">
-                    <?php if (isset($_SESSION["uporabnik_id"]) && $_SESSION["vloga"] != "admin"): ?>
+                    <?php if ($uporabnik && $uporabnik["vloga"] != "admin"): ?>
                         <form method="POST">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                             <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
                         </form>
-                    <?php elseif ($_SESSION["vloga"] == "admin"): ?>
+                    <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
                         <a href="admin.php" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
