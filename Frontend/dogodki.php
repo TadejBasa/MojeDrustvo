@@ -1,7 +1,5 @@
 <?php
-<<<<<<< HEAD
-require_once '../Backend/dogodki_backend.php';
-=======
+
 session_start();
 require_once '../Backend/config.php';
 
@@ -29,7 +27,7 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
         $sporocilo = "Prijava uspesna! Caka na potrditev admina.";
     }
 }
->>>>>>> 5c8e4f2a8d17d5ac896b4011abee3a516db91fc4
+
 ?>
 <!DOCTYPE html>
 <html lang="sl">
