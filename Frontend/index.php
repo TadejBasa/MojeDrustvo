@@ -28,7 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include 'header.php';
 ?>
 
-<section class="welcome flex flex-col items-center gap-4">
+<section class="welcome flex flex-col items-center">
   <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg p-6">
     <div class="welcome-vsebina flex items-center gap-4">
       <h1>ŠPORTNO DRUŠTVO FERI ⚽</h1>
@@ -87,12 +87,12 @@ include 'header.php';
 	</div>
 </div>
 <div class="fade-bottom"></div>
-<section class="opis pt-20">
+<section class="opis">
   <div class="flex flex-col p-8 w-full mx-auto md:flex-row" style="max-width: 90%;" data-aos="fade-up">
       <div class="flex flex-col md:p-6 leading-normal flex-1">
           <h5 class="naslovOpis mb-6 text-8xl font-bold tracking-tight text-gray-800 leading-tight">O DRUŠTVU</h5>
           <div class="flex flex-col justify-center gap-4">
-              <p class="text-4xl text-gray-600 leading-relaxed font-medium mt-8 opisBesedilo">Športno društvo FERI je študentska organizacija, ki združuje študente 
+              <p class="text-4xl text-white leading-relaxed font-medium mt-8 opisBesedilo">Športno društvo FERI je študentska organizacija, ki združuje študente 
                                                             Fakultete za elektrotehniko, računalništvo in informatiko v Mariboru. 
                                                             Naš cilj je spodbujati športno aktivnost, zdravi način življenja in 
                                                             športni duh med študenti. Organiziramo različne športne dogodke, 
@@ -108,21 +108,21 @@ include 'header.php';
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width: 70%; margin: 6rem auto 0rem auto;" data-aos="flip-down">
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-4xl font-bold text-gray-800 mb-3 ">Več kot 10 športnih oddelkov</h3>
+    <h3 class="gridNaslov text-4xl mb-3 ">Več kot 10 oddelkov</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed text-2xl">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
+    <p class="opisBesedilo text-gray-600 leading-relaxed text-2xl">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
   </div>
 
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-4xl font-bold text-gray-800 mb-3">500+ aktivnih članov</h3>
+    <h3 class="gridNaslov text-4xl mb-3 ">500+ aktivnih članov</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed text-2xl">Spoznaj nove prijatelje in postani del živahne skupnosti 500+ aktivnih študentov. Skupaj gradimo prijetno vzdušje na fakulteti.</p>
+    <p class="opisBesedilo text-gray-600 leading-relaxed text-2xl">Spoznaj nove prijatelje in postani del živahne skupnosti 500+ aktivnih študentov. Skupaj gradimo prijetno vzdušje na fakulteti.</p>
   </div>
 
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="text-4xl font-bold text-gray-800 mb-3">Dogodki skozi celo leto</h3>
+    <h3 class="gridNaslov text-4xl mb-3">Dogodki skozi celo leto</h3>
     <hr class="mb-4">
-    <p class="text-gray-600 leading-relaxed text-2xl">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
+    <p class="opisBesedilo text-gray-600 leading-relaxed text-2xl">Skozi vse leto organiziramo tekmovanja, izlete, delavnice in družabne večere. Vedno se dogaja nekaj zanimivega.</p>
   </div>
 </div> 
 <div class="galerija">
@@ -135,8 +135,8 @@ include 'header.php';
     <img src="https://feri.um.si/site/assets/files/11467/2__meduniverzitetno_sportno_tekmovanje_145_of_152_-min.jpg" alt="Slika 5" class="slicicica" onclick="zamenjaj(this)">
     <img src="https://feri.um.si/site/assets/files/9709/feri_finale_web-7.jpg" alt="Slika 6" class="slicicica" onclick="zamenjaj(this)">
 </div>
-<div class="flex justify-center mt-4 mb-8">
-    <button onclick="location.href='register.php'" class="btn-glow">Pridruži se ekipi!</button>
+<div class="flex justify-center mb-8 mt-12">
+    <button onclick="location.href='register.php'" class="btn-glow2">Pridruži se ekipi!</button>
 </div>
 
 <script src="galerija.js"></script>

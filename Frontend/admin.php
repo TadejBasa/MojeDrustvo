@@ -1,79 +1,5 @@
 <?php
-session_start();
-require_once 'config.php';
-
-if (!isset($_SESSION["vloga"]) || $_SESSION["vloga"] != "admin") {
-    header("Location: index.php");
-    exit();
-}
-
-if (isset($_GET["brisi_dogodek"])) {
-    $id_dogodka = (int)$_GET["brisi_dogodek"];
-    mysqli_query($conn, "DELETE FROM prijava WHERE dogodek_id = $id_dogodka");
-    mysqli_query($conn, "DELETE FROM dogodek WHERE id = $id_dogodka");
-    header("Location: admin.php"); exit();
-}
-
-if (isset($_GET["brisi_objavo"])) {
-    $id_objave = (int)$_GET["brisi_objavo"];
-    mysqli_query($conn, "DELETE FROM objava WHERE id = $id_objave");
-    header("Location: admin.php"); exit();
-}
-
-if (isset($_GET["potrdi"])) {
-    $id_prijave = (int)$_GET["potrdi"];
-    mysqli_query($conn, "UPDATE prijava SET status = 'potrjena' WHERE id = $id_prijave");
-    header("Location: admin.php#prijave"); exit();
-}
-
-if (isset($_GET["zavrni"])) {
-    $id_prijave = (int)$_GET["zavrni"];
-    mysqli_query($conn, "UPDATE prijava SET status = 'zavrnjena' WHERE id = $id_prijave");
-    header("Location: admin.php#prijave"); exit();
-}
-
-if (isset($_POST["dodaj_dogodek"])) {
-    $naslov    = trim($_POST["naslov"]);
-    $opis      = trim($_POST["opis"]);
-    $lokacija  = trim($_POST["lokacija"]);
-    $datum     = $_POST["datum_cas"];
-    $cena      = (float)$_POST["cena"];
-    $st_mest   = (int)$_POST["st_mest"];
-    $vrsta     = $_POST["vrsta"];
-    $slika_url = trim($_POST["slika_url"]);
-    $je_javen  = isset($_POST["je_javen"]) ? 1 : 0;
-    $kreator   = $_SESSION["uporabnik_id"];
-
-    $stmt = mysqli_prepare($conn, "INSERT INTO dogodek (naslov, opis, lokacija, datum_cas, cena, st_mest, vrsta, slika_url, je_javen, kreator_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "ssssdiisii", $naslov, $opis, $lokacija, $datum, $cena, $st_mest, $vrsta, $slika_url, $je_javen, $kreator);
-    mysqli_stmt_execute($stmt);
-    header("Location: admin.php#dogodki"); exit();
-}
-
-if (isset($_POST["dodaj_objavo"])) {
-    $naslov      = trim($_POST["naslov_o"]);
-    $vsebina     = trim($_POST["vsebina"]);
-    $tip         = $_POST["tip"];
-    $je_javna    = isset($_POST["je_javna"]) ? 1 : 0;
-    $je_pomembna = isset($_POST["je_pomembna"]) ? 1 : 0;
-    $avtor       = $_SESSION["uporabnik_id"];
-
-    $stmt = mysqli_prepare($conn, "INSERT INTO objava (naslov, vsebina, tip, je_javna, je_pomembna, avtor_id) VALUES (?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "sssiii", $naslov, $vsebina, $tip, $je_javna, $je_pomembna, $avtor);
-    mysqli_stmt_execute($stmt);
-    header("Location: admin.php#objave"); exit();
-}
-
-$vsi_dogodki = mysqli_query($conn, "SELECT * FROM dogodek ORDER BY datum_cas DESC");
-$vse_objave  = mysqli_query($conn, "SELECT * FROM objava ORDER BY datum_objave DESC");
-$vsi_clani   = mysqli_query($conn, "SELECT * FROM uporabnik ORDER BY datum_reg DESC");
-
-$prijave_cakanje = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov as naziv_dogodka
-                                         FROM prijava p
-                                         JOIN uporabnik u ON p.uporabnik_id = u.id
-                                         JOIN dogodek d ON p.dogodek_id = d.id
-                                         WHERE p.status = 'cakanje'
-                                         ORDER BY p.datum_prijave DESC");
+require_once '../Backend/admin_backend.php';
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -104,7 +30,7 @@ $prijave_cakanje = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov a
 
         <div class="tab-pane fade show active" id="dogodki">
             <h4 class="mb-3">Dodaj dogodek</h4>
-            <form method="POST" class="row g-3 mb-4 p-3 border rounded bg-light">
+            <form method="POST" enctype="multipart/form-data" class="row g-3 mb-4 p-3 border rounded bg-light">
                 <div class="col-md-6">
                     <label class="form-label">Naslov *</label>
                     <input type="text" name="naslov" class="form-control" required>
@@ -124,6 +50,8 @@ $prijave_cakanje = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov a
                 <div class="col-md-6">
                     <label class="form-label">Slika (URL)</label>
                     <input type="url" name="slika_url" class="form-control" placeholder="https://...">
+                    <label class="form-label mt-2">ali naloži z računalnika</label>
+                    <input type="file" name="slika_datoteka" class="form-control" accept="image/*">
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Cena (EUR)</label>
@@ -139,7 +67,7 @@ $prijave_cakanje = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov a
                         <option value="pohod">Pohod</option>
                         <option value="delavnica">Delavnica</option>
                         <option value="izlet">Izlet</option>
-                        <option value="akcija">Akcija</option>
+                        <option value="turnir">Turnir</option>
                         <option value="drugo">Drugo</option>
                     </select>
                 </div>
@@ -216,7 +144,6 @@ $prijave_cakanje = mysqli_query($conn, "SELECT p.*, u.ime, u.priimek, d.naslov a
                     <select name="tip" class="form-select">
                         <option value="novica">Novica</option>
                         <option value="obvestilo">Obvestilo</option>
-                        <option value="zapisnik">Zapisnik</option>
                         <option value="vabilo">Vabilo</option>
                     </select>
                 </div>

@@ -1,31 +1,5 @@
 <?php
-session_start();
-require_once 'config.php';
-
-$izbrana_vrsta = $_GET["vrsta"] ?? "vse";
-
-$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javen = 1";
-
-if ($izbrana_vrsta != "vse") {
-    $vrsta_varna = mysqli_real_escape_string($conn, $izbrana_vrsta);
-    $pogoj .= " AND vrsta = '$vrsta_varna'";
-}
-
-$dogodki = mysqli_query($conn, "SELECT * FROM dogodek $pogoj ORDER BY datum_cas ASC");
-
-$sporocilo = "";
-if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
-    $id_dogodka = (int)$_POST["dogodek_id"];
-    $id_uporabnika = $_SESSION["uporabnik_id"];
-
-    $obstojna = mysqli_query($conn, "SELECT id FROM prijava WHERE uporabnik_id = $id_uporabnika AND dogodek_id = $id_dogodka");
-    if (mysqli_num_rows($obstojna) > 0) {
-        $sporocilo = "Ze si prijavljen na ta dogodek.";
-    } else {
-        mysqli_query($conn, "INSERT INTO prijava (uporabnik_id, dogodek_id, status) VALUES ($id_uporabnika, $id_dogodka, 'cakanje')");
-        $sporocilo = "Prijava uspesna! Caka na potrditev admina.";
-    }
-}
+require_once '../Backend/dogodki_backend.php';
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -37,31 +11,6 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
     <script src="https://cdn.tailwindcss.com/"></script>
     <link href="style.css" rel="stylesheet">
     <title>Dogodki - Moje Društvo</title>
-    <style>
-        .kartica-dogodek {
-            border: 2px solid #3b82f6;
-            border-radius: 12px;
-            transition: box-shadow 0.2s;
-        }
-        .kartica-dogodek:hover {
-            box-shadow: 0 4px 20px rgba(59,130,246,0.2);
-        }
-        .slika-dogodek {
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-        .brez-slike {
-            height: 200px;
-            background: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #adb5bd;
-            font-size: 14px;
-            border-radius: 10px 10px 0 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -82,7 +31,7 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
-        $vrste = ["vse" => "Vsi", "pohod" => "Pohodi", "delavnica" => "Delavnice", "izlet" => "Izleti", "akcija" => "Akcije", "drugo" => "Drugo"];
+        $vrste = ["vse" => "Vsi", "pohod" => "Pohodi", "delavnica" => "Delavnice", "izlet" => "Izleti", "turnir" => "Turnirji", "drugo" => "Drugo"];
         foreach ($vrste as $vrednost => $oznaka):
             $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>
@@ -107,7 +56,7 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
                 <?php if (!empty($dogodek["slika_url"])): ?>
                     <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">
                 <?php else: ?>
-                    <div class="brez-slike">Ni slike</div>
+                    <div class="brez-slike"></div>
                 <?php endif; ?>
 
                 <div class="card-body">
@@ -136,11 +85,13 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
                 </div>
 
                 <div class="card-footer">
-                    <?php if (isset($_SESSION["uporabnik_id"])): ?>
+                    <?php if (isset($_SESSION["uporabnik_id"]) && $_SESSION["vloga"] != "admin"): ?>
                         <form method="POST">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                             <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
                         </form>
+                    <?php elseif ($_SESSION["vloga"] == "admin"): ?>
+                        <a href="admin.php" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
                     <?php endif; ?>

@@ -1,17 +1,5 @@
 <?php
-session_start();
-require_once 'config.php';
-
-$izbrani_tip = $_GET["tip"] ?? "vse";
-
-$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javna = 1";
-
-if ($izbrani_tip != "vse") {
-    $tip_varen = mysqli_real_escape_string($conn, $izbrani_tip);
-    $pogoj .= " AND tip = '$tip_varen'";
-}
-
-$objave = mysqli_query($conn, "SELECT * FROM objava $pogoj ORDER BY datum_objave DESC");
+require_once '../Backend/objave_backend.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +16,6 @@ $objave = mysqli_query($conn, "SELECT * FROM objava $pogoj ORDER BY datum_objave
     <style>
         .kartica-novica    { border-left: 4px solid #3b82f6; }
         .kartica-obvestilo { border-left: 4px solid #ef4444; }
-        .kartica-zapisnik  { border-left: 4px solid #f59e0b; }
         .kartica-vabilo    { border-left: 4px solid #22c55e; }
     </style>
 
@@ -42,13 +29,13 @@ $objave = mysqli_query($conn, "SELECT * FROM objava $pogoj ORDER BY datum_objave
 
     <?php if (!isset($_SESSION["uporabnik_id"])): ?>
         <div class="alert alert-info">
-            <a href="login.php">Prijavi se</a> za ogled internih objav.
+            <a href="login.php">Prijavi se</a> za ogled privatnih objav.
         </div>
     <?php endif; ?>
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
-        $tipi = ["vse" => "Vse", "novica" => "Novice", "obvestilo" => "Obvestila", "zapisnik" => "Zapisniki", "vabilo" => "Vabila"];
+        $tipi = ["vse" => "Vse", "novica" => "Novice", "obvestilo" => "Obvestila", "vabilo" => "Vabila"];
         foreach ($tipi as $vrednost => $oznaka):
             $aktiven = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>
@@ -67,7 +54,6 @@ $objave = mysqli_query($conn, "SELECT * FROM objava $pogoj ORDER BY datum_objave
             $slog = match($objava["tip"]) {
                 "novica"    => "kartica-novica",
                 "obvestilo" => "kartica-obvestilo",
-                "zapisnik"  => "kartica-zapisnik",
                 "vabilo"    => "kartica-vabilo",
                 default     => ""
             };
@@ -78,9 +64,6 @@ $objave = mysqli_query($conn, "SELECT * FROM objava $pogoj ORDER BY datum_objave
                     <div class="mb-2 d-flex gap-1 flex-wrap">
                         <?php if ($objava["je_pomembna"]): ?>
                             <span class="badge bg-danger">Pomembno</span>
-                        <?php endif; ?>
-                        <?php if (!$objava["je_javna"]): ?>
-                            <span class="badge bg-dark">Interno</span>
                         <?php endif; ?>
                         <span class="badge bg-secondary"><?= htmlspecialchars($objava["tip"]) ?></span>
                     </div>
