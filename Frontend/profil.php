@@ -1,30 +1,10 @@
-<?php
-session_start();
-require_once 'config.php';
+<script>
+    const token = sessionStorage.getItem("jwt");
 
-if (!isset($_SESSION["uporabnik_id"])) {
-    header("Location: login.php");
-    exit();
-}
-
-$id = (int)$_SESSION["uporabnik_id"];
-
-$sql = "SELECT ime, priimek, username, email, datum_rojstva, vloga 
-        FROM uporabnik 
-        WHERE id = ?";
-
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);
-
-$uporabnik = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
-
-if (!$uporabnik) {
-    session_destroy();
-    header("Location: login.php");
-    exit();
-}
-?>
+    if (!token) {
+        window.location.href = "login.php";
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,33 +48,25 @@ if (!$uporabnik) {
                 <p class="text-sm text-gray-500">
                     Ime
                 </p>
-                <p class="text-lg font-semibold text-gray-800">
-                    <?= htmlspecialchars($uporabnik["ime"]) ?>
-                </p>
+                <p id="ime" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
                 <p class="text-sm text-gray-500">
                     Priimek
                 </p>
-                <p class="text-lg font-semibold text-gray-800">
-                    <?= htmlspecialchars($uporabnik["priimek"]) ?>
-                </p>
+                <p id="priimek" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
                 <p class="text-sm text-gray-500">
                     Uporabniško ime
                 </p>
-                <p class="text-lg font-semibold text-gray-800">
-                    <?= htmlspecialchars($uporabnik["username"]) ?>
-                </p>
+                <p id="username" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
                 <p class="text-sm text-gray-500">
                     Datum rojstva
                 </p>
-                <p class="text-lg font-semibold text-gray-800">
-                    <?= htmlspecialchars($uporabnik["datum_rojstva"]) ?>
-                </p>
+                <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
             </div>
         </div>
         <div id="urejanjeProfila" class="hidden mt-6">
@@ -140,6 +112,27 @@ if (!$uporabnik) {
 </main>
 
 <?php include 'footer.php'; ?>
+
+<script>
+fetch("../Backend/profil.php", {
+    headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("jwt")
+    }
+})
+.then(res => {
+    if (!res.ok) {
+        sessionStorage.removeItem("jwt");
+        window.location.href = "login.php";
+    }
+    return res.json();
+})
+.then(uporabnik => {
+    document.getElementById("ime").textContent = uporabnik.ime;
+    document.getElementById("priimek").textContent = uporabnik.priimek;
+    document.getElementById("username").textContent = uporabnik.username;
+    document.getElementById("datum_rojstva").textContent = uporabnik.datum_rojstva;
+});
+</script>
     
 </body>
 </html>

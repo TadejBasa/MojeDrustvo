@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'config.php';
+require_once '../Backend/config.php';
 
 if (!isset($_SESSION["vloga"]) || $_SESSION["vloga"] != "admin") {
     header("Location: index.php");

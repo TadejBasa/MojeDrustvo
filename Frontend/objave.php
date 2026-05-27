@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'config.php';
+require_once '../Backend/config.php';
 
 $izbrani_tip = $_GET["tip"] ?? "vse";
 

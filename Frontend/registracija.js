@@ -3,7 +3,7 @@ const forma = document.getElementById("registracijaForm");
 console.log("test 1");
 
 forma.addEventListener("submit", function (event) {
-  //event.preventDefault();
+  event.preventDefault();
 
   const vseError = document.getElementById("vseError");
 
@@ -33,45 +33,45 @@ forma.addEventListener("submit", function (event) {
     gesloError.textContent = "";
     rojstvoError.textContent = "";
   
+  let napaka = false;
+
 //za vse
   if (ime === "" || priimek === "" || uporabniskoIme === "" || email === "" || geslo === "" || datumRojstva === "") {
     vseError.textContent = "Izpolni vsa polja.";
-    return;
+    napaka = true;
   }
 //ime
   if(/\d/.test(ime)){
     imeError.textContent = "V imenu ne sme biti številka."
-    return;
+    napaka = true;
   } 
-  imeError.textContent="";
   if(ime === ""){
     imeError.textContent = "Vnesi ime."
-    return;
+    napaka = true;
   }
 //priimek
   if(/\d/.test(priimek)){
     priimekError.textContent = "V priimku ne sme biti številka."
-    return;
+    napaka = true;
   } 
-  priimekError.textContent="";
   if(priimek === ""){
     priimekError.textContent = "Vnesi priimek."
-    return;
+    napaka = true;
   }
 //uporabnisko ime
   if (!/^[a-zA-Z0-9_]+$/.test(uporabniskoIme)) {
     uporabniskoError.textContent = "Uporabniško ime ne sme vsebovati posebnih znakov.";
-    return;
+    napaka = true;
 }
 //email
   if(!email.includes("@") || !email.includes(".")) {
     emailError.textContent = "Vnesi veljaven email.";
-    return;
+    napaka = true;
   }
 //geslo
   if(geslo.length < 8) {
     gesloError.textContent = "Geslo mora imeti vsaj 8 znakov.";
-    return;
+    napaka = true;
   }
 //datum rojstva
 const danes = new Date();
@@ -85,9 +85,9 @@ if (mesecRazlika < 0 || (mesecRazlika === 0 && danes.getDate() < rojstvo.getDate
     starostUporabnika--;
 }
 
-if (starost < 18) {
+if (starostUporabnika < 18) {
     rojstvoError.textContent = "Za registracijo moraš biti star vsaj 18 let.";
-    return;
+    napaka = true;
 }
 
   const uporabnik = {
@@ -99,6 +99,8 @@ if (starost < 18) {
     datumRojstva: datumRojstva
   };
 
-  vseError.textContent = "Registracija uspesna";
-  forma.submit();
+  if (!napaka) {
+    vseError.textContent = "Registracija uspesna";
+    HTMLFormElement.prototype.submit.call(forma);
+}
 });

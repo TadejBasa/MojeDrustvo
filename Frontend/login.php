@@ -1,50 +1,6 @@
-<?php
-session_start();
-require_once 'config.php';
 
-if (isset($_SESSION["uporabnik_id"])) {
-    header("Location: index.php");
-    exit();
-}
-
-$napaka = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $vhod  = trim($_POST["vhod"]);
-    $geslo = $_POST["geslo"];
-
-    if (empty($vhod) || empty($geslo)) {
-        $napaka = "Prosim izpolni vsa polja.";
-    } else {
-        $sql  = "SELECT * FROM uporabnik WHERE username = ? OR email = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $vhod, $vhod);
-        mysqli_stmt_execute($stmt);
-
-        $rezultat  = mysqli_stmt_get_result($stmt);
-        $uporabnik = mysqli_fetch_assoc($rezultat);
-
-        if ($uporabnik && password_verify($geslo, $uporabnik["geslo_hash"])) {
-            session_regenerate_id(true);
-            $_SESSION["uporabnik_id"] = $uporabnik["id"];
-            $_SESSION["ime"]          = $uporabnik["ime"];
-            $_SESSION["username"]     = $uporabnik["username"];
-            $_SESSION["vloga"]        = $uporabnik["vloga"];
-
-            if ($uporabnik["vloga"] == "admin") {
-                header("Location: admin.php");
-            } else {
-                header("Location: index.php");
-            }
-            exit();
-        } else {
-            $napaka = "Napačno uporabniško ime/email ali geslo.";
-        }
-    }
-}
-?>
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="sl">    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,12 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <main class="login-bg flex-1 min-h-[110vh] flex items-center justify-center px-4 py-16">
     <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl p-10">
         <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Prijava</h2>
-        <?php if ($napaka): ?>
-            <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
-                <?= htmlspecialchars($napaka) ?>
-            </div>
+        <?php if(isset($_GET["napaka"])): ?>
+          <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
+            <?= htmlspecialchars($_GET["napaka"]) ?>
+          </div>
         <?php endif; ?>
-        <form method="POST" action="login.php" class="space-y-4">
+        <form method="POST" action="../Backend/login.php" class="space-y-4">
             <div class="relative">
                 <input type="text" name="vhod" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['vhod'] ?? '') ?>">
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
