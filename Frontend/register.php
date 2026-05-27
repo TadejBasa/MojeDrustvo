@@ -1,55 +1,3 @@
-<?php
-session_start();
-require_once 'config.php';
-
-if (isset($_SESSION["uporabnik_id"])) {
-    header("Location: index.php");
-    exit();
-}
-
-$napaka = "";
-$uspeh = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $ime = trim($_POST["ime"]);
-    $priimek = trim($_POST["priimek"]);
-    $username = trim($_POST["username"]);
-    $email = trim($_POST["email"]);
-    $geslo = $_POST["geslo"];
-    $datum_rojstva = $_POST["datum_rojstva"];
-
-    $geslo_hash = password_hash($geslo, PASSWORD_DEFAULT);
-    $vloga = "clan";
-
-    $sql = "INSERT INTO uporabnik
-    (ime, priimek, username, email, geslo_hash, vloga, datum_rojstva)
-    VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = mysqli_prepare($conn, $sql);
-
-    mysqli_stmt_bind_param(
-        $stmt,
-        "sssssss",
-        $ime,
-        $priimek,
-        $username,
-        $email,
-        $geslo_hash,
-        $vloga,
-        $datum_rojstva
-    );
-
-    if(mysqli_stmt_execute($stmt)){
-      $uspeh = "Registracija uspešna";
-    }else{
-      $napaka = "Napaka pri registraciji";
-    }
-
-    $uspeh = "Registracija uspešna";
-}
-?>
-
 <!DOCTYPE html>
 <html class="html" lang="en">
 <head>
@@ -63,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <script src="trianglify.bundle.js"></script><title>Prijava - Moje Društvo</title>
+    <script src="trianglify.bundle.js"></script>
     <link href="style.css" rel="stylesheet">
     <script src="geslo.js" defer></script>
     <title>Registracija - Moje Društvo</title>
@@ -77,38 +25,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">
             Registracija
         </h2>
-        <?php if ($uspeh): ?>
-            <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4">
-                <?= htmlspecialchars($uspeh) ?>
+        <p id="vseError" class="text-red-600 text-sm mb-3"></p>
+        <?php if(isset($_GET["napaka"])): ?>
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
+                <?= htmlspecialchars($_GET["napaka"]) ?>
             </div>
         <?php endif; ?>
-        <form id="registracijaForm" method="POST" action="register.php" class="space-y-4">
+        <form id="registracijaForm" method="POST" action="../Backend/register.php" class="space-y-4">
             <div class="relative">
                 <input type="text" id="ime" name="ime" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="imeError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Ime
                 </label>
             </div>
             <div class="relative">
                 <input type="text" id="priimek" name="priimek" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="priimekError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Priimek
                 </label>
             </div>
             <div class="relative">
                 <input type="text" id="uporabniskoIme" name="username" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="uporabniskoError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Uporabniško ime
                 </label>
             </div>
             <div class="relative">
                 <input type="email" id="email" name="email" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="emailError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Email
                 </label>
             </div>
             <div class="relative">
                 <input type="password" id="geslo" name="geslo" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="gesloError" class="text-red-600 text-sm mt-1"></p>
                 <button type="button" id="pokaziGeslo" class="absolute right-3 top-1/2 -translate-y-1/2">
                     <img id="ikonaGeslo" src="slike/eye.png" class="w-5 h-5" alt="Pokaži geslo">
                 </button>
@@ -118,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="relative">
                 <input type="date" id="datumRojstva" name="datum_rojstva" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <p id="rojstvoError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-1 text-sm">
                     Datum rojstva
                 </label>

@@ -9,6 +9,7 @@ $conn = mysqli_connect($host, $user, $password, $database);
 if (!$conn) {
     die("Napaka pri povezavi z bazo: " . mysqli_connect_error());
 }
+<<<<<<< HEAD
 $dogodkiStart = [
     ["Nogometni turnir", "Turnir v malem nogometu. Ekipe po 5+1, glavna nagrada malica v FERI EatSmart menzi.", "Ljudski vrt", "2026-06-15 10:00:00", 0, 36, "turnir", "https://www.pendlesportswear.co.uk/blog/wp-content/uploads/goblet-and-soccer-ball-on-football-field-with-play-2024-11-17-11-44-39-utc-min.jpg"],
     ["Planinski pohod Pohorje", "Skupinski pohod na Pohorje.", "Maribor", "2026-06-22 08:00:00", 5, 15, "pohod", "https://www.visitmaribor.si/media/2886/lovrenska-jezera_maribor_pohorje_slovenija_slovenia_shutterstock_onixxino.jpg"],
@@ -26,5 +27,8 @@ foreach ($dogodkiStart as $s) {
                              VALUES ('$s[0]', '$s[1]', '$s[2]', '$s[3]', $s[4], $s[5], '$s[6]','$s[7]', 1, $kreator_id)");
     }
 }
+=======
+
+>>>>>>> 5c8e4f2a8d17d5ac896b4011abee3a516db91fc4
 mysqli_set_charset($conn, "utf8");
 ?>

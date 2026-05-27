@@ -1,7 +1,4 @@
-<?php
-$prijavljen = isset($_SESSION["uporabnik_id"]);
-$jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
-?>
+
 <nav class="bg-gray-100">
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex justify-between">
@@ -26,27 +23,21 @@ $jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
 
     <div class="hidden md:flex items-center space-x-3 font-bold">
 
-    <?php if(isset($_SESSION["uporabnik_id"])): ?>
-    <span class="text-gray-700">
-        <?= htmlspecialchars($_SESSION["username"]) ?>
-    </span>
+    <span id="navUsername" class="text-gray-700 hidden"></span>
 
-    <?php if($_SESSION["vloga"] == "admin"): ?>
-        <a href="admin.php" class="py-2 px-3 bg-blue-500 hover:bg-blue-400 text-white rounded transition duration-300">
-            Admin
-        </a>
-      <?php endif; ?>
-        <a href="profil.php" class="py-2 px-3 bg-green-500 hover:bg-green-400 text-white rounded transition duration-300">
-          Profil
-        </a>
-        <a href="odjava.php" class="py-2 px-3 bg-red-500 hover:bg-red-400 text-white rounded transition duration-300">
-          Odjava
-        </a>
-      <?php else: ?>
-        <a href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
-          Prijava
-        </a>
-      <?php endif; ?>
+    <a id="navAdmin" href="admin.php" class="hidden py-2 px-3 bg-blue-500 hover:bg-blue-400 text-white rounded transition duration-300">
+      Admin
+    </a>
+    <a id="navProfil" href="profil.php" class="hidden py-2 px-3 bg-green-500 hover:bg-green-400 text-white rounded transition duration-300">
+      Profil
+    </a>
+    <a id="navOdjava" href="odjava.php" class="hidden py-2 px-3 bg-red-500 hover:bg-red-400 text-white rounded transition duration-300">
+      Odjava
+    </a>
+    <a id="navPrijava" href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
+      Prijava
+    </a>
+
     </div>
       <!-- mobile button goes here -->
       <div class="md:hidden flex items-center">
@@ -69,3 +60,48 @@ $jeAdmin = isset($_SESSION["vloga"]) && $_SESSION["vloga"] === "admin";
     <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Kontakt</a>
   </div>
 </nav>
+
+<script>
+function decodeJWT(token) {
+    try {
+        const payload = token.split(".")[1];
+        return JSON.parse(atob(payload));
+    } catch (e) {
+        return null;
+    }
+}
+
+const navPrijava = document.getElementById("navPrijava");
+const navProfil = document.getElementById("navProfil");
+const navAdmin = document.getElementById("navAdmin");
+const navOdjava = document.getElementById("navOdjava");
+const navUsername = document.getElementById("navUsername");
+
+const navToken = sessionStorage.getItem("jwt");
+
+if (navToken) {
+
+    const uporabnik = decodeJWT(navToken);
+
+    navPrijava.classList.add("hidden");
+
+    navProfil.classList.remove("hidden");
+    navOdjava.classList.remove("hidden");
+    navUsername.classList.remove("hidden");
+
+    navUsername.textContent = uporabnik.username;
+
+    if (uporabnik.vloga === "admin") {
+        navAdmin.classList.remove("hidden");
+    }
+
+} else {
+
+    navPrijava.classList.remove("hidden");
+
+    navProfil.classList.add("hidden");
+    navAdmin.classList.add("hidden");
+    navOdjava.classList.add("hidden");
+    navUsername.classList.add("hidden");
+}
+</script>
