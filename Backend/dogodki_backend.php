@@ -1,16 +1,21 @@
 <?php
-session_start();
-require_once '../Frontend/config.php';
- 
+require_once __DIR__ . '/jwt.php';
+require_once __DIR__ . '/config.php';
+
+$uporabnik = null;
+if (!empty($_COOKIE["jwt"])) {
+    $uporabnik = preveriJWT($_COOKIE["jwt"]);
+}
+
 $izbrana_vrsta = $_GET["vrsta"] ?? "vse";
 $sporocilo = "";
- 
-if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
+
+if (isset($_POST["prijava_dogodek"]) && $uporabnik) {
     $id_dogodka    = (int)$_POST["dogodek_id"];
-    $id_uporabnika = (int)$_SESSION["uporabnik_id"];
- 
+    $id_uporabnika = (int)$uporabnik["uporabnik_id"];
+
     $obstojna = mysqli_query($conn, "SELECT id FROM prijava WHERE uporabnik_id = $id_uporabnika AND dogodek_id = $id_dogodka");
- 
+
     if (mysqli_num_rows($obstojna) > 0) {
         $sporocilo = "Ze si prijavljen na ta dogodek.";
     } else {
@@ -18,22 +23,21 @@ if (isset($_POST["prijava_dogodek"]) && isset($_SESSION["uporabnik_id"])) {
         $sporocilo = "Prijava uspesna! Caka na potrditev admina.";
     }
 }
- 
-$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javen = 1";
- 
+
+$pogoj = $uporabnik ? "WHERE 1=1" : "WHERE je_javen = 1";
+
 if ($izbrana_vrsta != "vse") {
     $vrsta_varna = mysqli_real_escape_string($conn, $izbrana_vrsta);
     $pogoj .= " AND vrsta = '$vrsta_varna'";
 }
- 
+
 $dogodki = mysqli_query($conn, "SELECT * FROM dogodek $pogoj ORDER BY datum_cas ASC");
- 
+
 $vrste = [
     "vse"       => "Vsi",
     "pohod"     => "Pohodi",
     "delavnica" => "Delavnice",
     "izlet"     => "Izleti",
-    "akcija"    => "Akcije",
+    "turnir"    => "Turnirji",
     "drugo"     => "Drugo"
 ];
- 

@@ -23,7 +23,7 @@ require_once '../Backend/dogodki_backend.php';
         <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
     <?php endif; ?>
 
-    <?php if (!isset($_SESSION["uporabnik_id"])): ?>
+    <?php if (!$uporabnik): ?>
         <div class="alert alert-warning">
             <a href="login.php">Prijavi se</a> za prijavo na dogodke.
         </div>
@@ -31,7 +31,6 @@ require_once '../Backend/dogodki_backend.php';
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
-        $vrste = ["vse" => "Vsi", "pohod" => "Pohodi", "delavnica" => "Delavnice", "izlet" => "Izleti", "turnir" => "Turnirji", "drugo" => "Drugo"];
         foreach ($vrste as $vrednost => $oznaka):
             $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>
@@ -85,12 +84,12 @@ require_once '../Backend/dogodki_backend.php';
                 </div>
 
                 <div class="card-footer">
-                    <?php if (isset($_SESSION["uporabnik_id"]) && $_SESSION["vloga"] != "admin"): ?>
+                    <?php if ($uporabnik && $uporabnik["vloga"] != "admin"): ?>
                         <form method="POST">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                             <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
                         </form>
-                    <?php elseif ($_SESSION["vloga"] == "admin"): ?>
+                    <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
                         <a href="admin.php" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>

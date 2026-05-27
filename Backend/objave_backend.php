@@ -1,10 +1,15 @@
 <?php
-session_start();
-require_once '../Frontend/config.php';
+require_once __DIR__ . '/jwt.php';
+require_once __DIR__ . '/config.php';
+
+$uporabnik = null;
+if (!empty($_COOKIE["jwt"])) {
+    $uporabnik = preveriJWT($_COOKIE["jwt"]);
+}
 
 $izbrani_tip = $_GET["tip"] ?? "vse";
 
-$pogoj = isset($_SESSION["uporabnik_id"]) ? "WHERE 1=1" : "WHERE je_javna = 1";
+$pogoj = $uporabnik ? "WHERE 1=1" : "WHERE je_javna = 1";
 
 if ($izbrani_tip != "vse") {
     $tip_varen = mysqli_real_escape_string($conn, $izbrani_tip);
@@ -17,6 +22,5 @@ $tipi = [
     "vse"       => "Vse",
     "novica"    => "Novice",
     "obvestilo" => "Obvestila",
-    "zapisnik"  => "Zapisniki",
     "vabilo"    => "Vabila"
 ];
