@@ -1,3 +1,10 @@
+<script>
+    const token = sessionStorage.getItem("jwt");
+    if (!token) {
+        window.location.href = "login.php";
+    }
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,28 +44,34 @@
         <div id="prikazProfila">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-sm text-gray-500">
+                <p class="text-me text-gray-500">
                     Ime
                 </p>
                 <p id="ime" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-sm text-gray-500">
+                <p class="text-me text-gray-500">
                     Priimek
                 </p>
                 <p id="priimek" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-sm text-gray-500">
+                <p class="text-me text-gray-500">
                     Uporabniško ime
                 </p>
                 <p id="username" class="text-lg font-semibold text-gray-800"></p>
             </div>
             <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-sm text-gray-500">
+                <p class="text-me text-gray-500">
                     Datum rojstva
                 </p>
                 <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
+            </div>
+            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                <p class="text-me text-gray-500">
+                    Status prijave: 
+                </p>
+                <p id="status" class="text-lg font-semibold text-gray-800"></p>
             </div>
         </div>
         <div id="urejanjeProfila" class="hidden mt-6">

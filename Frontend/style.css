@@ -7,7 +7,7 @@ body {
 .grid {
   background-color: transparent !important;
 }
-.welcome {
+.welcome{
   position: relative;
   min-height: 77vh;
   justify-content: center;

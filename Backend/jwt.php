@@ -1,29 +1,32 @@
 <?php
-const JWT_SECRET = "TungTungSahur_kluc";
+const JWT_SECRET = "TungTungSahur_kluc"; 
 
+//pretvore podatke
 function base64url_encode($data) {
-    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); //zamenja +,-,...
 }
 
-function base64url_decode($data) {
+function base64url_decode($data) { //jwt v navadne podatke
     return base64_decode(strtr($data, '-_', '+/'));
 }
 
+//ustvari jwt token
 function ustvariJWT($payload) {
-    $header = ["alg" => "HS256", "typ" => "JWT"];
+    $header = ["alg" => "HS256", "typ" => "JWT"]; //da uporabljas jwt
 
     $base64Header = base64url_encode(json_encode($header));
     $base64Payload = base64url_encode(json_encode($payload));
 
-    $signature = hash_hmac(
+    $signature = hash_hmac( //digitalni pdopis
         "sha256",
         $base64Header . "." . $base64Payload,
         JWT_SECRET,
         true
     );
 
-    return $base64Header . "." . $base64Payload . "." . base64url_encode($signature);
+    return $base64Header . "." . $base64Payload . "." . base64url_encode($signature); //koncne jwt
 }
+
 
 function preveriJWT($jwt) {
     $deli = explode(".", $jwt);
