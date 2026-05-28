@@ -73,6 +73,10 @@ forma.addEventListener("submit", function (event) {
     gesloError.textContent = "Geslo mora imeti vsaj 8 znakov.";
     napaka = true;
   }
+  if (/[!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\;/']/.test(geslo)) {
+    gesloError.textContent = "Geslo mora imeti poseben znak."
+    napaka = true;
+} 
 //datum rojstva
 const danes = new Date();
 const rojstvo = new Date(datumRojstva);

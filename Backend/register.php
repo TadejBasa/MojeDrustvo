@@ -8,7 +8,7 @@ $username = $_POST["username"] ?? "";
 $email = $_POST["email"] ?? "";
 $datum = $_POST["datum_rojstva"] ?? "";
 
-$gesloHash = password_hash($_POST["geslo"], PASSWORD_DEFAULT);
+$gesloHash = password_hash($_POST["geslo"], PASSWORD_DEFAULT); //shrane geslo kak hash
 
 $check = mysqli_prepare(
     $conn,
@@ -26,6 +26,7 @@ if(mysqli_fetch_assoc($result)) {
     exit;
 }
 
+//doda novoga uporabnika v bazo
 $sql = "INSERT INTO uporabnik
 (ime, priimek, username, email, geslo_hash, datum_rojstva)
 VALUES (?, ?, ?, ?, ?, ?)";
@@ -47,6 +48,7 @@ mysqli_stmt_execute($stmt);
 
 $id = mysqli_insert_id($conn);
 
+//avtomatsko prijavi
 $token = ustvariJWT([
     "id" => $id,
     "username" => $username,
@@ -55,6 +57,6 @@ $token = ustvariJWT([
 ?>
 
 <script>
-sessionStorage.setItem("jwt", <?= json_encode($token) ?>);
+sessionStorage.setItem("jwt", <?= json_encode($token) ?>); //vpis v session storage
 window.location.href = "../Frontend/profil.php";
 </script>
