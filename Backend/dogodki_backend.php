@@ -1,10 +1,11 @@
 <?php
+session_start();
 require_once __DIR__ . '/jwt.php';
 require_once __DIR__ . '/config.php';
 
 $uporabnik = null;
-if (!empty($_COOKIE["jwt"])) {
-    $uporabnik = preveriJWT($_COOKIE["jwt"]);
+if (!empty($_SESSION["jwt"])) {
+    $uporabnik = preveriJWT($_SESSION["jwt"]);
 }
 
 $izbrana_vrsta = $_GET["vrsta"] ?? "vse";

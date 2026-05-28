@@ -1,11 +1,3 @@
-<script>
-    const token = sessionStorage.getItem("jwt");
-
-    if (!token) {
-        window.location.href = "login.php";
-    }
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,24 +106,40 @@
 <?php include 'footer.php'; ?>
 
 <script>
-fetch("../Backend/profil.php", {
-    headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("jwt")
-    }
-})
-.then(res => {
-    if (!res.ok) {
-        sessionStorage.removeItem("jwt");
+function nalagajProfil() {
+    const token = sessionStorage.getItem("jwt");
+    if (!token) {
         window.location.href = "login.php";
+        return;
     }
-    return res.json();
-})
-.then(uporabnik => {
-    document.getElementById("ime").textContent = uporabnik.ime;
-    document.getElementById("priimek").textContent = uporabnik.priimek;
-    document.getElementById("username").textContent = uporabnik.username;
-    document.getElementById("datum_rojstva").textContent = uporabnik.datum_rojstva;
-});
+    fetch("../Backend/profil.php", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            sessionStorage.removeItem("jwt");
+            window.location.href = "login.php";
+            return;
+        }
+        return res.json();
+    })
+    .then(uporabnik => {
+        if (!uporabnik) return;
+        document.getElementById("ime").textContent = uporabnik.ime;
+        document.getElementById("priimek").textContent = uporabnik.priimek;
+        document.getElementById("username").textContent = uporabnik.username;
+        document.getElementById("datum_rojstva").textContent = uporabnik.datum_rojstva;
+    });
+}
+
+// Počakaj da se sessionStorage naloži (pomembno po preusmeritvi iz login)
+if (sessionStorage.getItem("jwt")) {
+    nalagajProfil();
+} else {
+    setTimeout(nalagajProfil, 200);
+}
 </script>
     
 </body>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "config.php";
 require_once "jwt.php";
 
@@ -28,9 +29,12 @@ $token = ustvariJWT([
     "vloga" => $uporabnik["vloga"],
     "exp" => time() + 3600
 ]);
+
+$_SESSION["jwt"] = $token;
+$_SESSION["vloga"] = $uporabnik["vloga"];
 ?>
 
 <script>
 sessionStorage.setItem("jwt", <?= json_encode($token) ?>);
-window.location.href = "../Frontend/profil.php";
+window.location.replace("../Frontend/profil.php");
 </script>
