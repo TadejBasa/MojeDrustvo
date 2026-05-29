@@ -21,6 +21,7 @@
     <script src="trianglify.bundle.js"></script>
     <link href="style.css" rel="stylesheet">
     <script src="profil.js" defer></script>
+    <script src="geslo.js" defer></script>
     <title>Profil</title>
 </head>
 <body>
@@ -42,76 +43,115 @@
             </h2>
         </div>
         <div id="prikazProfila">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-me text-gray-500">
-                    Ime
-                </p>
-                <p id="ime" class="text-lg font-semibold text-gray-800"></p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Ime
+                    </p>
+                    <p id="ime" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Priimek
+                    </p>
+                    <p id="priimek" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Uporabniško ime
+                    </p>
+                    <p id="username" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Datum rojstva
+                    </p>
+                    <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Status prijave: 
+                    </p>
+                    <p id="status" class="text-lg font-semibold text-gray-800"></p>
+                </div>
             </div>
-            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-me text-gray-500">
-                    Priimek
-                </p>
-                <p id="priimek" class="text-lg font-semibold text-gray-800"></p>
-            </div>
-            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-me text-gray-500">
-                    Uporabniško ime
-                </p>
-                <p id="username" class="text-lg font-semibold text-gray-800"></p>
-            </div>
-            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-me text-gray-500">
-                    Datum rojstva
-                </p>
-                <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
-            </div>
-            <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                <p class="text-me text-gray-500">
-                    Status prijave: 
-                </p>
-                <p id="status" class="text-lg font-semibold text-gray-800"></p>
+            <div class="mt-8 flex gap-4">
+                <button type="button" id="urediProfil" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                    Uredi profil
+                </button>
+                <button type="button" id="spremeniGeslo" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                    Spremeni geslo
+                </button>
             </div>
         </div>
-        <div id="urejanjeProfila" class="hidden mt-6">
+        <div id="urejanjeProfila" style="display: none">
+            <form class="space-y-4">
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Ime
+                    </p>
+                    <p id="imeUredi" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Priimek
+                    </p>
+                    <p id="priimekUredi" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                    <p class="text-me text-gray-500">
+                        Uporabniško ime
+                    </p>
+                    <p id="usernameUredi" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                        Shrani
+                    </button>
+                    <button type="button" id="prekliciUredi" class="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-100 transition">
+                        Prekliči
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id="spremembaGesla" style="display: none">
             <form class="space-y-4">
                 <div class="relative">
-                    <input type="text" value="Tadej" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14">
+                    <input type="password" id="trenutnoGeslo" name="trenutnoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
+                    </button>
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
-                        Ime
+                        Trenutno geslo
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="text" value="Basa" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14">
+                    <input type="password" id="novoGeslo" name="novoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
+                    </button>
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
-                        Priimek
+                        Novo geslo
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="text" value="LilTadaX" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14">
+                    <input type="password" id="potrdiGeslo" name="potrdiGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
+                    </button>
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
-                        Uporabniško ime
+                        Potrdi novo geslo
                     </label>
                 </div>
                 <div class="flex gap-4">
                     <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
                         Shrani
                     </button>
-                    <button type="button" id="preklici" class="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-100 transition">
+                    <button type="button" id="prekliciGeslo" class="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-100 transition">
                         Prekliči
                     </button>
                 </div>
             </form>
-        </div>
-        <div class="mt-8 flex gap-4">
-            <button type="button" id="urediProfil" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                Uredi profil
-            </button>
-            <button type="button" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                Spremeni geslo
-            </button>
-        </div>
         </div>
     </div>
 </main>
@@ -147,7 +187,6 @@ function nalagajProfil() {
     });
 }
 
-// Počakaj da se sessionStorage naloži (pomembno po preusmeritvi iz login)
 if (sessionStorage.getItem("jwt")) {
     nalagajProfil();
 } else {

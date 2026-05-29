@@ -1,16 +1,14 @@
-const gumb = document.getElementById("pokaziGeslo");
-const geslo = document.getElementById("geslo");
-const ikona = document.getElementById("ikonaGeslo");
+document.querySelectorAll(".pokaziGeslo").forEach(gumb => {
+    gumb.addEventListener("click", () => {
+        const input = gumb.parentElement.querySelector(".geslo-input");
+        const ikona = gumb.querySelector(".ikonaGeslo");
 
-gumb.addEventListener("click", () => {
-
-    if (geslo.type === "password") {
-        geslo.type = "text";
-        ikona.src="slike/hidden.png";
-    }
-    else {
-        geslo.type = "password";
-        ikona.src="slike/eye.png";
-    }
-
+        if (input.type === "password") {
+            input.type = "text";
+            ikona.src = "slike/hidden.png";
+        } else {
+            input.type = "password";
+            ikona.src = "slike/eye.png";
+        }
+    });
 });
