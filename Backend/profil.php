@@ -27,9 +27,9 @@ if (!$data) {
 $id = $data["id"]; //dobi id
 
 //podatke uporabnika
-$sql = "SELECT ime, priimek, username, datum_rojstva
-        FROM uporabnik
-        WHERE id = ?";
+$sql = "SELECT ime, priimek, username, datum_rojstva, profilna_slika
+        from uporabnik
+        where id = ?";
 
 $stmt = mysqli_prepare($conn, $sql);
 

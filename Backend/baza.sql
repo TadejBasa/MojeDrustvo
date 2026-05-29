@@ -68,3 +68,6 @@ CREATE TABLE obvestilo (
 INSERT INTO uporabnik (ime, priimek, username, email, geslo_hash, vloga)
 VALUES ('Admin', 'Društvo', 'admin', 'admin@mojedrustvo.si',
         '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+
+alter table uporabnik
+add profilna_slika varchar(255) default '../Frontend/slike/default.png';

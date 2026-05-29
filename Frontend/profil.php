@@ -31,13 +31,16 @@
 <main class="login-bg flex-1 min-h-[110vh] flex items-center justify-center px-4 py-16">
     <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-10">
         <div class="flex flex-col items-center text-center mb-10">
+            <form id="uploadForma" action="../Backend/objava_slik.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="jwt" id="jwtInput">
             <div class="relative mb-4">
-                <img src="slike/default-profile.png" alt=" " class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg">
+                <img id="profilnaSlikaImg"src="slike/default.png" alt=" " class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg">
                 <label for="profilnaSlika" class="absolute bottom-0 right-0 bg-blue-600 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700 transition">
-                     +
+                     + 
                 </label>
-                <input type="file" id="profilnaSlika" name="profilnaSlika" accept="image/*" class="hidden">
+                <input type="file" id="profilnaSlika" name="profilnaSlika" accept="image/*" class="hidden" onchange="document.getElementById('uploadForma').submit();">
             </div>
+            </form>
             <h2 class="text-4xl font-bold text-gray-800">
                 Profil člana
             </h2>
@@ -160,6 +163,7 @@
 
 <script>
 function nalagajProfil() {
+
     const token = sessionStorage.getItem("jwt");
     if (!token) {
         window.location.href = "login.php";
@@ -178,12 +182,20 @@ function nalagajProfil() {
         }
         return res.json();
     })
-    .then(uporabnik => {
+    .then(uporabnik => {  
         if (!uporabnik) return;
         document.getElementById("ime").textContent = uporabnik.ime;
         document.getElementById("priimek").textContent = uporabnik.priimek;
         document.getElementById("username").textContent = uporabnik.username;
         document.getElementById("datum_rojstva").textContent = uporabnik.datum_rojstva;
+
+        if (uporabnik.profilna_slika) {
+            document.getElementById("profilnaSlikaImg").src = uporabnik.profilna_slika + "?v=" + Date.now();
+        }
+
+        document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
+
+        console.log(uporabnik.profilna_slika);
     });
 }
 
