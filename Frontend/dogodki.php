@@ -52,19 +52,22 @@ require_once '../Backend/dogodki_backend.php';
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
                 </div>
 
-                <div class="d-flex justify-content-end mb-2">
-                    <form method="POST"
-                        action="../Backend/dodajanje_med_priljubljene.php"
-                        class="m-0">
+                <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
 
-                        <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+                    <div class="d-flex justify-content-end mb-2">
+                        <form method="POST"
+                            action="../Backend/dodajanje_med_priljubljene.php"
+                            class="m-0">
 
-                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                            ♥
-                        </button>
+                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
 
-                    </form>
-                </div>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Dodaj med priljubljene
+                                </button>
+                        </form>
+                    </div>
+
+<?php endif; ?>
 
                 <?php if (!empty($dogodek["slika_url"])): ?>
                     <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">
