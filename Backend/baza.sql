@@ -71,3 +71,21 @@ VALUES ('Admin', 'Društvo', 'admin', 'admin@mojedrustvo.si',
 
 alter table uporabnik
 add profilna_slika varchar(255) default '../Frontend/slike/default.png';
+
+CREATE TABLE komentar(
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    uporabnik_id    INT NOT NULL,
+    dogodek_id      INT NOT NULL,
+    besedilo        TEXT NOT NULL,
+    datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id)
+    FOREIGN KEY (dogodek_id) REFERENCES dogodek(id)
+)
+
+CREATE TABLE priljubljeni(
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    uporabnik_id    INT NOT NULL,
+    dogodek_id      INT NOT NULL,
+    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id)
+    FOREIGN KEY (dogodek_id) REFERENCES dogodek(id)
+)

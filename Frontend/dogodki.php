@@ -52,6 +52,20 @@ require_once '../Backend/dogodki_backend.php';
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
                 </div>
 
+                <div class="d-flex justify-content-end mb-2">
+                    <form method="POST"
+                        action="../Backend/dodajanje_med_priljubljene.php"
+                        class="m-0">
+
+                        <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            ♥
+                        </button>
+
+                    </form>
+                </div>
+
                 <?php if (!empty($dogodek["slika_url"])): ?>
                     <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">
                 <?php else: ?>
@@ -85,10 +99,34 @@ require_once '../Backend/dogodki_backend.php';
 
                 <div class="card-footer">
                     <?php if ($uporabnik && $uporabnik["vloga"] != "admin"): ?>
+                        
                         <form method="POST">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                             <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
                         </form>
+
+                        <form method="POST"
+                            action="../Backend/komentar.php"
+                            class="mt-2"
+                            onsubmit="return preveriKomentar(this)">
+                            
+                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+
+                            <textarea name="besedilo" class="form-control" rows="2" placeholder="Napiši komentar..."></textarea>
+
+                            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
+                                Komentiraj
+                            </button>
+                        </form>
+
+                        <button type="button"
+                            class="btn btn-outline-secondary btn-sm w-100 mt-2"
+                            onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
+                            Prikaži komentarje
+                        </button>
+
+                    <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
+
                     <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
                         <a href="admin.php" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
@@ -104,5 +142,6 @@ require_once '../Backend/dogodki_backend.php';
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="komentarji.js"></script>
 </body>
 </html>
