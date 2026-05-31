@@ -1,10 +1,9 @@
 
-
 <footer class="bg-gray-100">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
-              <a href="index.php" class="flex items-center">
+              <a href="#" class="flex items-center">
                   <img src="slike/sd_feri_logo.jpg" class="h-16 me-3" alt="ŠD FERI logo" />
                   <span class="text-gray-700 text-heading self-center text-2xl font-semibold whitespace-nowrap">ŠD FERI</span>
               </a>
@@ -12,49 +11,49 @@
           <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
                   <h2 class="mb-6 text-sm font-semibold text-heading text-gray-900 uppercase">objave</h2>
-                    <ul class="text-gray-700 font-medium space-y-3">
+                    <ul class="text-gray-700 font-semibold space-y-3">
                       <li>
-                          <a href="objave.php" class="footer-link">Dogodki</a>
+                          <a href="#" class="footer-link">Dogodki</a>
                       </li>
                       <li>
-                          <a href="objave.php" class="footer-link">Novice</a>
+                          <a href="#" class="footer-link">Novice</a>
                       </li>
                       <li>
-                          <a href="objave.php" class="footer-link">Obvestila</a>
+                          <a href="#" class="footer-link">Obvestila</a>
                       </li>
                   </ul>
               </div>
               <div>
                   <h2 class="mb-6 text-sm font-semibold text-heading text-gray-900 uppercase">Navigacija</h2>
-                  <ul class="text-body font-medium">
+                  <ul class="text-body font-semibold">
             
             <?php if (isset($_SESSION["uporabnik_id"])): ?>
 
                 <li class="mb-4">
-                    <a href="profil.html" class="footer-link">Moj račun</a>
+                    <a href="#" class="footer-link">Moj račun</a>
                 </li>
                 
             <?php else: ?>
 
             <li class="mb-4">
-                <a href="login.php" class="footer-link">Prijava</a>
+                <a href="#" class="footer-link">Prijava</a>
             </li>
 
             <?php endif; ?>
 
                       <li>
-                          <a href="index.php" class="footer-link">Domov</a>
+                          <a href="#" class="footer-link">Domov</a>
                       </li>
                   </ul>
               </div>
               <div>
                   <h2 class="mb-6 text-sm font-semibold text-heading text-gray-900 uppercase">koristno</h2>
-                  <ul class="text-body font-medium">
+                  <ul class="text-body font-semibold">
                       <li class="mb-4">
-                          <a href="privacy_policy.php" class="footer-link">Pogoji poslovanja</a>
+                          <a href="#" class="footer-link">Pogoji poslovanja</a>
                       </li>
                       <li>
-                          <a href="kontakt.php" class="footer-link">Kontakt</a>
+                          <a href="#" class="footer-link">Kontakt</a>
                       </li>
                   </ul>
               </div>
@@ -62,17 +61,17 @@
       </div>
       <hr class="my-6 border-default sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-body sm:text-center">© 2026 <a href="index.php" class="hover:underline">Športno društvo Fakultete za elektrotehniko, računalništvo in informatiko™</a>. Vse pravice pridržane.</span>
+          <span class="text-sm text-body sm:text-center">© 2026 <a href="#" class="hover:underline">Športno društvo Fakultete za elektrotehniko, računalništvo in informatiko™</a>. Vse pravice pridržane.</span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
 
-            <a href="https://www.facebook.com/FERI.Maribor" class="text-body hover:text-heading">
+            <a href="#" class="text-body hover:text-heading">
                 <span class="sr-only">Facebook</span>
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/>
                 </svg>
             </a>
 
-            <a href="https://www.instagram.com/feri.um/" class="text-body hover:text-heading ms-5">
+            <a href="#" class="text-body hover:text-heading ms-5">
                 <span class="sr-only">Instagram</span>
 
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -80,7 +79,7 @@
                 </svg>
             </a>
 
-            <a href="https://feri.um.si" class="text-body hover:text-heading ms-5 transition" target="_blank">
+            <a href="#" class="text-body hover:text-heading ms-5 transition" target="_blank">
                 <span class="sr-only">FERI website</span>
 
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

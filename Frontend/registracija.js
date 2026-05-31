@@ -1,7 +1,5 @@
 const forma = document.getElementById("registracijaForm");
 
-console.log("test 1");
-
 forma.addEventListener("submit", function (event) {
   event.preventDefault();
 

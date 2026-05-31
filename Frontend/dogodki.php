@@ -7,6 +7,8 @@ require_once '../Backend/dogodki_backend.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/"></script>
     <link href="style.css" rel="stylesheet">
@@ -50,24 +52,25 @@ require_once '../Backend/dogodki_backend.php';
             <div class="card kartica-dogodek h-100">
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
+
+                        <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
+
+                            <div class="float-end ms-2">
+                                <form method="POST"
+                                    action="../Backend/dodajanje_med_priljubljene.php"
+                                    class="m-0">
+
+                                <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
+                                        <i class="bi bi-heart-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                <?php endif; ?>
+
                 </div>
-
-                <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
-
-                    <div class="d-flex justify-content-end mb-2">
-                        <form method="POST"
-                            action="../Backend/dodajanje_med_priljubljene.php"
-                            class="m-0">
-
-                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-
-                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                    Dodaj med priljubljene
-                                </button>
-                        </form>
-                    </div>
-
-<?php endif; ?>
 
                 <?php if (!empty($dogodek["slika_url"])): ?>
                     <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">

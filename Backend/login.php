@@ -19,6 +19,14 @@ $result = mysqli_stmt_get_result($stmt);
 
 $uporabnik = mysqli_fetch_assoc($result); //podatki iz baze
 
+/*$sql = "select * from uporabnik where username = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "s", $username);
+mysqli_stmt_execute($stmt);
+$rezultat = mysqli_stmt_get_result($stmt);
+$uporabnik = mysqli_fetch_assoc($rezultat)
+*/
+
 if (!$uporabnik || !password_verify($geslo, $uporabnik["geslo_hash"])) { //se geslo ujema
     header("Location: ../Frontend/login.php?napaka=Napacno uporabnisko ime ali geslo");
     exit;
