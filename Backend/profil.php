@@ -24,7 +24,7 @@ if (!$data) {
     exit;
 }
 
-$id = $data["id"]; //dobi id
+$id = $data["id"]; 
 
 //podatke uporabnika
 $sql = "SELECT ime, priimek, username, datum_rojstva, profilna_slika

@@ -24,5 +24,14 @@ $stmt = $conn->prepare("UPDATE uporabnik SET ime = ?, priimek = ?, username = ? 
 $stmt->bind_param("sssi", $novoIme, $novPriimek, $novoUporabnisko, $id);
 $stmt->execute();
 
-header("Location: ../Frontend/profil.php");
-exit;
+$novToken = ustvariJWT([
+    "id" => $id,
+    "username" => $novoUporabnisko,
+    "exp" => time() + 3600
+]);
+?>
+
+<script>
+    sessionStorage.setItem("jwt", <?= json_encode($novToken) ?>);
+    window.location.href = "../Frontend/profil.php";
+</script>
