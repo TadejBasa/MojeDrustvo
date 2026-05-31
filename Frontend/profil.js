@@ -7,9 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const gumb2 = document.getElementById("spremeniGeslo");
     const preklicGeslo = document.getElementById("prekliciGeslo");
 
-    const novoGeslo = document.getElementById("novoGeslo");
-    const potrdiGeslo = document.getElementById("potrdiGeslo");
-    const trenutnogeslo = document.getElementById("trenutnoGeslo");
+    const novoGeslo=document.getElementById("novoGeslo");
+    const potrdiGeslo=document.getElementById("potrdiGeslo");
+    const trenutnogeslo=document.getElementById("trenutnoGeslo");
+
+    const novoIme=document.getElementById("novoIme");
+    const novPriimek=document.getElementById("novPriimek");
+    const novoUporabnisko=document.getElementById("novoUporabnisko");
+
+    const profilClana=document.getElementById("profilClana");
 
 
     urejanje.style.display = "none";
@@ -41,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
         novoGeslo.value = "";
         potrdiGeslo.value = "";
         trenutnoGeslo.value = "";
+        novoIme.value="";
+        novPriimek.value="";
+        novoUporabnisko.value="";
     }
 
     gumb1.addEventListener("click", zamenjajUredi);
@@ -48,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (preklicUredi) {
         preklicUredi.addEventListener("click", zamenjajUredi);
+        preklicUredi.addEventListener("click", pocistiPolja);
     }
 
     if (preklicGeslo) {
