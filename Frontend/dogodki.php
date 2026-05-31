@@ -131,7 +131,7 @@ require_once '../Backend/dogodki_backend.php';
                     <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
 
                     <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
-                        <a href="admin.php" class="btn btn-outline-secondary w-100">Upravljaj</a>
+                        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
                     <?php endif; ?>

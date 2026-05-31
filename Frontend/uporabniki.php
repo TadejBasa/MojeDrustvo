@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../Backend/config.php';
 
 $uporabniki = [
     ["Admin",   "Društvo",  "admin",   "admin@mojedrustvo.si",  "admin123",  "admin"],

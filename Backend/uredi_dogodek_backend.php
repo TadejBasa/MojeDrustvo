@@ -9,7 +9,7 @@ if (!empty($_SESSION["jwt"])) {
 }
 
 if (!$uporabnik || $uporabnik["vloga"] != "admin") {
-    header("Location: index.php");
+    header("Location: ../Frontend/index.php");
     exit();
 }
 
@@ -21,7 +21,7 @@ mysqli_stmt_execute($stmt);
 $d = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
 if (!$d) {
-    header("Location: admin.php");
+    header("Location: ../Frontend/admin.php");
     exit();
 }
 

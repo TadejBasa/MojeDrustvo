@@ -13,7 +13,7 @@ $sporocilo = "";
 
 if (isset($_POST["prijava_dogodek"]) && $uporabnik) {
     $id_dogodka    = (int)$_POST["dogodek_id"];
-    $id_uporabnika = (int)$uporabnik["uporabnik_id"];
+    $id_uporabnika = (int)$uporabnik["id"];
 
     $obstojna = mysqli_query($conn, "SELECT id FROM prijava WHERE uporabnik_id = $id_uporabnika AND dogodek_id = $id_dogodka");
 

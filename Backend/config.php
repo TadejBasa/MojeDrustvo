@@ -18,12 +18,14 @@ $dogodkiStart = [
     ["Odbojkarski turnir", "Poletni odbojkarski turnir -pari.", "Mestni park", "2026-08-05 10:00:00", 2, 24, "turnir", "https://volleycountry.com/wp-content/uploads/2023/10/volleyball-tournaments-1080x675.jpg"],
 ];
 $admin_row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM uporabnik WHERE vloga = 'admin' LIMIT 1"));
-$kreator_id = $admin_row ? $admin_row["id"] : null;
-foreach ($dogodkiStart as $s) {
-    $obstaja = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM dogodek WHERE naslov = '$s[0]'"));
-    if (!$obstaja) {
-        mysqli_query($conn, "INSERT INTO dogodek (naslov, opis, lokacija, datum_cas, cena, st_mest, vrsta, slika_url ,je_javen, kreator_id) 
-                             VALUES ('$s[0]', '$s[1]', '$s[2]', '$s[3]', $s[4], $s[5], '$s[6]','$s[7]', 1, $kreator_id)");
+$kreator_id = $admin_row ? (int)$admin_row["id"] : 0;
+if ($kreator_id > 0) {
+    foreach ($dogodkiStart as $s) {
+        $obstaja = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM dogodek WHERE naslov = '$s[0]'"));
+        if (!$obstaja) {
+            mysqli_query($conn, "INSERT INTO dogodek (naslov, opis, lokacija, datum_cas, cena, st_mest, vrsta, slika_url ,je_javen, kreator_id) 
+                                 VALUES ('$s[0]', '$s[1]', '$s[2]', '$s[3]', $s[4], $s[5], '$s[6]','$s[7]', 1, $kreator_id)");
+        }
     }
 }
 
