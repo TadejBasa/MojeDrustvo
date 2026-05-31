@@ -26,7 +26,7 @@ function preveriKomentar(form) {
     const text = form.besedilo.value.trim();
 
     if (!text) {
-        alert("Izpolnite polje za dodajanje komentarja.");
+        alert("Izpolni polje za dodajanje komentarja.");
         return false;
     }
 

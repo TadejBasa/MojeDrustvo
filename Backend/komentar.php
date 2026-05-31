@@ -5,7 +5,7 @@ session_start();
 require_once '../Backend/config.php';
 
 if (!isset($_SESSION["uporabnik_id"])) {
-    die("Nisi prijavljen");
+    die("Uporabnik ni prijavljen v sistem.");
 }
 
 $uporabnik["uporabnik_id"];

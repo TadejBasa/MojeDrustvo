@@ -15,7 +15,6 @@
         <div class="hidden md:flex items-center space-x-1 font-bold">
           <a href="index.php" class="nav-link">Domov</a>
           <a href="dogodki.php" class="nav-link">Dogodki</a>
-          <a href="objave.php" class="nav-link">Novice</a>
           <a href="objave.php" class="nav-link">Obvestila</a>
           <a href="kontakt.php" class="nav-link">Kontakt</a>
         </div>
@@ -25,20 +24,32 @@
 
     <span id="navUsername" class="text-gray-700 hidden"></span>
 
-    <a id="navAdmin" href="admin.php" class="hidden py-2 px-3 bg-blue-500 hover:bg-blue-400 text-white rounded transition duration-300">
-      Admin
-    </a>
-    <a id="navProfil" href="profil.php" class="hidden py-2 px-3 bg-green-500 hover:bg-green-400 text-white rounded transition duration-300">
-      Profil
-    </a>
-    <a id="navOdjava" href="odjava.php" class="hidden py-2 px-3 bg-red-500 hover:bg-red-400 text-white rounded transition duration-300">
-      Odjava
-    </a>
-    <a id="navPrijava" href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
-      Prijava
-    </a>
+      <a id="navAdmin" href="admin.php"
+      class="hidden py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-md transition duration-300">Admin</a>
+
+      <a id="navProfil" href="profil.php"
+        class="hidden relative overflow-hidden px-3 py-2
+        border-2 border-emerald-500 text-emerald-600 rounded-full shadow-md group">
+
+        <span class="absolute inset-0 bg-emerald-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+
+        <span class="relative z-10 group-hover:text-white">Profil</span>
+      </a>
+
+      <a id="navOdjava" href="odjava.php"
+        class="hidden relative overflow-hidden px-3 py-2 border-2 border-red-500 text-red-600 rounded-full shadow-md group">
+
+        <span class="absolute inset-0 bg-red-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+
+        <span class="relative z-10 group-hover:text-white">Odjava</span>
+      </a>
+
+      <a id="navPrijava" href="login.php" class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">
+          Prijava
+      </a>
 
     </div>
+
       <!-- mobile button goes here -->
       <div class="md:hidden flex items-center">
         <button class="mobile-menu-button">
@@ -55,7 +66,6 @@
   <div class="mobile-menu hidden md:hidden">
     <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Domov</a>
     <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Dogodki</a>
-    <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Novice</a>
     <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Obvestila</a>
     <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Kontakt</a>
   </div>
