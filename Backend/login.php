@@ -13,7 +13,7 @@ $stmt = mysqli_prepare($conn, $sql);
 
 mysqli_stmt_bind_param($stmt, "ss", $vhod, $vhod);
 
-mysqli_stmt_execute($stmt); //pozene sql stavek
+mysqli_stmt_execute($stmt);
 
 $result = mysqli_stmt_get_result($stmt);
 

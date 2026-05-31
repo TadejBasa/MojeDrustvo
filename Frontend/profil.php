@@ -47,36 +47,30 @@
             </h2>
         </div>
         <div id="prikazProfila">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="border rounded-lg p-3 h-20 hover:bg-gray-100 transition">
                     <p class="text-me text-gray-500">
                         Ime
                     </p>
                     <p id="ime" class="text-lg font-semibold text-gray-800"></p>
                 </div>
-                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                <div class="border rounded-xl p-3 h-20 hover:bg-gray-100 transition">
                     <p class="text-me text-gray-500">
                         Priimek
                     </p>
                     <p id="priimek" class="text-lg font-semibold text-gray-800"></p>
                 </div>
-                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                <div class="border rounded-xl p-3 h-20 hover:bg-gray-100 transition">
                     <p class="text-me text-gray-500">
                         Uporabniško ime
                     </p>
                     <p id="username" class="text-lg font-semibold text-gray-800"></p>
                 </div>
-                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
+                <div class="border rounded-lg p-3 h-20 hover:bg-gray-100 transition">
                     <p class="text-me text-gray-500">
                         Datum rojstva
                     </p>
                     <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
-                </div>
-                <div class="border rounded-xl p-5 hover:bg-gray-100 transition">
-                    <p class="text-me text-gray-500">
-                        Status prijave: 
-                    </p>
-                    <p id="status" class="text-lg font-semibold text-gray-800"></p>
                 </div>
             </div>
             <div class="mt-8 flex gap-4">
@@ -90,7 +84,7 @@
         </div>
         <div id="urejanjeProfila" style="display: none">
             <form action="../Backend/urejanje_profila.php" method="POST" class="space-y-4">
-                <input type="hidden" name="jwt" id="jwtGeslo">
+                <input type="hidden" name="jwt" id="jwtUredi">
                 <h2 class="text-2xl font-bold text-gray-800">Urejanje profila</h2>
                 <div class="relative">
                     <input type="text" id="novoIme" name="novoIme" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['ime'] ?? '') ?>">
@@ -182,21 +176,22 @@ function nalagajProfil() {
         window.location.href = "login.php";
         return;
     }
+
     fetch("../Backend/profil.php", {
         headers: {
             "Authorization": "Bearer " + token
         }
     })
-    .then(res => {
-        if (!res.ok) {
+    .then(res => { //shrane odgovor
+        if (!res.ok) { 
             sessionStorage.removeItem("jwt");
             window.location.href = "login.php";
             return;
         }
-        return res.json();
+        return res.json(); //js objekt
     })
     .then(uporabnik => {  
-        if (!uporabnik) return;
+        if (!uporabnik) return; //ce nega podatkov
         document.getElementById("ime").textContent = uporabnik.ime;
         document.getElementById("priimek").textContent = uporabnik.priimek;
         document.getElementById("username").textContent = uporabnik.username;
@@ -231,6 +226,8 @@ setTimeout(() => {
         document.getElementById("spremembaGesla").style.display = "block";
     }
 }, 100);
+
+document.getElementById("jwtGeslo").value = sessionStorage.getItem("jwt");
 
 </script>
     
