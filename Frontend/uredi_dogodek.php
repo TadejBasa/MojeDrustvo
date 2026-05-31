@@ -1,5 +1,7 @@
 <?php
 require_once '../Backend/uredi_dogodek_backend.php';
+// $jwtToken, $d, $napaka, $uspeh so ze nastavljeni
+$jwtEncoded = htmlspecialchars($jwtToken ?? "");
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -28,6 +30,7 @@ require_once '../Backend/uredi_dogodek_backend.php';
 
   <div class="card shadow p-4">
     <form method="POST">
+      <input type="hidden" name="jwt" id="jwtInput" value="<?= $jwtEncoded ?>">
       <div class="row g-3">
 
         <div class="col-md-6">
@@ -68,7 +71,7 @@ require_once '../Backend/uredi_dogodek_backend.php';
         <div class="col-md-3">
           <label class="form-label">Vrsta</label>
           <select name="vrsta" class="form-select">
-            <?php foreach (["pohod","delavnica","izlet","akcija","drugo"] as $v): ?>
+            <?php foreach (["pohod","delavnica","izlet","turnir","drugo"] as $v): ?>
               <option value="<?= $v ?>" <?= $d["vrsta"] == $v ? "selected" : "" ?>><?= ucfirst($v) ?></option>
             <?php endforeach; ?>
           </select>
@@ -84,7 +87,7 @@ require_once '../Backend/uredi_dogodek_backend.php';
 
         <div class="col-12 d-flex gap-2">
           <button type="submit" class="btn btn-success">Shrani spremembe</button>
-          <a href="admin.php" class="btn btn-outline-secondary">Prekliči</a>
+          <a href="admin.php?jwt=<?= urlencode($jwtToken) ?>" class="btn btn-outline-secondary">Prekliči</a>
         </div>
 
       </div>
@@ -95,5 +98,14 @@ require_once '../Backend/uredi_dogodek_backend.php';
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const jwt = sessionStorage.getItem("jwt");
+    if (jwt) {
+        const inp = document.getElementById("jwtInput");
+        if (inp && !inp.value) inp.value = jwt;
+    }
+});
+</script>
 </body>
 </html>

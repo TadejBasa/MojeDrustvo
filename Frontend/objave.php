@@ -1,5 +1,6 @@
 <?php
 require_once '../Backend/objave_backend.php';
+$jwtEncoded = htmlspecialchars($jwtToken ?? "");
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -33,9 +34,10 @@ require_once '../Backend/objave_backend.php';
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
         foreach ($tipi as $vrednost => $oznaka):
-            $aktiven = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
+            $aktiven   = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
+            $jwtParam  = $jwtToken ? "&jwt=" . urlencode($jwtToken) : "";
         ?>
-            <a href="objave.php?tip=<?= $vrednost ?>" class="btn btn-sm <?= $aktiven ?>">
+            <a href="objave.php?tip=<?= $vrednost ?><?= $jwtParam ?>" class="btn btn-sm <?= $aktiven ?>">
                 <?= $oznaka ?>
             </a>
         <?php endforeach; ?>
@@ -76,5 +78,17 @@ require_once '../Backend/objave_backend.php';
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Shrani JWT v sessionStorage ce pride prek GET parametra
+(function() {
+    const urlJwt = new URLSearchParams(window.location.search).get("jwt");
+    if (urlJwt) {
+        sessionStorage.setItem("jwt", urlJwt);
+        const url = new URL(window.location.href);
+        url.searchParams.delete("jwt");
+        history.replaceState(null, "", url.toString());
+    }
+})();
+</script>
 </body>
 </html>

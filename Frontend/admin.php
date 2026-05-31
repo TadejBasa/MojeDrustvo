@@ -1,5 +1,7 @@
 <?php
 require_once '../Backend/admin_backend.php';
+// $jwtToken in $uporabnik sta ze nastavljena v admin_backend.php
+$jwtEncoded = htmlspecialchars($jwtToken);
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -16,6 +18,20 @@ require_once '../Backend/admin_backend.php';
 
 <?php include 'header.php'; ?>
 
+<script>
+// Poskrbi da je JWT v sessionStorage (ker smo prišli morda prek redirect z ?jwt=)
+(function() {
+    const urlJwt = new URLSearchParams(window.location.search).get("jwt");
+    if (urlJwt) {
+        sessionStorage.setItem("jwt", urlJwt);
+        // Pocisti URL brez reloada
+        const url = new URL(window.location.href);
+        url.searchParams.delete("jwt");
+        history.replaceState(null, "", url.toString());
+    }
+})();
+</script>
+
 <main class="container py-4">
     <h2 class="mb-4">Admin panel</h2>
 
@@ -28,9 +44,11 @@ require_once '../Backend/admin_backend.php';
 
     <div class="tab-content">
 
+        <!-- DOGODKI -->
         <div class="tab-pane fade show active" id="dogodki">
             <h4 class="mb-3">Dodaj dogodek</h4>
             <form method="POST" enctype="multipart/form-data" class="row g-3 mb-4 p-3 border rounded bg-light">
+                <input type="hidden" name="jwt" id="jwtDodajDogodek">
                 <div class="col-md-6">
                     <label class="form-label">Naslov *</label>
                     <input type="text" name="naslov" class="form-control" required>
@@ -98,8 +116,8 @@ require_once '../Backend/admin_backend.php';
                         <td><?= $dogodek["st_mest"] ?></td>
                         <td><?= $dogodek["je_javen"] ? "Da" : "Ne" ?></td>
                         <td>
-                            <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-sm btn-warning">Uredi</a>
-                            <a href="admin.php?brisi_dogodek=<?= $dogodek["id"] ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Brisi</a>
+                            <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-warning">Uredi</a>
+                            <a href="admin.php?brisi_dogodek=<?= $dogodek["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Brisi</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -107,6 +125,7 @@ require_once '../Backend/admin_backend.php';
             </table>
         </div>
 
+        <!-- PRIJAVE -->
         <div class="tab-pane fade" id="prijave">
             <h4>Prijave v cakanju</h4>
             <table class="table table-striped">
@@ -123,8 +142,8 @@ require_once '../Backend/admin_backend.php';
                         <td><?= htmlspecialchars($prijava["naziv_dogodka"]) ?></td>
                         <td><?= date("d. m. Y", strtotime($prijava["datum_prijave"])) ?></td>
                         <td>
-                            <a href="admin.php?potrdi=<?= $prijava["id"] ?>" class="btn btn-sm btn-success">Potrdi</a>
-                            <a href="admin.php?zavrni=<?= $prijava["id"] ?>" class="btn btn-sm btn-danger">Zavrni</a>
+                            <a href="admin.php?potrdi=<?= $prijava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-success">Potrdi</a>
+                            <a href="admin.php?zavrni=<?= $prijava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-danger">Zavrni</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -132,9 +151,11 @@ require_once '../Backend/admin_backend.php';
             </table>
         </div>
 
+        <!-- OBJAVE -->
         <div class="tab-pane fade" id="objave">
             <h4 class="mb-3">Dodaj objavo</h4>
             <form method="POST" class="row g-3 mb-4 p-3 border rounded bg-light">
+                <input type="hidden" name="jwt" id="jwtDodajObjavo">
                 <div class="col-md-6">
                     <label class="form-label">Naslov *</label>
                     <input type="text" name="naslov_o" class="form-control" required>
@@ -180,7 +201,7 @@ require_once '../Backend/admin_backend.php';
                         <td><?= $objava["je_pomembna"] ? "Da" : "Ne" ?></td>
                         <td><?= date("d. m. Y", strtotime($objava["datum_objave"])) ?></td>
                         <td>
-                            <a href="admin.php?brisi_objavo=<?= $objava["id"] ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Brisi</a>
+                            <a href="admin.php?brisi_objavo=<?= $objava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Brisi</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -188,6 +209,7 @@ require_once '../Backend/admin_backend.php';
             </table>
         </div>
 
+        <!-- CLANI -->
         <div class="tab-pane fade" id="clani">
             <h4>Vsi uporabniki</h4>
             <table class="table table-striped">
@@ -207,7 +229,7 @@ require_once '../Backend/admin_backend.php';
                         </td>
                         <td><?= $clan["aktiven"] ? "Da" : "Ne" ?></td>
                         <td>
-                            <a href="uredi_clana.php?id=<?= $clan["id"] ?>" class="btn btn-sm btn-warning">Uredi</a>
+                            <a href="uredi_clana.php?id=<?= $clan["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-warning">Uredi</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -221,5 +243,16 @@ require_once '../Backend/admin_backend.php';
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Vstavi JWT iz sessionStorage v vse skrite inpute
+document.addEventListener("DOMContentLoaded", function () {
+    const jwt = sessionStorage.getItem("jwt");
+    if (!jwt) {
+        window.location.href = "login.php";
+        return;
+    }
+    document.querySelectorAll("input[type=hidden][id^=jwt]").forEach(el => el.value = jwt);
+});
+</script>
 </body>
 </html>

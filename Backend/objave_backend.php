@@ -1,12 +1,10 @@
 <?php
-session_start();
 require_once __DIR__ . '/jwt.php';
 require_once __DIR__ . '/config.php';
 
-$uporabnik = null;
-if (!empty($_SESSION["jwt"])) {
-    $uporabnik = preveriJWT($_SESSION["jwt"]);
-}
+// JWT pride iz POST ali GET
+$jwtToken  = $_POST["jwt"] ?? $_GET["jwt"] ?? "";
+$uporabnik = $jwtToken ? preveriJWT($jwtToken) : null;
 
 $izbrani_tip = $_GET["tip"] ?? "vse";
 

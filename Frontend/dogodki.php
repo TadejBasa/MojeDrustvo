@@ -1,5 +1,7 @@
 <?php
 require_once '../Backend/dogodki_backend.php';
+// $jwtToken, $uporabnik, $dogodki, $vrste, $sporocilo, $izbrana_vrsta so ze nastavljeni
+$jwtEncoded = htmlspecialchars($jwtToken ?? "");
 ?>
 <!DOCTYPE html>
 <html lang="sl">
@@ -7,8 +9,7 @@ require_once '../Backend/dogodki_backend.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/"></script>
     <link href="style.css" rel="stylesheet">
@@ -17,6 +18,18 @@ require_once '../Backend/dogodki_backend.php';
 <body>
 
 <?php include 'header.php'; ?>
+
+<script>
+// Preberi JWT iz sessionStorage in daj backendу vedeti kdo je
+(function() {
+    const jwt = sessionStorage.getItem("jwt");
+    if (!jwt) return;
+    // Posodobi vse skrite jwt inpute v formah
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("input.jwt-input").forEach(el => el.value = jwt);
+    });
+})();
+</script>
 
 <main class="container py-5">
     <h2 class="mb-4">Dogodki</h2>
@@ -35,8 +48,9 @@ require_once '../Backend/dogodki_backend.php';
         <?php
         foreach ($vrste as $vrednost => $oznaka):
             $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
+            $jwtParam = $jwtToken ? "&jwt=" . urlencode($jwtToken) : "";
         ?>
-            <a href="dogodki.php?vrsta=<?= $vrednost ?>" class="btn btn-sm <?= $aktiven ?>">
+            <a href="dogodki.php?vrsta=<?= $vrednost ?><?= $jwtParam ?>" class="btn btn-sm <?= $aktiven ?>">
                 <?= $oznaka ?>
             </a>
         <?php endforeach; ?>
@@ -53,23 +67,17 @@ require_once '../Backend/dogodki_backend.php';
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
 
-                        <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
-
-                            <div class="float-end ms-2">
-                                <form method="POST"
-                                    action="../Backend/dodajanje_med_priljubljene.php"
-                                    class="m-0">
-
+                    <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
+                        <div class="float-end ms-2">
+                            <form method="POST" action="../Backend/dodajanje_med_priljubljene.php" class="m-0">
+                                <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
                                 <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-
-                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
-                                        <i class="bi bi-heart-fill"></i>
-                                    </button>
-                                </form>
-                            </div>
-
-                <?php endif; ?>
-
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (!empty($dogodek["slika_url"])): ?>
@@ -83,9 +91,7 @@ require_once '../Backend/dogodki_backend.php';
                         <small><?= date("d. m. Y H:i", strtotime($dogodek["datum_cas"])) ?></small>
                     </p>
                     <?php if (!empty($dogodek["lokacija"])): ?>
-                        <p class="text-muted mb-1">
-                            <small><?= htmlspecialchars($dogodek["lokacija"]) ?></small>
-                        </p>
+                        <p class="text-muted mb-1"><small><?= htmlspecialchars($dogodek["lokacija"]) ?></small></p>
                     <?php endif; ?>
                     <?php if (!empty($dogodek["opis"])): ?>
                         <p class="card-text mt-2"><?= htmlspecialchars($dogodek["opis"]) ?></p>
@@ -105,36 +111,27 @@ require_once '../Backend/dogodki_backend.php';
 
                 <div class="card-footer">
                     <?php if ($uporabnik && $uporabnik["vloga"] != "admin"): ?>
-                        
                         <form method="POST">
+                            <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                             <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
                         </form>
 
-                        <form method="POST"
-                            action="../Backend/komentar.php"
-                            class="mt-2"
-                            onsubmit="return preveriKomentar(this)">
-                            
+                        <form method="POST" action="../Backend/komentar.php" class="mt-2" onsubmit="return preveriKomentar(this)">
+                            <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
                             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-
                             <textarea name="besedilo" class="form-control" rows="2" placeholder="Napiši komentar..."></textarea>
-
-                            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
-                                Komentiraj
-                            </button>
+                            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">Komentiraj</button>
                         </form>
 
-                        <button type="button"
-                            class="btn btn-outline-secondary btn-sm w-100 mt-2"
+                        <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2"
                             onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
                             Prikaži komentarje
                         </button>
-
-                    <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
+                        <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
 
                     <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
-                        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100">Upravljaj</a>
+                        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-outline-secondary w-100">Upravljaj</a>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
                     <?php endif; ?>
@@ -149,5 +146,16 @@ require_once '../Backend/dogodki_backend.php';
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="komentarji.js"></script>
+<script>
+// Vstavi JWT iz sessionStorage v vse jwt-input polja (za primer fresh load brez GET jwt)
+document.addEventListener("DOMContentLoaded", function() {
+    const jwt = sessionStorage.getItem("jwt");
+    if (jwt) {
+        document.querySelectorAll("input.jwt-input").forEach(el => {
+            if (!el.value) el.value = jwt;
+        });
+    }
+});
+</script>
 </body>
 </html>

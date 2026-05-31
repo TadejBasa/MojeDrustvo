@@ -1,12 +1,9 @@
 <?php
-session_start();
 require_once __DIR__ . '/jwt.php';
 require_once __DIR__ . '/config.php';
 
-$uporabnik = null;
-if (!empty($_SESSION["jwt"])) {
-    $uporabnik = preveriJWT($_SESSION["jwt"]);
-}
+$jwtToken  = $_POST["jwt"] ?? $_GET["jwt"] ?? "";
+$uporabnik = $jwtToken ? preveriJWT($jwtToken) : null;
 
 if (!$uporabnik || $uporabnik["vloga"] != "admin") {
     header("Location: ../Frontend/index.php");
@@ -21,7 +18,7 @@ mysqli_stmt_execute($stmt);
 $d = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
 if (!$d) {
-    header("Location: ../Frontend/admin.php");
+    header("Location: ../Frontend/admin.php?jwt=" . urlencode($jwtToken));
     exit();
 }
 
@@ -41,10 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($naslov) || empty($datum)) {
         $napaka = "Naslov in datum sta obvezna.";
     } else {
-        $stmt = mysqli_prepare($conn, "UPDATE dogodek SET naslov=?, opis=?, lokacija=?, datum_cas=?, cena=?, st_mest=?, vrsta=?, je_javen=? WHERE id=?");
-        mysqli_stmt_bind_param($stmt, "ssssdisii", $naslov, $opis, $lokacija, $datum, $cena, $mesta, $vrsta, $javen, $id);
+        $stmt2 = mysqli_prepare($conn, "UPDATE dogodek SET naslov=?, opis=?, lokacija=?, datum_cas=?, cena=?, st_mest=?, vrsta=?, je_javen=? WHERE id=?");
+        mysqli_stmt_bind_param($stmt2, "ssssdisii", $naslov, $opis, $lokacija, $datum, $cena, $mesta, $vrsta, $javen, $id);
 
-        if (mysqli_stmt_execute($stmt)) {
+        if (mysqli_stmt_execute($stmt2)) {
             $uspeh = "Dogodek uspešno posodobljen!";
             $d["naslov"]    = $naslov;
             $d["opis"]      = $opis;
