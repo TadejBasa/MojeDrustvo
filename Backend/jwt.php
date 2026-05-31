@@ -49,4 +49,13 @@ function preveriJWT($jwt) {
 
     return $data;
 }
+
+function getUser() {
+    if (empty($_SESSION["jwt"])) return null;
+
+    $u = preveriJWT($_SESSION["jwt"]);
+
+    return $u;
+}
+
 ?>

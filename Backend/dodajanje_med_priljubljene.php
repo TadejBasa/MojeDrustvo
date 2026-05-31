@@ -3,13 +3,16 @@
 
 session_start();
 require_once '../Backend/config.php';
+require_once '../Backend/jwt.php';
 
-if (!isset($_SESSION["uporabnik_id"])) {
-    die("Uporabnik ni prijavljen v sistem.");
+$uporabnik = getUser();
+
+if (!$uporabnik) {
+    die("Uporabnik ni prijavljen");
 }
 
-$uporabnik["uporabnik_id"];
-$dogodek_id = $_POST["dogodek_id"];
+$user_id = (int)$uporabnik["id"];
+$dogodek_id = (int)($_POST["dogodek_id"] ?? 0);
 
 $check = mysqli_query($conn, "SELECT id FROM priljubljeni WHERE uporabnik_id=$user_id AND dogodek_id=$dogodek_id");
 
