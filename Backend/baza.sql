@@ -77,15 +77,15 @@ CREATE TABLE komentar(
     uporabnik_id    INT NOT NULL,
     dogodek_id      INT NOT NULL,
     besedilo        TEXT NOT NULL,
-    datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id)
-    FOREIGN KEY (dogodek_id) REFERENCES dogodek(id)
-)
+    datum           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id),
+    FOREIGN KEY (dogodek_id)   REFERENCES dogodek(id)
+);
 
 CREATE TABLE priljubljeni(
     id              INT AUTO_INCREMENT PRIMARY KEY,
     uporabnik_id    INT NOT NULL,
     dogodek_id      INT NOT NULL,
-    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id)
-    FOREIGN KEY (dogodek_id) REFERENCES dogodek(id)
-)
+    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id),
+    FOREIGN KEY (dogodek_id)   REFERENCES dogodek(id)
+);

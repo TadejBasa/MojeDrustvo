@@ -38,12 +38,6 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
     <?php endif; ?>
 
-    <?php if (!$uporabnik): ?>
-        <div class="alert alert-warning">
-            <a href="login.php">Prijavi se</a> za prijavo na dogodke.
-        </div>
-    <?php endif; ?>
-
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
         foreach ($vrste as $vrednost => $oznaka):
@@ -74,7 +68,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                                 <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
                                     <i class="bi bi-heart-fill"></i>
-                                </button>
+                                </button>   
                             </form>
                         </div>
                     <?php endif; ?>
@@ -110,32 +104,44 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                 </div>
 
                 <div class="card-footer">
-                    <?php if ($uporabnik && $uporabnik["vloga"] != "admin"): ?>
-                        <form method="POST">
-                            <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
-                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                            <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">Prijava</button>
-                        </form>
+                    <div class="prijava-obmocje hidden">
+        <form method="POST">
+            <input type="hidden" name="jwt" class="jwt-input">
+            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+            <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
+                Prijava
+            </button>
+        </form>
 
-                        <form method="POST" action="../Backend/komentar.php" class="mt-2" onsubmit="return preveriKomentar(this)">
-                            <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
-                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                            <textarea name="besedilo" class="form-control" rows="2" placeholder="Napiši komentar..."></textarea>
-                            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">Komentiraj</button>
-                        </form>
+        <form method="POST" action="../Backend/komentar.php" class="mt-2" onsubmit="return preveriKomentar(this)">
+            <input type="hidden" name="jwt" class="jwt-input">
+            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+            <textarea name="besedilo" class="form-control" rows="2" placeholder="Napiši komentar..."></textarea>
+            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
+                Komentiraj
+            </button>
+        </form>
 
-                        <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2"
-                            onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
-                            Prikaži komentarje
-                        </button>
-                        <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
+        <button type="button"
+            class="btn btn-outline-secondary btn-sm w-100 mt-2"
+            onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
+            Prikaži komentarje
+        </button>
 
-                    <?php elseif ($uporabnik && $uporabnik["vloga"] == "admin"): ?>
-                        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-outline-secondary w-100">Upravljaj</a>
-                    <?php else: ?>
-                        <a href="login.php" class="btn btn-outline-primary w-100">Prijavi se za prijavo</a>
-                    <?php endif; ?>
-                </div>
+        <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
+    </div>
+
+    <div class="admin-obmocje hidden">
+        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100">
+            Upravljaj
+        </a>
+    </div>
+
+    <a href="login.php" class="btn btn-outline-primary w-100 login-gumb">
+        Prijavi se za prijavo
+    </a>
+
+</div>
             </div>
         </div>
         <?php endwhile; ?>
@@ -157,5 +163,42 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const token = sessionStorage.getItem("jwt");
+
+    if (!token) {
+        return;
+    }
+
+    let uporabnik;
+
+    try {
+        uporabnik = JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+        return;
+    }
+
+    document.querySelectorAll(".jwt-input").forEach(input => {
+        input.value = token;
+    });
+
+    document.querySelectorAll(".login-gumb").forEach(gumb => {
+        gumb.classList.add("hidden");
+    });
+
+    if (uporabnik.vloga === "admin") {
+        document.querySelectorAll(".admin-obmocje").forEach(div => {
+            div.classList.remove("hidden");
+        });
+    } else {
+        document.querySelectorAll(".prijava-obmocje").forEach(div => {
+            div.classList.remove("hidden");
+        });
+    }
+});
+</script>
+
 </body>
 </html>

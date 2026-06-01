@@ -102,6 +102,7 @@ if (navToken) {
     navUsername.textContent = uporabnik.username;
 
     if (uporabnik.vloga === "admin") {
+        navAdmin.href = "admin.php?jwt=" + encodeURIComponent(navToken);
         navAdmin.classList.remove("hidden");
     }
 
