@@ -39,7 +39,6 @@ $token = ustvariJWT([
     "vloga" => $uporabnik["vloga"],
     "exp" => time() + 3600 //cas kda potece
 ]);
-
 ?>
 
 <script>

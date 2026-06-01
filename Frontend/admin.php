@@ -244,7 +244,6 @@ $jwtEncoded = htmlspecialchars($jwtToken);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Vstavi JWT iz sessionStorage v vse skrite inpute
 document.addEventListener("DOMContentLoaded", function () {
     const jwt = sessionStorage.getItem("jwt");
     if (!jwt) {

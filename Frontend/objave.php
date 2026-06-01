@@ -16,6 +16,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         .kartica-novica    { border-left: 4px solid #3b82f6; }
         .kartica-obvestilo { border-left: 4px solid #ef4444; }
         .kartica-vabilo    { border-left: 4px solid #22c55e; }
+        .privatna-znacka   { display: none; }
     </style>
 </head>
 <body>
@@ -25,19 +26,16 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 <main class="container py-5">
     <h2 class="mb-4">Objave</h2>
 
-    <?php if (!$uporabnik): ?>
-        <div class="alert alert-info">
-            <a href="login.php">Prijavi se</a> za ogled privatnih objav.
-        </div>
-    <?php endif; ?>
+    <div id="opozorilo-prijava" class="alert alert-info" style="display:none;">
+        <a href="login.php">Prijavi se</a> za ogled privatnih objav.
+    </div>
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
-        <?php
-        foreach ($tipi as $vrednost => $oznaka):
-            $aktiven   = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
-            $jwtParam  = $jwtToken ? "&jwt=" . urlencode($jwtToken) : "";
+        <?php foreach ($tipi as $vrednost => $oznaka):
+            $aktiven = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
         ?>
-            <a href="objave.php?tip=<?= $vrednost ?><?= $jwtParam ?>" class="btn btn-sm <?= $aktiven ?>">
+            <a href="objave.php?tip=<?= $vrednost ?>"
+               class="btn btn-sm <?= $aktiven ?> filter-link">
                 <?= $oznaka ?>
             </a>
         <?php endforeach; ?>
@@ -79,16 +77,35 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Shrani JWT v sessionStorage ce pride prek GET parametra
-(function() {
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Shrani JWT če pride prek GET parametra
     const urlJwt = new URLSearchParams(window.location.search).get("jwt");
     if (urlJwt) {
         sessionStorage.setItem("jwt", urlJwt);
-        const url = new URL(window.location.href);
-        url.searchParams.delete("jwt");
-        history.replaceState(null, "", url.toString());
     }
-})();
+
+    const jwt = sessionStorage.getItem("jwt");
+
+    if (!jwt) {
+        // Ni prijavljen — pokaži opozorilo
+        document.getElementById("opozorilo-prijava").style.display = "block";
+        return;
+    }
+
+    // 2. Dodaj JWT vsem filter linkom
+    document.querySelectorAll(".filter-link").forEach(link => {
+        const url = new URL(link.href);
+        url.searchParams.set("jwt", jwt);
+        link.href = url.toString();
+    });
+
+    // 3. Če stran nima JWT v GET-u, preusmeri z JWT da backend dobi podatke
+    if (!urlJwt) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("jwt", jwt);
+        window.location.replace(url.toString());
+    }
+});
 </script>
 </body>
 </html>

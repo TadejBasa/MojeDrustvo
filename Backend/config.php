@@ -28,6 +28,57 @@ if ($kreator_id > 0) {
         }
     }
 }
+$objaveStart = [
+    [
+        "Dobrodošli v društvu!",
+        "Pozdravljeni vsi novi in stari člani. Veseli smo, da ste del naše skupnosti. V prihodnosti nas čaka veliko zanimivih dogodkov, delavnic in izletov. Ostanite z nami!",
+        "novica",
+        1, 1, 2
+    ],
+    [
+        "Letni program 2026 je objavljen",
+        "Pripravili smo bogat program za leto 2026. Na sporedu so pohodi, turnirji, delavnice in izleti. Vse podrobnosti najdete v razdelku Dogodki. Zgodnja prijava je priporočljiva, saj so mesta omejena!",
+        "novica",
+        1, 0, 2
+    ],
+    [
+        "Pomembno: Sprememba urnika pohoda",
+        "Obveščamo vse prijavljene na Planinski pohod Pohorje, da se začetna ura premika z 8:00 na 9:00. Zbiramo se na istem mestu. Za vprašanja pišite na info@mojedrustvo.si.",
+        "obvestilo",
+        1, 1, 2
+    ],
+    [
+        "Iščemo prostovoljce za turnir",
+        "Za organizacijo Nogometnega turnirja 15. junija iščemo 3-4 prostovoljce, ki bi pomagali pri registraciji ekip in vodenju rezultatov. Zainteresirani se javite pri administratorju.",
+        "obvestilo",
+        1, 0, 2
+    ],
+    [
+        "Fotogalerija: Zimski pohod 2025",
+        "Objavili smo fotografije z zimskega pohoda, ki je potekal februarja. Hvala vsem udeležencem za odlično vzdušje! Galerijo si lahko ogledate v članski sekciji.",
+        "novica",
+        0, 0, 2
+    ],
+    [
+        "Sestanek upravnega odbora",
+        "Spoštovani člani upravnega odbora, naslednji sestanek bo v torek, 10. junija ob 18:00 v prostorih društva. Na dnevnem redu: pregled financ, načrtovanje jeseni, razno.",
+        "vabilo",
+        0, 0, 2
+    ],
+];
+
+$admin_row2 = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM uporabnik WHERE vloga = 'admin' LIMIT 1"));
+$avtor_id = $admin_row2 ? (int)$admin_row2["id"] : 0;
+
+if ($avtor_id > 0) {
+    foreach ($objaveStart as $o) {
+        $obstaja = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM objava WHERE naslov = '$o[0]'"));
+        if (!$obstaja) {
+            mysqli_query($conn, "INSERT INTO objava (naslov, vsebina, tip, je_javna, je_pomembna, avtor_id)
+                                 VALUES ('$o[0]', '$o[1]', '$o[2]', $o[3], $o[4], $o[5])");
+        }
+    }
+}
 
 mysqli_set_charset($conn, "utf8");
 ?>

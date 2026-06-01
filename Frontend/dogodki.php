@@ -132,7 +132,11 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     </div>
 
     <div class="admin-obmocje hidden">
+<<<<<<< HEAD
         <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100 admin-link">
+=======
+        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100">
+>>>>>>> f33a7b63e9afeac2e7d52656a5e3c4f0be6047e2
             Upravljaj
         </a>
     </div>
@@ -190,17 +194,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (uporabnik.vloga === "admin") {
         document.querySelectorAll(".admin-obmocje").forEach(div => {
-        div.classList.remove("hidden");
-    });
-
-    document.querySelectorAll(".admin-link").forEach(link => {
-        link.href += "&jwt=" + encodeURIComponent(token);
-    });
+            div.classList.remove("hidden");
+        });
     } else {
         document.querySelectorAll(".prijava-obmocje").forEach(div => {
             div.classList.remove("hidden");
-    });
-}
+        });
+    }
 });
 </script>
 
