@@ -132,11 +132,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     </div>
 
     <div class="admin-obmocje hidden">
-<<<<<<< HEAD
         <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100 admin-link">
-=======
-        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>" class="btn btn-outline-secondary w-100">
->>>>>>> f33a7b63e9afeac2e7d52656a5e3c4f0be6047e2
             Upravljaj
         </a>
     </div>
