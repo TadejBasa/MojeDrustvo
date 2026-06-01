@@ -201,6 +201,7 @@ function nalagajProfil() {
         document.getElementById("novoUporabnisko").value = uporabnik.username;
         document.getElementById("jwtGeslo").value = sessionStorage.getItem("jwt");
         document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
+        document.getElementById("jwtUredi").value = sessionStorage.getItem("jwt");
 
         if (uporabnik.profilna_slika) {
             document.getElementById("profilnaSlikaImg").src = uporabnik.profilna_slika + "?v=" + Date.now();
@@ -227,7 +228,8 @@ setTimeout(() => {
     }
 }, 100);
 
-document.getElementById("jwtGeslo").value = sessionStorage.getItem("jwt");
+document.getElementById("jwtUredi").value = sessionStorage.getItem("jwt");
+document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
 
 </script>
     

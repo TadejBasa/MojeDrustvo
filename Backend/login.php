@@ -40,8 +40,6 @@ $token = ustvariJWT([
     "exp" => time() + 3600 //cas kda potece
 ]);
 
-$_SESSION["jwt"] = $token;
-$_SESSION["vloga"] = $uporabnik["vloga"];
 ?>
 
 <script>

@@ -50,6 +50,7 @@ function preveriJWT($jwt) {
     return $data;
 }
 
+
 function getUser() {
     if (empty($_SESSION["jwt"])) return null;
 
