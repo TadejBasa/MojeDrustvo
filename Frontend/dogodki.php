@@ -191,6 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (uporabnik.vloga === "admin") {
         document.querySelectorAll(".admin-obmocje").forEach(div => {
             div.classList.remove("hidden");
+            document.querySelectorAll(".admin-link").forEach(link => {
+            const url = new URL(link.href);
+            url.searchParams.set("jwt", token);
+            link.href = url.toString();
+});
         });
     } else {
         document.querySelectorAll(".prijava-obmocje").forEach(div => {
