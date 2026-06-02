@@ -10,6 +10,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link href="style.css" rel="stylesheet">
     <title>Objave - Moje Društvo</title>
     <style>
@@ -23,8 +24,10 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 
 <?php include 'header.php'; ?>
 
-<main class="container py-5">
-    <h2 class="mb-4">Objave</h2>
+<div class = "ozadje">
+<div class = "main h-full">
+<main data-aos="fade-up" class="container py-5">
+    <h2 class="naslov-dogodki">OBJAVE</h2>
 
     <div id="opozorilo-prijava" class="alert alert-info" style="display:none;">
         <a href="login.php">Prijavi se</a> za ogled privatnih objav.
@@ -32,10 +35,10 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php foreach ($tipi as $vrednost => $oznaka):
-            $aktiven = $izbrani_tip == $vrednost ? "btn-dark" : "btn-outline-secondary";
+            $aktiven = $izbrani_tip == $vrednost ? "btn-primary" : "btn-outline-secondary";
         ?>
             <a href="objave.php?tip=<?= $vrednost ?>"
-               class="btn btn-sm <?= $aktiven ?> filter-link">
+               class="btn btn-sm bg-white text-black <?= $aktiven ?> filter-link">
                 <?= $oznaka ?>
             </a>
         <?php endforeach; ?>
@@ -55,7 +58,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
             };
         ?>
         <div class="col-md-4">
-            <div class="card shadow-sm h-100 <?= $slog ?>">
+            <div class="card shadow-sm h-100 bg-white <?= $slog ?>">
                 <div class="card-body p-4">
                     <div class="mb-2 d-flex gap-1 flex-wrap">
                         <?php if ($objava["je_pomembna"]): ?>
@@ -72,13 +75,14 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <?php endwhile; ?>
     </div>
 </main>
+</div>
+</div>
 
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Shrani JWT če pride prek GET parametra
     const urlJwt = new URLSearchParams(window.location.search).get("jwt");
     if (urlJwt) {
         sessionStorage.setItem("jwt", urlJwt);
@@ -87,19 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const jwt = sessionStorage.getItem("jwt");
 
     if (!jwt) {
-        // Ni prijavljen — pokaži opozorilo
         document.getElementById("opozorilo-prijava").style.display = "block";
         return;
     }
 
-    // 2. Dodaj JWT vsem filter linkom
     document.querySelectorAll(".filter-link").forEach(link => {
         const url = new URL(link.href);
         url.searchParams.set("jwt", jwt);
         link.href = url.toString();
     });
 
-    // 3. Če stran nima JWT v GET-u, preusmeri z JWT da backend dobi podatke
     if (!urlJwt) {
         const url = new URL(window.location.href);
         url.searchParams.set("jwt", jwt);
@@ -107,5 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
 </body>
 </html>
