@@ -12,6 +12,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link href="style.css" rel="stylesheet">
     <title>Dogodki - Moje Društvo</title>
 </head>
@@ -30,9 +31,10 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     });
 })();
 </script>
-
-<main class="container py-5">
-    <h2 class="mb-4">Dogodki</h2>
+<div class = "ozadje">
+<div class = "main">
+<main data-aos="fade-up" class="container">
+    <h2 class = "naslov-dogodki">DOGODKI</h2>
 
     <?php if ($sporocilo): ?>
         <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
@@ -41,7 +43,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
         foreach ($vrste as $vrednost => $oznaka):
-            $aktiven = $izbrana_vrsta == $vrednost ? "btn-dark" : "btn-outline-secondary";
+            $aktiven = $izbrana_vrsta == $vrednost ? "btn-primary" : "btn-outline-secondary";
             $jwtParam = $jwtToken ? "&jwt=" . urlencode($jwtToken) : "";
         ?>
             <a href="dogodki.php?vrsta=<?= $vrednost ?><?= $jwtParam ?>" class="btn btn-sm <?= $aktiven ?>">
@@ -56,8 +58,8 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <?php endif; ?>
 
         <?php while ($dogodek = mysqli_fetch_assoc($dogodki)): ?>
-        <div class="col-md-4">
-            <div class="card kartica-dogodek h-100">
+        <div class="col-md-4 flex-wrap">
+            <div class="card kartica-dogodek h-100 bg-white ">
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
 
@@ -146,14 +148,16 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         </div>
         <?php endwhile; ?>
     </div>
+    </div>
 </main>
+</div>
+</div>
 
 <?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="komentarji.js"></script>
 <script>
-// Vstavi JWT iz sessionStorage v vse jwt-input polja (za primer fresh load brez GET jwt)
 document.addEventListener("DOMContentLoaded", function() {
     const jwt = sessionStorage.getItem("jwt");
     if (jwt) {
@@ -202,6 +206,18 @@ document.addEventListener("DOMContentLoaded", () => {
             div.classList.remove("hidden");
         });
     }
+});
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
 });
 </script>
 
