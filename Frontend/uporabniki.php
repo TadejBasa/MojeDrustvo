@@ -2,7 +2,6 @@
 require_once '../Backend/config.php';
 
 $uporabniki = [
-    ["Admin",   "Društvo",  "admin",   "admin@mojedrustvo.si",  "admin123",  "admin"],
     ["Janez",   "Novak",    "janez",   "janez@test.si",         "geslo123",  "clan"],
     ["Ana",     "Kovač",    "ana",     "ana@test.si",           "geslo123",  "clan"],
     ["Maja",    "Horvat",   "maja",    "maja@test.si",          "geslo123",  "clan"],

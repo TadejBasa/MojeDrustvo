@@ -36,7 +36,7 @@ if (isset($_GET["brisi_objavo"])) {
 if (isset($_GET["potrdi"])) {
     $id = (int)$_GET["potrdi"];
     mysqli_query($conn, "UPDATE prijava SET status = 'potrjena' WHERE id = $id");
-    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#prijave"); exit();
+    header("Location: admin.php#prijave?jwt=" . urlencode($jwtToken) . "#prijave"); exit();
 }
 
 if (isset($_GET["zavrni"])) {

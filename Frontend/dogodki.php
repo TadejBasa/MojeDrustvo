@@ -40,6 +40,14 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <div class="alert alert-info"><?= htmlspecialchars($sporocilo) ?></div>
     <?php endif; ?>
 
+    <?php if (isset($_GET["priljubljeni"])): ?>
+        <?php if ($_GET["priljubljeni"] === "dodano"): ?>
+            <div class="alert alert-info">Dodano med priljubljene dogodke!</div>
+        <?php elseif ($_GET["priljubljeni"] === "odstranjeno"): ?>
+            <div class="alert alert-info">Odstranjeno iz priljubljenih dogodkov.</div>
+        <?php endif; ?>
+    <?php endif; ?>
+
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
         foreach ($vrste as $vrednost => $oznaka):
@@ -58,22 +66,23 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <?php endif; ?>
 
         <?php while ($dogodek = mysqli_fetch_assoc($dogodki)): ?>
+        <?php
+            $prosta_mesta = $dogodek["st_mest"] - $dogodek["stevilo_prijav"];
+        ?>
         <div class="col-md-4 flex-wrap">
             <div class="card kartica-dogodek h-100 bg-white ">
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
 
-                    <?php if ($uporabnik && (($uporabnik["vloga"] ?? "") !== "admin")): ?>
-                        <div class="float-end ms-2">
-                            <form method="POST" action="../Backend/dodajanje_med_priljubljene.php" class="m-0">
-                                <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">
-                                <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
-                                    <i class="bi bi-heart-fill"></i>
-                                </button>   
-                            </form>
-                        </div>
-                    <?php endif; ?>
+                    <div class="float-end ms-2 priljubljeni-gumb hidden">
+                        <form method="POST" action="../Backend/dodajanje_med_priljubljene.php" class="m-0">
+                            <input type="hidden" name="jwt" class="jwt-input">
+                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
+                                <i class="bi bi-heart-fill"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <?php if (!empty($dogodek["slika_url"])): ?>
@@ -99,20 +108,59 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                         <?php else: ?>
                             <span class="badge bg-success">Brezplacno</span>
                         <?php endif; ?>
-                        <?php if ($dogodek["st_mest"] > 0): ?>
-                            <span class="badge bg-light text-dark"><?= $dogodek["st_mest"] ?> mest</span>
+                        <?php if ($prosta_mesta > 0): ?>
+                            <span class="badge bg-success">
+                                Prosta mesta: <?= $prosta_mesta ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="badge bg-danger">
+                                Dogodek zaseden
+                            </span>
                         <?php endif; ?>
                     </div>
                 </div>
 
                 <div class="card-footer">
+                    <!-- Vrstica zasedenosti -->
+                    <div class="zasedenost-vrstica mb-2">
+                        <?php
+                            $stevilo_prijav  = (int)$dogodek["stevilo_prijav"];
+                            $skupaj_mest     = (int)$dogodek["st_mest"];
+                            $odstotek        = $skupaj_mest > 0 ? round(($stevilo_prijav / $skupaj_mest) * 100) : 100;
+                            $barva_prog      = $odstotek >= 100 ? 'bg-danger' : ($odstotek >= 75 ? 'bg-warning' : 'bg-success');
+                        ?>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-semibold">
+                                <i class="bi bi-people-fill me-1"></i>
+                                Zasedenost: <?= $stevilo_prijav ?> / <?= $skupaj_mest ?> mest
+                            </small>
+                            <small class="text-muted"><?= $odstotek ?>%</small>
+                        </div>
+                        <div class="progress" style="height: 6px; border-radius: 4px;">
+                            <div class="progress-bar <?= $barva_prog ?>"
+                                 role="progressbar"
+                                 style="width: <?= min($odstotek, 100) ?>%"
+                                 aria-valuenow="<?= $stevilo_prijav ?>"
+                                 aria-valuemin="0"
+                                 aria-valuemax="<?= $skupaj_mest ?>">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="prijava-obmocje hidden">
         <form method="POST">
             <input type="hidden" name="jwt" class="jwt-input">
             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-            <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
-                Prijava
-            </button>
+            <?php if ($prosta_mesta > 0): ?>
+                <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
+                    Prijava
+                </button>
+            <?php else: ?>
+                <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 py-2 px-3" role="alert">
+                    <i class="bi bi-x-circle-fill fs-5"></i>
+                    <span class="fw-semibold">Dogodek je zaseden</span>
+                </div>
+            <?php endif; ?>
         </form>
 
         <form method="POST" action="../Backend/komentar.php" class="mt-2" onsubmit="return preveriKomentar(this)">
@@ -203,6 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     } else {
         document.querySelectorAll(".prijava-obmocje").forEach(div => {
+            div.classList.remove("hidden");
+        });
+        document.querySelectorAll(".priljubljeni-gumb").forEach(div => {
             div.classList.remove("hidden");
         });
     }
