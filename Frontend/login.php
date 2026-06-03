@@ -15,7 +15,32 @@
     <title>Prijava - Moje Društvo</title>
     <link href="style.css" rel="stylesheet">
     <script src="geslo.js" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
+<script>
+function googleLogin(response) {
+    fetch("../Backend/google_login.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            credential: response.credential
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.token) {
+            sessionStorage.setItem("jwt", data.token);
+            window.location.href = "profil.php";
+        } else {
+            alert(data.napaka || "Google prijava ni uspela.");
+        }
+    });
+}
+</script>
+
 <body class="stran min-h-screen flex flex-col">
 
 <?php include 'header.php';?>
@@ -48,6 +73,9 @@
                 Prijava
             </button>
         </form>
+        <hr class="my-6">
+        <div id="g_id_onload" data-client_id="624964479245-cnjesbkvicibe8mf18n5iicd1hh7qg7u.apps.googleusercontent.com" data-callback="googleLogin"></div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with" data-shape="rectangular"></div>
         <hr class="my-6">
         <p class="text-center"> Nimaš računa?
             <a href="register.php" class="text-blue-600 font-semibold hover:underline">

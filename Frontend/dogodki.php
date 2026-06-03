@@ -61,7 +61,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
 
-                    <?php if ($uporabnik && $uporabnik["vloga"] !== "admin"): ?>
+                    <?php if ($uporabnik && (($uporabnik["vloga"] ?? "") !== "admin")): ?>
                         <div class="float-end ms-2">
                             <form method="POST" action="../Backend/dodajanje_med_priljubljene.php" class="m-0">
                                 <input type="hidden" name="jwt" class="jwt-input" value="<?= $jwtEncoded ?>">

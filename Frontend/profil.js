@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     urejanje.style.display = "none";
     geslo.style.display = "none";
 
+    
+
     function zamenjajUredi() {
         if (urejanje.style.display === "none") {
             profil.style.display = "none";
@@ -64,4 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         preklicGeslo.addEventListener("click", zamenjajGeslo);
         preklicGeslo.addEventListener("click", pocistiPolja);
     }
+
+    
 });

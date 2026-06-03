@@ -68,9 +68,9 @@
                 </div>
                 <div class="border rounded-lg p-3 h-20 hover:bg-gray-100 transition">
                     <p class="text-me text-gray-500">
-                        Datum rojstva
+                        Email
                     </p>
-                    <p id="datum_rojstva" class="text-lg font-semibold text-gray-800"></p>
+                    <p id="email" class="text-lg font-semibold text-gray-800"></p>
                 </div>
             </div>
             <div class="mt-8 flex gap-4">
@@ -102,6 +102,12 @@
                     <input type="text" id="novoUporabnisko" name="novoUporabnisko" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                         Uporabniško ime
+                    </label>
+                </div>
+                <div id="nove_email" class="relative">
+                    <input type="text" id="novEmail" name="novEmail" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
+                    <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
+                        Email
                     </label>
                 </div>
                 <div class="flex gap-4">
@@ -192,13 +198,20 @@ function nalagajProfil() {
     })
     .then(uporabnik => {  
         if (!uporabnik) return; //ce nega podatkov
+
+        if (uporabnik.vrsta_prijave === "google") {
+            document.getElementById("nove_email").style.display = "none";
+
+        }
+
         document.getElementById("ime").textContent = uporabnik.ime;
         document.getElementById("priimek").textContent = uporabnik.priimek;
         document.getElementById("username").textContent = uporabnik.username;
-        document.getElementById("datum_rojstva").textContent = uporabnik.datum_rojstva;
+        document.getElementById("email").textContent = uporabnik.email;
         document.getElementById("novoIme").value = uporabnik.ime;
         document.getElementById("novPriimek").value = uporabnik.priimek;
         document.getElementById("novoUporabnisko").value = uporabnik.username;
+        document.getElementById("novEmail").value = uporabnik.email;
         document.getElementById("jwtGeslo").value = sessionStorage.getItem("jwt");
         document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
         document.getElementById("jwtUredi").value = sessionStorage.getItem("jwt");

@@ -9,6 +9,7 @@ CREATE TABLE uporabnik (
     email           VARCHAR(100) NOT NULL UNIQUE,
     geslo_hash      VARCHAR(255) NOT NULL,
     vloga           ENUM('neclan','clan','admin') DEFAULT 'clan',
+    vrsta_prijave   varchar(20) default 'navadna',
     datum_rojstva   DATE,
     datum_reg       DATETIME DEFAULT CURRENT_TIMESTAMP,
     aktiven         TINYINT(1) DEFAULT 1

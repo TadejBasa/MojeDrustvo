@@ -26,7 +26,6 @@ if(mysqli_fetch_assoc($result)) {
     exit;
 }
 
-//doda novoga uporabnika v bazo
 $sql = "INSERT INTO uporabnik
 (ime, priimek, username, email, geslo_hash, datum_rojstva)
 VALUES (?, ?, ?, ?, ?, ?)";

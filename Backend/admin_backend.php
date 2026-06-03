@@ -17,7 +17,7 @@ if (isset($_GET["brisi_dogodek"])) {
     $r1 = mysqli_query($conn, "DELETE FROM prijava WHERE dogodek_id = $id");
     $r2 = mysqli_query($conn, "DELETE FROM dogodek WHERE id = $id");
     
-    // DEBUG
+    
     if (!$r2) die("Napaka: " . mysqli_error($conn));
     
     header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#dogodki"); exit();
