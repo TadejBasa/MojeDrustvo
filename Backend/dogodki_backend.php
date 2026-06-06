@@ -66,7 +66,7 @@ if ($izbrana_vrsta != "vse") {
 }
 
 $dogodki = mysqli_query($conn, "
-    SELECT d.*, COUNT(p.id) AS stevilo_prijav
+    SELECT d.*, COUNT(DISTINCT p.id) AS stevilo_prijav
     FROM dogodek d
     LEFT JOIN prijava p
         ON p.dogodek_id = d.id

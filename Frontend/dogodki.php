@@ -47,8 +47,9 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
             <div class="alert alert-info">Odstranjeno iz priljubljenih dogodkov.</div>
         <?php endif; ?>
     <?php endif; ?>
+<input type="text" id="iskanje-dogodkov" class="form-control mb-3" placeholder="🔍 Išči dogodke" style="border-radius: 8px; border: 1px solid #dee2e6; padding: 10px 16px; background: white;">
 
-    <div class="mb-4 d-flex gap-2 flex-wrap">
+<div class="mb-4 d-flex gap-2 flex-wrap">
         <?php
         foreach ($vrste as $vrednost => $oznaka):
             $aktiven = $izbrana_vrsta == $vrednost ? "btn-primary" : "btn-outline-secondary";
@@ -74,16 +75,14 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                 <div class="card-header fw-bold fs-5">
                     <?= htmlspecialchars($dogodek["naslov"]) ?>
 
-                    <div class="float-end ms-2 priljubljeni-gumb hidden">
-                        <form method="POST" action="../Backend/dodajanje_med_priljubljene.php" class="m-0">
-                            <input type="hidden" name="jwt" class="jwt-input">
-                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
-                                <i class="bi bi-heart-fill"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
+<div class="float-end ms-2 priljubljeni-gumb hidden">
+    <button type="button"
+        class="btn btn-sm btn-outline-danger rounded-circle priljubljen-btn"
+        data-dogodek-id="<?= $dogodek['id'] ?>" title="Dodaj med priljubljene">
+        <i class="bi bi-heart-fill"></i>
+    </button>
+</div>
+</div>
 
                 <?php if (!empty($dogodek["slika_url"])): ?>
                     <img src="<?= htmlspecialchars($dogodek["slika_url"]) ?>" class="slika-dogodek w-100" alt="Slika dogodka">
@@ -159,7 +158,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                 <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 py-2 px-3" role="alert">
                     <i class="bi bi-x-circle-fill fs-5"></i>
                     <span class="fw-semibold">Dogodek je zaseden</span>
-                </div>
+                </div>i
             <?php endif; ?>
         </form>
 
@@ -205,36 +204,35 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="komentarji.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const jwt = sessionStorage.getItem("jwt");
-    if (jwt) {
-        document.querySelectorAll("input.jwt-input").forEach(el => {
-            if (!el.value) el.value = jwt;
-        });
-    }
-});
-</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    AOS.init({ duration: 800, once: true, offset: 100 });
+
     const token = sessionStorage.getItem("jwt");
 
-    if (!token) {
-        return;
-    }
+    const iskanje = document.getElementById("iskanje-dogodkov");
+    iskanje.addEventListener("input", () => {
+        const query = iskanje.value.toLowerCase().trim();
+        document.querySelectorAll(".col-md-4").forEach(kartica => {
+            const naslov = kartica.querySelector(".card-header").textContent.toLowerCase();
+            kartica.style.display = naslov.includes(query) ? "" : "none";
+        });
+    });
+
+    if (!token) return;
+
+    document.querySelectorAll("input.jwt-input").forEach(el => {
+        if (!el.value) el.value = token;
+    });
 
     let uporabnik;
-
     try {
         uporabnik = JSON.parse(atob(token.split(".")[1]));
     } catch (e) {
         return;
     }
-
-    document.querySelectorAll(".jwt-input").forEach(input => {
-        input.value = token;
-    });
 
     document.querySelectorAll(".login-gumb").forEach(gumb => {
         gumb.classList.add("hidden");
@@ -243,11 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (uporabnik.vloga === "admin") {
         document.querySelectorAll(".admin-obmocje").forEach(div => {
             div.classList.remove("hidden");
-            document.querySelectorAll(".admin-link").forEach(link => {
+        });
+        document.querySelectorAll(".admin-link").forEach(link => {
             const url = new URL(link.href);
             url.searchParams.set("jwt", token);
             link.href = url.toString();
-});
         });
     } else {
         document.querySelectorAll(".prijava-obmocje").forEach(div => {
@@ -257,17 +255,50 @@ document.addEventListener("DOMContentLoaded", () => {
             div.classList.remove("hidden");
         });
     }
-});
-</script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
+    // Naloži priljubljene in označi gumbe
+    fetch('../Backend/get_priljubljeni.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'jwt=' + encodeURIComponent(token)
+    })
+    .then(r => r.json())
+    .then(priljubljeni => {
+        document.querySelectorAll('.priljubljen-btn').forEach(btn => {
+            const id = parseInt(btn.dataset.dogodekId);
+            if (priljubljeni.includes(id)) {
+                btn.classList.remove('btn-outline-danger');
+                btn.classList.add('btn-danger');
+                btn.title = 'Odstrani iz priljubljenih';
+            }
+        });
+    });
+
+    // Klik na srce — AJAX toggle brez page reloada
+    document.querySelectorAll('.priljubljen-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const dogodekId = btn.dataset.dogodekId;
+            const body = 'jwt=' + encodeURIComponent(token) + '&dogodek_id=' + dogodekId;
+
+            fetch('../Backend/dodajanje_med_priljubljene.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body
+            })
+            .then(() => {
+                const jePriljubljen = btn.classList.contains('btn-danger');
+                if (jePriljubljen) {
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add('btn-outline-danger');
+                    btn.title = 'Dodaj med priljubljene';
+                } else {
+                    btn.classList.remove('btn-outline-danger');
+                    btn.classList.add('btn-danger');
+                    btn.title = 'Odstrani iz priljubljenih';
+                }
+            })
+            .catch(() => alert('Napaka pri shranjevanju.'));
+        });
     });
 });
 </script>

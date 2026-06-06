@@ -13,30 +13,22 @@ if (!$uporabnik || $uporabnik["vloga"] != "admin") {
 
 if (isset($_GET["brisi_dogodek"])) {
     $id = (int)$_GET["brisi_dogodek"];
-    mysqli_query($conn, "DELETE FROM komentar WHERE dogodek_id = $id");
-    $r1 = mysqli_query($conn, "DELETE FROM prijava WHERE dogodek_id = $id");
-    $r2 = mysqli_query($conn, "DELETE FROM dogodek WHERE id = $id");
-    
-    
-    if (!$r2) die("Napaka: " . mysqli_error($conn));
-    
-    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#dogodki"); exit();
+    mysqli_query($conn, "DELETE FROM prijava WHERE dogodek_id = $id");
+    mysqli_query($conn, "DELETE FROM dogodek WHERE id = $id");
+    header("Location: admin.php?jwt=" . urlencode($jwtToken)); exit();
 }
 
 if (isset($_GET["brisi_objavo"])) {
     $id = (int)$_GET["brisi_objavo"];
-    $r = mysqli_query($conn, "DELETE FROM objava WHERE id = $id");
-    
-    // DEBUG
-    if (!$r) die("Napaka: " . mysqli_error($conn));
-    
-    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#objave"); exit();
+    mysqli_query($conn, "DELETE FROM objava WHERE id = $id");
+    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#objave"); 
+    exit();
 }
 
 if (isset($_GET["potrdi"])) {
     $id = (int)$_GET["potrdi"];
     mysqli_query($conn, "UPDATE prijava SET status = 'potrjena' WHERE id = $id");
-    header("Location: admin.php#prijave?jwt=" . urlencode($jwtToken) . "#prijave"); exit();
+    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#prijave"); exit();
 }
 
 if (isset($_GET["zavrni"])) {

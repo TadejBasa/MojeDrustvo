@@ -34,9 +34,8 @@ foreach ($dogodki as $d) {
         continue;
     }
 
-    mysqli_stmt_bind_param($stmt, "ssssdiisi",
-        $naslov, $opis, $lokacija, $datum_cas,
-        $cena, $st_mest, $vrsta, $slika_url, $kreator_id
+    mysqli_stmt_bind_param($stmt, "ssssdissi",
+        $naslov, $opis, $lokacija, $datum_cas, $cena, $st_mest, $vrsta, $slika_url, $kreator_id
     );
     mysqli_stmt_execute($stmt);
     $dodanih++;
