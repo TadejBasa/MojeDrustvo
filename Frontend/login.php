@@ -55,13 +55,13 @@ function googleLogin(response) {
         <?php endif; ?>
         <form method="POST" action="../Backend/login.php" class="space-y-4">
             <div class="relative">
-                <input type="text" name="vhod" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['vhod'] ?? '') ?>">
+                <input type="text" name="vhod" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required value="<?= htmlspecialchars($_POST['vhod'] ?? '') ?>">
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                   Uporabniško ime ali email
                 </label>
             </div>
             <div class="relative">
-                <input type="password" name="geslo" placeholder=" " class="geslo geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="password" name="geslo" placeholder=" " class="geslo geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                   <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
                 </button>
@@ -69,7 +69,7 @@ function googleLogin(response) {
                   Geslo
                 </label>
               </div>
-            <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+            <button type="submit" class="w-full bg-fuchsia-600 text-white p-3 rounded-lg hover:bg-fuchsia-700 transition">
                 Prijava
             </button>
         </form>
@@ -78,7 +78,7 @@ function googleLogin(response) {
         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with" data-shape="rectangular"></div>
         <hr class="my-6">
         <p class="text-center"> Nimaš računa?
-            <a href="register.php" class="text-blue-600 font-semibold hover:underline">
+            <a href="register.php" class="text-fuchsia-600 font-semibold hover:underline">
               Registracija
             </a>
         </p>
