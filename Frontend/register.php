@@ -33,35 +33,35 @@
         <?php endif; ?>
         <form id="registracijaForm" method="POST" action="../Backend/register.php" class="space-y-4">
             <div class="relative">
-                <input type="text" id="ime" name="ime" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="text" id="ime" name="ime" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="imeError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Ime
                 </label>
             </div>
             <div class="relative">
-                <input type="text" id="priimek" name="priimek" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="text" id="priimek" name="priimek" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="priimekError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Priimek
                 </label>
             </div>
             <div class="relative">
-                <input type="text" id="uporabniskoIme" name="username" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="text" id="uporabniskoIme" name="username" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="uporabniskoError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Uporabniško ime
                 </label>
             </div>
             <div class="relative">
-                <input type="email" id="email" name="email" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="email" id="email" name="email" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="emailError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                     Email
                 </label>
             </div>
             <div class="relative">
-                <input type="password" id="geslo" name="geslo" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="password" id="geslo" name="geslo" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="gesloError" class="text-red-600 text-sm mt-1"></p>
                 <button type="button" id="pokaziGeslo" class="absolute right-3 top-1/2 -translate-y-1/2">
                     <img id="ikonaGeslo" src="slike/eye.png" class="w-5 h-5" alt="Pokaži geslo">
@@ -71,21 +71,21 @@
                 </label>
             </div>
             <div class="relative">
-                <input type="date" id="datumRojstva" name="datum_rojstva" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <input type="date" id="datumRojstva" name="datum_rojstva" class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                 <p id="rojstvoError" class="text-red-600 text-sm mt-1"></p>
                 <label class="text-gray-500 pointer-events-none absolute left-3 top-1 text-sm">
                     Datum rojstva
                 </label>
             </div>
             <button type="submit"
-            class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+            class="w-full bg-fuchsia-600 text-white p-3 rounded-lg hover:bg-fuchsia-700 transition">
                 Registracija
             </button>
         </form>
         <hr class="my-6">
         <p class="text-center">
             Že imaš račun?
-            <a href="login.php" class="text-blue-600 font-semibold hover:underline">
+            <a href="login.php" class="text-fuchsia-600 font-semibold hover:underline">
                 Prijava
             </a>
         </p>

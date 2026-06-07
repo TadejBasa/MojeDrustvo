@@ -74,11 +74,17 @@
                 </div>
             </div>
             <div class="mt-8 flex gap-4">
-                <button type="button" id="urediProfil" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                    Uredi profil
+                <button type="button" id="urediProfil" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-500 text-fuchsia-600 shadow-md group">
+                    <span class="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                    <span class="relative z-10 group-hover:text-white">
+                        Uredi profil
+                    </span>
                 </button>
-                <button type="button" id="spremeniGeslo" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                    Spremeni geslo
+                <button type="button" id="spremeniGeslo" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-400 text-fuchsia-500 shadow-md group">
+                    <span class="absolute inset-0 bg-gradient-to-r from-violet-400 via-fuchsia-300 to-pink-200 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                    <span class="relative z-10 group-hover:text-white">
+                        Spremeni geslo
+                    </span>
                 </button>
             </div>
             <div class="mt-4">
@@ -92,35 +98,41 @@
                 <input type="hidden" name="jwt" id="jwtUredi">
                 <h2 class="text-2xl font-bold text-gray-800">Urejanje profila</h2>
                 <div class="relative">
-                    <input type="text" id="novoIme" name="novoIme" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['ime'] ?? '') ?>">
+                    <input type="text" id="novoIme" name="novoIme" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required value="<?= htmlspecialchars($_POST['ime'] ?? '') ?>">
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                         Ime
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="text" id="novPriimek" name="novPriimek" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
+                    <input type="text" id="novPriimek" name="novPriimek" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                         Priimek
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="text" id="novoUporabnisko" name="novoUporabnisko" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
+                    <input type="text" id="novoUporabnisko" name="novoUporabnisko" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                         Uporabniško ime
                     </label>
                 </div>
                 <div id="nove_email" class="relative">
-                    <input type="text" id="novEmail" name="novEmail" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
+                    <input type="text" id="novEmail" name="novEmail" placeholder=" " class="peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required value="<?= htmlspecialchars($_POST['priimek'] ?? '') ?>">
                     <label class="text-gray-500 pointer-events-none absolute left-3 top-4 transition-all duration-200 peer-focus:text-sm peer-focus:top-1 peer-valid:text-sm peer-valid:top-1">
                         Email
                     </label>
                 </div>
                 <div class="flex gap-4">
-                    <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                        Shrani
+                    <button type="submit" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-500 text-fuchsia-600 shadow-md group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                        <span class="relative z-10 group-hover:text-white">
+                            Shrani
+                        </span>
                     </button>
-                    <button type="button" id="prekliciUredi" class="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-100 transition">
-                        Prekliči
+                    <button type="button" id="prekliciUredi" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-violet-300 text-violet-500 shadow-md group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-violet-300 via-fuchsia-300 to-pink-300 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                        <span class="relative z-10 group-hover:text-white">
+                            Prekliči
+                        </span>
                     </button>
                 </div>
             </form>
@@ -134,7 +146,7 @@
             <form action="../Backend/primerjava_gesel.php" method="POST" class="space-y-4">
                 <input type="hidden" name="jwt" id="jwtGeslo">
                 <div class="relative">
-                    <input type="password" id="trenutnoGeslo" name="trenutnoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <input type="password" id="trenutnoGeslo" name="trenutnoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                     <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
                     </button>
@@ -143,7 +155,7 @@
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="password" id="novoGeslo" name="novoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <input type="password" id="novoGeslo" name="novoGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                     <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
                     </button>
@@ -152,7 +164,7 @@
                     </label>
                 </div>
                 <div class="relative">
-                    <input type="password" id="potrdiGeslo" name="potrdiGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                    <input type="password" id="potrdiGeslo" name="potrdiGeslo" placeholder=" " class="geslo-input peer pt-6 w-full border rounded-lg px-3 pb-2 h-14 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" required>
                     <button type="button" class="pokaziGeslo absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <img src="slike/eye.png" class="ikonaGeslo w-5 h-5" alt="Pokaži geslo">
                     </button>
@@ -161,11 +173,17 @@
                     </label>
                 </div>
                 <div class="flex gap-4">
-                    <button type="submit" id="shraniGeslo" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                        Shrani
+                    <button type="submit" id="shraniGeslo" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-500 text-fuchsia-600 shadow-md group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                        <span class="relative z-10 group-hover:text-white">
+                            Shrani
+                        </span>
                     </button>
-                    <button type="button" id="prekliciGeslo" class="w-full border border-gray-300 p-3 rounded-lg hover:bg-gray-100 transition">
-                        Prekliči
+                    <button type="button" id="prekliciGeslo" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-violet-300 text-violet-500 shadow-md group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-violet-300 via-fuchsia-300 to-pink-300 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                        <span class="relative z-10 group-hover:text-white">
+                            Prekliči
+                        </span>
                     </button>
                 </div>
             </form>
