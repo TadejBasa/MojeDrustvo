@@ -25,6 +25,17 @@ if (isset($_GET["brisi_objavo"])) {
     exit();
 }
 
+if (isset($_GET["odstrani_clana"])) {
+    $id = (int)$_GET["odstrani_clana"];
+    // Prevent admin from deleting themselves
+    if ($id !== (int)$uporabnik["id"]) {
+        mysqli_query($conn, "DELETE FROM prijava WHERE uporabnik_id = $id");
+        mysqli_query($conn, "DELETE FROM uporabnik WHERE id = $id");
+    }
+    header("Location: admin.php?jwt=" . urlencode($jwtToken) . "#clani");
+    exit();
+}
+
 if (isset($_GET["potrdi"])) {
     $id = (int)$_GET["potrdi"];
     mysqli_query($conn, "UPDATE prijava SET status = 'potrjena' WHERE id = $id");

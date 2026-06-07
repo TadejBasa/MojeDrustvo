@@ -380,7 +380,7 @@ main{
         .slika-dogodek {
             height: 200px;
             object-fit: cover;
-            border-radius: 10px 10px 0 0;
+
         }
         .brez-slike {
             height: 200px;

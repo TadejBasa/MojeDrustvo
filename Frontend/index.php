@@ -71,7 +71,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width:70%;margin:6rem auto 0rem auto;" data-aos="flip-down">
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="gridNaslov text-4xl mb-3 font-bold tracking-tight text-gray-800">Več kot 10 oddelkov</h3>
+    <h3 class="gridNaslov text-4xl mb-3 font-bold tracking-tight text-gray-800">Več kot 10 športnih oddelkov</h3>
     <hr class="mb-4">
     <p class="opisBesedilo text-gray-600 leading-relaxed text-2xl">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
   </div>

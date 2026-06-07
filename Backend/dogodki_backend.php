@@ -85,4 +85,4 @@ $vrste = [
     "drugo"     => "Drugo",
 ];
 
-$jwtToken = $_COOKIE["jwt"] ?? $_SESSION["jwt"] ?? null;
+$jwtToken = $_POST["jwt"] ?? $_GET["jwt"] ?? null;
