@@ -66,11 +66,15 @@ if ($izbrana_vrsta != "vse") {
 }
 
 $dogodki = mysqli_query($conn, "
-    SELECT d.*, COUNT(DISTINCT p.id) AS stevilo_prijav
+    SELECT d.*,
+           COUNT(DISTINCT p.id) AS stevilo_prijav,
+           COUNT(DISTINCT pr.id) AS stevilo_priljubljenih
     FROM dogodek d
     LEFT JOIN prijava p
         ON p.dogodek_id = d.id
         AND p.status != 'zavrnjena'
+    LEFT JOIN priljubljeni pr
+        ON pr.dogodek_id = d.id
     $pogoj
     GROUP BY d.id
     ORDER BY d.datum_cas ASC

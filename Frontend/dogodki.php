@@ -120,6 +120,9 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                                                 Dogodek zaseden
                                             </span>
                                         <?php endif; ?>
+                                        <span class="badge bg-pink text-white" style="background-color:#e91e63;">
+                                            <i class="bi bi-heart-fill me-1"></i><?= (int)$dogodek["stevilo_priljubljenih"] ?>
+                                        </span>
                                     </div>
                                 </div>
 

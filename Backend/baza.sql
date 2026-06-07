@@ -90,3 +90,12 @@ CREATE TABLE priljubljeni(
     FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id),
     FOREIGN KEY (dogodek_id) REFERENCES dogodek(id)
 );
+CREATE TABLE priljubljen (
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    uporabnik_id    INT NOT NULL,
+    dogodek_id      INT NOT NULL,
+    datum           DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unik_priljubljen (uporabnik_id, dogodek_id),
+    FOREIGN KEY (uporabnik_id) REFERENCES uporabnik(id),
+    FOREIGN KEY (dogodek_id)   REFERENCES dogodek(id)
+);

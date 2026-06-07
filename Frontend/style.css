@@ -375,7 +375,7 @@ main{
             transition: box-shadow 0.2s;
         }
         .kartica-dogodek:hover {
-            box-shadow: 0 4px 20px rgba(59,130,246,0.2);
+            box-shadow: 25px 4px 20px rgba(59,130,246,0.2);
         }
         .slika-dogodek {
             height: 200px;
@@ -477,11 +477,45 @@ main{
     padding-bottom: 3rem;
 }
 .naslov-dogodki {
-    background: white;
-    border-radius: 12px;
-    padding: 15px 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    display: inline-block;
-    margin-bottom: 2rem;
-    font-size: x-large;
+    background: linear-gradient(45deg, #ff0080, #7928ca);
+            color: #fff;
+            -webkit-text-fill-color: #fff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: x-large;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
 }
+.naslov-objave {
+            background: linear-gradient(45deg, #ff0080, #7928ca);
+            color: #fff;
+            -webkit-text-fill-color: #fff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: x-large;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+        }
+
+        .kartica-novica {
+            border: 1px solid rgba(0,0,0,.125) !important;
+            border-left: 5px solid #c0207a !important;
+            background-color: #f4e9ff !important;
+            
+        }
+        .kartica-obvestilo {
+            border: 1px solid rgba(0,0,0,.125) !important;
+            border-left: 5px solid #c0207a !important;
+            
+            background-color: #ebd4ff !important;
+        }
+        .kartica-vabilo {
+            border: 1px solid rgba(0,0,0,.125) !important;
+            border-left: 5px solid #c0207a !important;
+            background-color: #f7f1ff !important;
+        }
+        .privatna-znacka { display: none; }

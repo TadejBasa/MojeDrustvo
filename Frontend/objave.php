@@ -13,13 +13,6 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link href="style.css" rel="stylesheet">
     <title>Objave - Moje Društvo</title>
-    <style>
-        .kartica-novica    { border-left: 4px solid #3b82f6; }
-        .kartica-obvestilo { border-left: 4px solid #ef4444; }
-        .kartica-vabilo    { border-left: 4px solid #22c55e; }
-        .privatna-znacka   { display: none; }
-    </style>
-</head>
 <body>
 
 <?php include 'header.php'; ?>
@@ -27,11 +20,13 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
 <div class = "ozadje">
 <div class = "main h-full">
 <main data-aos="fade-up" class="container py-5">
-    <h2 class="naslov-dogodki">OBJAVE</h2>
+    <h2 class="naslov-objave">OBJAVE</h2>
 
     <div id="opozorilo-prijava" class="alert alert-info" style="display:none;">
         <a href="login.php">Prijavi se</a> za ogled privatnih objav.
     </div>
+    <input type="text" id="iskanje-objav" class="form-control mb-3" placeholder=" Išči objave"
+                    style="border-radius: 8px; border: 1px solid #dee2e6; padding: 10px 16px; background: white;">
 
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <?php foreach ($tipi as $vrednost => $oznaka):
@@ -106,6 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
         url.searchParams.set("jwt", jwt);
         window.location.replace(url.toString());
     }
+    const iskanje = document.getElementById("iskanje-objav");
+    iskanje.addEventListener("input", () => {
+        const query = iskanje.value.toLowerCase().trim();
+        document.querySelectorAll(".col-md-4").forEach(kartica => {
+            const naslov = kartica.querySelector(".card-title")?.textContent.toLowerCase() ?? "";
+            const vsebina = kartica.querySelector(".card-text")?.textContent.toLowerCase() ?? "";
+            kartica.style.display = (naslov.includes(query) || vsebina.includes(query)) ? "" : "none";
+        });
+    });
 });
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
