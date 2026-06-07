@@ -19,12 +19,10 @@ $jwtEncoded = htmlspecialchars($jwtToken);
 <?php include 'header.php'; ?>
 
 <script>
-// Poskrbi da je JWT v sessionStorage (ker smo prišli morda prek redirect z ?jwt=)
 (function() {
     const urlJwt = new URLSearchParams(window.location.search).get("jwt");
     if (urlJwt) {
         sessionStorage.setItem("jwt", urlJwt);
-        // Pocisti URL brez reloada
         const url = new URL(window.location.href);
         url.searchParams.delete("jwt");
         history.replaceState(null, "", url.toString());
@@ -39,12 +37,11 @@ $jwtEncoded = htmlspecialchars($jwtToken);
         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#dogodki">Dogodki</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#prijave">Prijave</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#objave">Objave</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#clani">Clani</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#clani">Člani</a></li>
     </ul>
 
     <div class="tab-content">
 
-        <!-- DOGODKI -->
         <div class="tab-pane fade show active" id="dogodki">
             <h4 class="mb-3">Dodaj dogodek</h4>
             <form method="POST" enctype="multipart/form-data" class="row g-3 mb-4 p-3 border rounded bg-light">
@@ -201,7 +198,8 @@ $jwtEncoded = htmlspecialchars($jwtToken);
                         <td><?= $objava["je_pomembna"] ? "Da" : "Ne" ?></td>
                         <td><?= date("d. m. Y", strtotime($objava["datum_objave"])) ?></td>
                         <td>
-                            <a href="admin.php?brisi_objavo=<?= $objava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Brisi</a>
+                            <a href="uredi_objavo.php?id=<?= $objava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-warning">Uredi</a>
+                            <a href="admin.php?brisi_objavo=<?= $objava["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" onclick="return confirm('Res izbrisi?')" class="btn btn-sm btn-danger">Briši</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -214,12 +212,14 @@ $jwtEncoded = htmlspecialchars($jwtToken);
             <h4>Vsi uporabniki</h4>
             <table class="table table-striped">
                 <thead>
-                    <tr><th>Ime</th><th>Username</th><th>Email</th><th>Vloga</th><th>Aktiven</th><th>Akcije</th></tr>
+                    <tr><th>Ime</th><th>Uporabnisko ime</th><th>Elektronski naslov</th><th>Vloga</th><th>Aktiven</th><th>Akcije</th></tr>
                 </thead>
                 <tbody>
-                    <?php while ($clan = mysqli_fetch_assoc($vsi_clani)): ?>
+                    <?php while ($clan = mysqli_fetch_assoc($vsi_clani)):
+                        $clanIme = htmlspecialchars($clan["ime"] . " " . $clan["priimek"]);
+                    ?>
                     <tr>
-                        <td><?= htmlspecialchars($clan["ime"] . " " . $clan["priimek"]) ?></td>
+                        <td><?= $clanIme ?></td>
                         <td><?= htmlspecialchars($clan["username"]) ?></td>
                         <td><?= htmlspecialchars($clan["email"]) ?></td>
                         <td>
@@ -230,6 +230,7 @@ $jwtEncoded = htmlspecialchars($jwtToken);
                         <td><?= $clan["aktiven"] ? "Da" : "Ne" ?></td>
                         <td>
                             <a href="uredi_clana.php?id=<?= $clan["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" class="btn btn-sm btn-warning">Uredi</a>
+                            <a href="admin.php?odstrani_clana=<?= $clan["id"] ?>&jwt=<?= urlencode($jwtToken) ?>" onclick="return confirm('Res izbrisi clana <?= $clanIme ?>?')" class="btn btn-sm btn-danger">Odstrani</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>

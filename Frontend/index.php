@@ -8,9 +8,8 @@
     <script src="https://cdn.tailwindcss.com/"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,800&family=Roboto+Mono:ital,wght@0,330;1,330&display=swap" rel="stylesheet">
+
     <script src="trianglify.bundle.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Zacetna stran</title>
@@ -20,8 +19,8 @@
 <?php include 'header.php'; ?>
 
 <section class="welcome flex flex-col items-center">
-  <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg p-6">
-    <div class="welcome-vsebina flex items-center gap-4">
+  <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl shadow-lg p-6">
+    <div class="welcome-vsebina flex items-center gap-4 p-6">
       <h1>ŠPORTNO DRUŠTVO FERI ⚽</h1>
     </div>
     <p>Pridružite se največjemu športnemu društvu na Mariborski univerzi!</p>
@@ -72,7 +71,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 pb-16 text-center" style="max-width:70%;margin:6rem auto 0rem auto;" data-aos="flip-down">
   <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h3 class="gridNaslov text-4xl mb-3">Več kot 10 oddelkov</h3>
+    <h3 class="gridNaslov text-4xl mb-3 font-bold tracking-tight text-gray-800">Več kot 10 športnih oddelkov</h3>
     <hr class="mb-4">
     <p class="opisBesedilo text-gray-600 leading-relaxed text-2xl">Ponujamo več kot 10 različnih športnih sekcij — od nogometa in košarke do plezanja in joge. Vsak najde svojo aktivnost.</p>
   </div>

@@ -21,14 +21,14 @@ $novPriimek = $_POST["novPriimek"];
 $novoUporabnisko = $_POST["novoUporabnisko"];
 $novEmail = $_POST["novEmail"];
 
-$stmt = $conn->prepare("UPDATE uporabnik SET ime = ?, priimek = ?, username = ? WHERE id = ?");
-$stmt->bind_param("sssi", $novoIme, $novPriimek, $novoUporabnisko, $novEmail, $id);
+$stmt = $conn->prepare("UPDATE uporabnik SET ime = ?, priimek = ?, username = ?, email = ? WHERE id = ?");
+$stmt->bind_param("ssssi", $novoIme, $novPriimek, $novoUporabnisko, $novEmail, $id);
 $stmt->execute();
 
 $novToken = ustvariJWT([
     "id" => $id,
     "username" => $novoUporabnisko,
-    "exp" => time() + 3600
+    "exp" => time() + 3600  
 ]);
 ?>
 

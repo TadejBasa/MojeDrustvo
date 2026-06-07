@@ -87,6 +87,11 @@
                     </span>
                 </button>
             </div>
+            <div class="mt-4">
+                <a href="priljubljeniDogodki.php" class="block w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition text-center">
+                    ♥ Priljubljeni dogodki
+                </a>
+            </div>
         </div>
         <div id="urejanjeProfila" style="display: none">
             <form action="../Backend/urejanje_profila.php" method="POST" class="space-y-4">
@@ -206,20 +211,19 @@ function nalagajProfil() {
             "Authorization": "Bearer " + token
         }
     })
-    .then(res => { //shrane odgovor
+    .then(res => {
         if (!res.ok) { 
             sessionStorage.removeItem("jwt");
             window.location.href = "login.php";
             return;
         }
-        return res.json(); //js objekt
+        return res.json();
     })
     .then(uporabnik => {  
-        if (!uporabnik) return; //ce nega podatkov
+        if (!uporabnik) return;
 
         if (uporabnik.vrsta_prijave === "google") {
             document.getElementById("nove_email").style.display = "none";
-
         }
 
         document.getElementById("ime").textContent = uporabnik.ime;
@@ -239,8 +243,6 @@ function nalagajProfil() {
         }
 
         document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
-
-        console.log(uporabnik.profilna_slika);
     });
 }
 
@@ -261,7 +263,6 @@ setTimeout(() => {
 
 document.getElementById("jwtUredi").value = sessionStorage.getItem("jwt");
 document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
-
 </script>
     
 </body>
