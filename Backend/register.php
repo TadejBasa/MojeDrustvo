@@ -1,6 +1,7 @@
 <?php
 require_once "config.php";
 require_once "jwt.php";
+require_once "mail.php";
 
 $ime = $_POST["ime"] ?? "";
 $priimek = $_POST["priimek"] ?? "";
@@ -44,6 +45,8 @@ mysqli_stmt_bind_param(
 );
 
 mysqli_stmt_execute($stmt);
+
+posljiRegistracijskiMail($email, $ime);
 
 $id = mysqli_insert_id($conn);
 

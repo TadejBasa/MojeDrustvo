@@ -1,6 +1,7 @@
 <?php
 require_once "config.php";
 require_once "jwt.php";
+require_once "mail.php";
 require_once "../vendor/autoload.php";
 
 header("Content-Type: application/json");
@@ -61,7 +62,9 @@ if (!$uporabnik) {
     if (mysqli_stmt_error($stmt)) {
     echo json_encode(["napaka" => mysqli_stmt_error($stmt)]);
     exit;
-}
+    }
+
+    posljiRegistracijskiMail($email, $ime);
 
     $id = mysqli_insert_id($conn);
 
