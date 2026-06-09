@@ -127,77 +127,102 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                                 </div>
 
                                 <div class="card-footer">
-                                    <div class="zasedenost-vrstica mb-2">
-                                        <?php
-                                        $stevilo_prijav = (int) $dogodek["stevilo_prijav"];
-                                        $skupaj_mest = (int) $dogodek["st_mest"];
-                                        $odstotek = $skupaj_mest > 0 ? round(($stevilo_prijav / $skupaj_mest) * 100) : 100;
-                                        $barva_prog = $odstotek >= 100 ? 'bg-danger' : ($odstotek >= 75 ? 'bg-warning' : 'bg-success');
-                                        ?>
-                                        <div class="d-flex justify-content-between align-items-center mb-1">
-                                            <small class="text-muted fw-semibold">
-                                                <i class="bi bi-people-fill me-1"></i>
-                                                Zasedenost: <?= $stevilo_prijav ?> / <?= $skupaj_mest ?> mest
-                                            </small>
-                                            <small class="text-muted"><?= $odstotek ?>%</small>
-                                        </div>
-                                        <div class="progress" style="height: 6px; border-radius: 4px;">
-                                            <div class="progress-bar <?= $barva_prog ?>" role="progressbar"
-                                                style="width: <?= min($odstotek, 100) ?>%"
-                                                aria-valuenow="<?= $stevilo_prijav ?>" aria-valuemin="0"
-                                                aria-valuemax="<?= $skupaj_mest ?>">
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="zasedenost-vrstica mb-2">
+        <?php
+        $stevilo_prijav = (int) $dogodek["stevilo_prijav"];
+        $skupaj_mest = (int) $dogodek["st_mest"];
+        $odstotek = $skupaj_mest > 0 ? round(($stevilo_prijav / $skupaj_mest) * 100) : 100;
+        $barva_prog = $odstotek >= 100 ? 'bg-danger' : ($odstotek >= 75 ? 'bg-warning' : 'bg-success');
+        ?>
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <small class="text-muted fw-semibold">
+                <i class="bi bi-people-fill me-1"></i>
+                Zasedenost: <?= $stevilo_prijav ?> / <?= $skupaj_mest ?> mest
+            </small>
+            <small class="text-muted"><?= $odstotek ?>%</small>
+        </div>
+        <div class="progress" style="height: 6px; border-radius: 4px;">
+            <div class="progress-bar <?= $barva_prog ?>" role="progressbar"
+                style="width: <?= min($odstotek, 100) ?>%"
+                aria-valuenow="<?= $stevilo_prijav ?>" aria-valuemin="0"
+                aria-valuemax="<?= $skupaj_mest ?>">
+            </div>
+        </div>
+    </div>
 
-                                    <div class="prijava-obmocje hidden">
-                                        <form method="POST">
-                                            <input type="hidden" name="jwt" class="jwt-input">
-                                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                                            <?php if ($prosta_mesta > 0): ?>
-                                                <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
-                                                    Prijava
-                                                </button>
-                                            <?php else: ?>
-                                                <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 py-2 px-3"
-                                                    role="alert">
-                                                    <i class="bi bi-x-circle-fill fs-5"></i>
-                                                    <span class="fw-semibold">Dogodek je zaseden</span>
-                                                </div>i
-                                            <?php endif; ?>
-                                        </form>
+    <div class="prijava-obmocje hidden">
+        <form method="POST">
+            <input type="hidden" name="jwt" class="jwt-input">
+            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+            <?php if ($prosta_mesta > 0): ?>
+                <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
+                    Prijava
+                </button>
+            <?php else: ?>
+                <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 py-2 px-3" role="alert">
+                    <i class="bi bi-x-circle-fill fs-5"></i>
+                    <span class="fw-semibold">Dogodek je zaseden</span>
+                </div>
+            <?php endif; ?>
+        </form>
 
-                                        <form method="POST" action="../Backend/komentar.php" class="mt-2"
-                                            onsubmit="return preveriKomentar(this)">
-                                            <input type="hidden" name="jwt" class="jwt-input">
-                                            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-                                            <textarea name="besedilo" class="form-control" rows="2"
-                                                placeholder="Napiši komentar..."></textarea>
-                                            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
-                                                Komentiraj
-                                            </button>
-                                        </form>
+        <form method="POST" action="../Backend/komentar.php" class="mt-2"
+            onsubmit="return preveriKomentar(this)">
+            <input type="hidden" name="jwt" class="jwt-input">
+            <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
+            <textarea name="besedilo" class="form-control" rows="2"
+                placeholder="Napiši komentar..."></textarea>
+            <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
+                Komentiraj
+            </button>
+        </form>
+    </div>
 
-                                        <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2"
-                                            onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
-                                            Prikaži komentarje
-                                        </button>
+    <?php
+    $preview = $komentarji_preview[$dogodek['id']] ?? [];
+    $ze_prikazano = count($preview);
+    ?>
 
-                                        <div id="komentarji<?= $dogodek['id'] ?>" style="display:none;"></div>
-                                    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2"
+        id="gumb-komentarji<?= $dogodek['id'] ?>"
+        data-razsirjen="<?= $ze_prikazano > 0 ? '1' : '0' ?>"
+        onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
+        <?= $ze_prikazano > 0 ? 'Vsi komentarji' : 'Prikaži komentarje' ?>
+    </button>
 
-                                    <div class="admin-obmocje hidden">
-                                        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>"
-                                            class="btn btn-outline-secondary w-100 admin-link">
-                                            Upravljaj
-                                        </a>
-                                    </div>
+    <div id="komentarji<?= $dogodek['id'] ?>"
+     style="display: <?= $ze_prikazano > 0 ? 'block' : 'none' ?>; height: auto; overflow: visible;"
+     data-nalozeno="0">
+        <?php foreach ($preview as $k): ?>
+            <?php
+            $slika = !empty($k['profilna_slika'])
+                ? htmlspecialchars($k['profilna_slika'])
+                : '../Frontend/img/privzeta_slika.png';
+            ?>
+            <div class="d-flex align-items-start gap-2 border rounded p-2 mt-2 small komentar-blok">
+                <img src="<?= $slika ?>"
+                     alt="Profil"
+                     style="width:32px; height:32px; border-radius:50%; object-fit:cover; flex-shrink:0;">
+                <div>
+                    <span class="fw-semibold text-dark"><?= htmlspecialchars($k['username']) ?></span>
+                    <p class="mb-0 text-muted"><?= htmlspecialchars($k['besedilo']) ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
-                                    <a href="login.php" class="btn btn-outline-primary w-100 login-gumb">
-                                        Prijavi se za prijavo
-                                    </a>
+    <div class="admin-obmocje hidden">
+        <a href="uredi_dogodek.php?id=<?= $dogodek["id"] ?>"
+            class="btn btn-outline-secondary w-100 admin-link">
+            Upravljaj
+        </a>
+    </div>
 
-                                </div>
+    <a href="login.php" class="btn btn-outline-primary w-100 login-gumb">
+        Prijavi se za prijavo
+    </a>
+
+</div>
                             </div>
                         </div>
                     <?php endwhile; ?>

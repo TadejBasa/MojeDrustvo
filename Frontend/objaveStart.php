@@ -5,7 +5,6 @@ $admin = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM uporabnik WHERE 
 $avtor_id = $admin ? (int)$admin["id"] : 1;
 
 $objave = [
-    // naslov, vsebina, tip, je_javna, je_pomembna, datum_objave
     [
         "Vabilo na zaključno druženje sezone",
         "Vabimo vse člane in njihove družine na zaključno druženje sezone — žar, glasba in podelitev priznanj. 30. avgusta ob 17:00 pri FERI.",
@@ -63,7 +62,7 @@ $objave = [
     ],
     [
         "Rezultati kosarkarskega vecera",
-        "Zahvaljujemo se vsem udeležlencem! Zmagala je ekipa Byte Ballers s 3 zaporednimi zmagami. Cestitke! Naslednji vecer bo julija.",
+        "Zahvaljujemo se vsem udeležlencem! Zmagala je ekipa Pijanice s 3 zaporednimi zmagami. Cestitke! Naslednji vecer bo julija.",
         "novica", 1, 0, "2026-04-10 20:00:00"
     ],
     [
@@ -80,6 +79,24 @@ $objave = [
         "Dobrodosli v Sportnem drustvu FERI",
         "Pozdravljamo vse nove in stare clane! Letosnja sezona prinasa polno novih dogodkov, turnirjev in izletov. Skupaj bomo naredili se boljso skupnost.",
         "novica", 1, 1, "2026-01-05 08:00:00"
+    ],
+
+    [
+        "Vabilo na izlet v Piran",
+        "Pridite z nami na enodnevni izlet na slovensko obalo! Obiščemo Piran in Portorož. Odhod 1. avgusta ob 7:00 izpred FERI. Prijavite se do 25. julija.",
+        "vabilo", 1, 0, "2026-06-18 10:00:00"
+    ],
+
+    [
+        "Odprli smo badminton sekcijo",
+        "Z veseljem sporočamo, da smo septembra 2026 uradno odprli badminton sekcijo. Prijavilo se je že 14 članov! Treningi potekajo vsak torek in četrtek v telovadnici FERI.",
+        "novica", 1, 0, "2026-06-10 09:00:00"
+    ],
+
+    [
+        "Sprememba lokacije košarkarskega večera",
+        "Obveščamo, da se košarkarski večer 1. julija seli na zunanje igrišče pri ŠC Pobrežje (ne pri šoli, kot je bilo prvotno navedeno). Parkiranje je zagotovljeno.",
+        "obvestilo", 1, 1, "2026-06-12 11:00:00"
     ],
 ];
 

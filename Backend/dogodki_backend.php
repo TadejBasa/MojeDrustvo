@@ -90,3 +90,22 @@ $vrste = [
 ];
 
 $jwtToken = $_POST["jwt"] ?? $_GET["jwt"] ?? null;
+
+$komentarji_preview = [];
+
+$res = mysqli_query($conn, "
+    SELECT k.dogodek_id, k.besedilo, u.username, u.profilna_slika
+    FROM komentar k
+    JOIN uporabnik u ON u.id = k.uporabnik_id
+    ORDER BY k.id DESC
+");
+
+while ($vr = mysqli_fetch_assoc($res)) {
+    $did = $vr['dogodek_id'];
+    if (!isset($komentarji_preview[$did])) {
+        $komentarji_preview[$did] = [];
+    }
+    if (count($komentarji_preview[$did]) < 2) {
+        $komentarji_preview[$did][] = $vr;
+    }
+}
