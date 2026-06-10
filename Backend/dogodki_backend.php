@@ -109,3 +109,15 @@ while ($vr = mysqli_fetch_assoc($res)) {
         $komentarji_preview[$did][] = $vr;
     }
 }
+$moje_prijave = [];
+if ($uporabnik) {
+    $id_up = (int)$uporabnik["id"];
+    $res_prijave = mysqli_query($conn, "
+        SELECT dogodek_id FROM prijava
+        WHERE uporabnik_id = $id_up
+        AND status != 'zavrnjena'
+    ");
+    while ($vr = mysqli_fetch_assoc($res_prijave)) {
+        $moje_prijave[] = (int)$vr["dogodek_id"];
+    }
+}
