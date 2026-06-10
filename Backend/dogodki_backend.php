@@ -86,7 +86,6 @@ $vrste = [
     "delavnica" => "Delavnice",
     "izlet"     => "Izleti",
     "turnir"    => "Turnirji",
-    "drugo"     => "Drugo",
 ];
 
 $jwtToken = $_POST["jwt"] ?? $_GET["jwt"] ?? null;
