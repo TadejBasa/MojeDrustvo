@@ -12,8 +12,8 @@ function posljiRegistracijskiMail($email, $ime) {
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
 
-        $mail->Username = "tadej.basa71@gmail.com";
-        $mail->Password = "zbiptfblbwfwuiow";
+        $mail->Username = "sportnodrustvoferi@gmail.com";
+        $mail->Password = "icvrambzylhmmeue";
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;

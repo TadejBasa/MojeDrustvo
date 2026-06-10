@@ -95,14 +95,8 @@
                         </span>
                     </button>
                 </div>
-                
-            <!--</div>
-            <div class="mt-4">
-                <a href="priljubljeniDogodki.php" class="block w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition text-center">
-                    ♥ Priljubljeni dogodki
-                </a>
             </div>
-        </div>-->
+
         <div id="urejanjeProfila" style="display: none">
             <form action="../Backend/urejanje_profila.php" method="POST" class="space-y-4">
                 <input type="hidden" name="jwt" id="jwtUredi">
