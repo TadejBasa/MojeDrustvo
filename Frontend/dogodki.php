@@ -154,10 +154,14 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         <form method="POST">
             <input type="hidden" name="jwt" class="jwt-input">
             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-            <?php if ($prosta_mesta > 0): ?>
-                <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100">
-                    Prijava
+            <?php
+                $ze_prijavljen = in_array((int)$dogodek["id"], $moje_prijave ?? []);
+                if ($ze_prijavljen): ?>
+                    <button type="button" class="btn btn-secondary w-100" disabled>
+                    <i class="bi bi-hourglass-split me-1"></i> Čakanje na potrditev
                 </button>
+            <?php elseif ($prosta_mesta > 0): ?>
+                <button type="submit" name="prijava_dogodek" class="btn btn-primary w-100"> Prijava </button>
             <?php else: ?>
                 <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 py-2 px-3" role="alert">
                     <i class="bi bi-x-circle-fill fs-5"></i>
@@ -170,8 +174,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
             onsubmit="return preveriKomentar(this)">
             <input type="hidden" name="jwt" class="jwt-input">
             <input type="hidden" name="dogodek_id" value="<?= $dogodek["id"] ?>">
-            <textarea name="besedilo" class="form-control" rows="2"
-                placeholder="Napiši komentar..."></textarea>
+            <textarea name="besedilo" class="form-control" rows="2" placeholder="Napiši komentar..."style="resize: none; height: 60px;"></textarea>
             <button type="submit" class="btn btn-secondary btn-sm mt-2 w-100">
                 Komentiraj
             </button>
@@ -199,7 +202,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
                 ? htmlspecialchars($k['profilna_slika'])
                 : '../Frontend/img/privzeta_slika.png';
             ?>
-            <div class="d-flex align-items-start gap-2 border rounded p-2 mt-2 small komentar-blok">
+            <div class="d-flex align-items-start gap-2 border rounded p-2 mt-2 small komentar-blok mb-2">
                 <img src="<?= $slika ?>"
                      alt="Profil"
                      style="width:32px; height:32px; border-radius:50%; object-fit:cover; flex-shrink:0;">
