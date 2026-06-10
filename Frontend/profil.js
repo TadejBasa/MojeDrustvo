@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const geslo = document.getElementById("spremembaGesla");
     const gumb2 = document.getElementById("spremeniGeslo");
     const preklicGeslo = document.getElementById("prekliciGeslo");
+    const priljubljeniDogodki = document.getElementById("priljubljeniDogodki");
 
     const novoGeslo=document.getElementById("novoGeslo");
     const potrdiGeslo=document.getElementById("potrdiGeslo");
@@ -66,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
         preklicGeslo.addEventListener("click", zamenjajGeslo);
         preklicGeslo.addEventListener("click", pocistiPolja);
     }
+
+    priljubljeniDogodki.addEventListener("click",() => {window.location.href = "priljubljeniDogodki.php"});
+
+
 
     
 });

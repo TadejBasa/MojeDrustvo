@@ -88,7 +88,7 @@
                 </button>
                 </div>
                 <div class="mt-3 block w-full">
-                    <button type="button" id="priljubljeniDogodki.php" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-400 text-fuchsia-500 shadow-md group">
+                    <button type="button" id="priljubljeniDogodki" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-400 text-fuchsia-500 shadow-md group">
                         <span class="absolute inset-0 bg-gradient-to-r from-fuchsia-400 via-fuchsia-300 to-pink-200 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                         <span class="relative z-10 group-hover:text-white">
                             ♥ Priljubljeni dogodki
@@ -241,6 +241,12 @@ function nalagajProfil() {
         document.getElementById("jwtGeslo").value = sessionStorage.getItem("jwt");
         document.getElementById("jwtInput").value = sessionStorage.getItem("jwt");
         document.getElementById("jwtUredi").value = sessionStorage.getItem("jwt");
+
+        if(uporabnik.vloga === "admin") {
+            document.getElementById("profilClana").textContent = "Profil admina";
+        } else {
+            document.getElementById("profilClana").textContent = "Profil člana";
+        }
 
         if (uporabnik.profilna_slika) {
             document.getElementById("profilnaSlikaImg").src = uporabnik.profilna_slika + "?v=" + Date.now();

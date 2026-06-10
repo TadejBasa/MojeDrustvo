@@ -27,7 +27,7 @@ if (!$data) {
 $id = $data["id"]; 
 
 //podatke uporabnika
-$sql = "SELECT ime, priimek, username, email, profilna_slika, vrsta_prijave
+$sql = "SELECT ime, priimek, username, email, profilna_slika, vrsta_prijave, vloga
         from uporabnik
         where id = ?";
 
