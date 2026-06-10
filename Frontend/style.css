@@ -63,6 +63,16 @@ li{
   text-shadow: 2px 2px 8px rgba(124, 58, 237, 0.8);
 }
 
+.kontakt_naslov{
+  font-family: "Inter", sans-serif;
+  text-shadow: black;
+  font-size: 5rem;
+  font-weight: 900;
+  max-width: 100%;
+  margin: 0 auto 20px;
+  text-shadow: 2px 2px 8px rgba(124, 58, 237, 0.8);
+}
+
 .welcome p{
     font-size: 1.5rem;
     margin: 0 auto 30px;}
@@ -519,3 +529,13 @@ main{
             background-color: #f7f1ff !important;
         }
         .privatna-znacka { display: none; }
+
+.kontakt-naslov {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+}
+
+.kontakt-besedilo {
+    font-family: 'Poppins', sans-serif !important;
+}
