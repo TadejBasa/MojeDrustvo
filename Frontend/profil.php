@@ -36,7 +36,7 @@
             <input type="hidden" name="jwt" id="jwtInput">
             <div class="relative mb-4">
                 <img id="profilnaSlikaImg"src="slike/default.png" alt=" " class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg">
-                <label for="profilnaSlika" class="absolute bottom-0 right-0 bg-blue-600 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700 transition">
+                <label for="profilnaSlika" class="absolute bottom-0 right-0 bg-fuchsia-600 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer hover:bg-fuchsia-700 transition">
                      + 
                 </label>
                 <input type="file" id="profilnaSlika" name="profilnaSlika" accept="image/*" class="hidden" onchange="document.getElementById('uploadForma').submit();">
@@ -81,18 +81,28 @@
                     </span>
                 </button>
                 <button type="button" id="spremeniGeslo" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-400 text-fuchsia-500 shadow-md group">
-                    <span class="absolute inset-0 bg-gradient-to-r from-violet-400 via-fuchsia-300 to-pink-200 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                     <span class="relative z-10 group-hover:text-white">
                         Spremeni geslo
                     </span>
                 </button>
-            </div>
+                </div>
+                <div class="mt-3 block w-full">
+                    <button type="button" id="priljubljeniDogodki.php" class="relative overflow-hidden w-full p-3 rounded-lg border-2 border-fuchsia-400 text-fuchsia-500 shadow-md group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-fuchsia-400 via-fuchsia-300 to-pink-200 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                        <span class="relative z-10 group-hover:text-white">
+                            ♥ Priljubljeni dogodki
+                        </span>
+                    </button>
+                </div>
+                
+            <!--</div>
             <div class="mt-4">
                 <a href="priljubljeniDogodki.php" class="block w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition text-center">
                     ♥ Priljubljeni dogodki
                 </a>
             </div>
-        </div>
+        </div>-->
         <div id="urejanjeProfila" style="display: none">
             <form action="../Backend/urejanje_profila.php" method="POST" class="space-y-4">
                 <input type="hidden" name="jwt" id="jwtUredi">
