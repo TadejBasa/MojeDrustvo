@@ -134,7 +134,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
         $odstotek = $skupaj_mest > 0 ? round(($stevilo_prijav / $skupaj_mest) * 100) : 100;
         $barva_prog = $odstotek >= 100 ? 'bg-danger' : ($odstotek >= 75 ? 'bg-warning' : 'bg-success');
         ?>
-        <div class="d-flex justify-content-between align-items-center mb-1">
+        <div class="d-flex justify-content-between align-items-center mb-2">
             <small class="text-muted fw-semibold">
                 <i class="bi bi-people-fill me-1"></i>
                 Zasedenost: <?= $stevilo_prijav ?> / <?= $skupaj_mest ?> mest
@@ -186,7 +186,7 @@ $jwtEncoded = htmlspecialchars($jwtToken ?? "");
     $ze_prikazano = count($preview);
     ?>
 
-    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2"
+    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2"
         id="gumb-komentarji<?= $dogodek['id'] ?>"
         data-razsirjen="<?= $ze_prikazano > 0 ? '1' : '0' ?>"
         onclick="toggleKomentarji(<?= $dogodek['id'] ?>)">
