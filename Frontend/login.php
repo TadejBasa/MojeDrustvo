@@ -75,7 +75,9 @@ function googleLogin(response) {
         </form>
         <hr class="my-6">
         <div id="g_id_onload" data-client_id="624964479245-cnjesbkvicibe8mf18n5iicd1hh7qg7u.apps.googleusercontent.com" data-callback="googleLogin"></div>
-        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with" data-shape="rectangular"></div>
+        <div class="flex justify-center">
+            <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with" data-shape="rectangular" data-width="400"></div>
+        </div>
         <hr class="my-6">
         <p class="text-center"> Nimaš računa?
             <a href="register.php" class="text-fuchsia-600 font-semibold hover:underline">

@@ -10,7 +10,7 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,800&family=Roboto+Mono:ital,wght@0,330;1,330&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet"> 
   <script src="https://cdn.tailwindcss.com/"></script>
   <link href="style.css" rel="stylesheet">
   <title>Kontakt-ŠD FERI</title>
@@ -30,7 +30,7 @@
                   Kontaktirajte nas
                </h2>
 
-               <p class="text-xl text-white/90 leading-relaxed">
+               <p class="text-xl text-white/90 leading-relaxed pisava_druga">
                   Za dodatne informacije, vprašanja ali sodelovanje ste vabljeni, da nas kontaktirate.
                </p>
             </div>
@@ -42,9 +42,7 @@
                Kontaktni podatki
             </h3>
 
-            <p class="text-slate-600 mb-8">
-               Za vprašanja glede članstva, dogodkov ali sodelovanja nas lahko kontaktirate.
-            </p>
+            <br>
 
             <div class="flex flex-col gap-5">
 
@@ -53,8 +51,8 @@
                      📍
                   </div>
                   <div>
-                     <h3 class="text-slate-900 font-semibold">Naslov</h3>
-                     <p class="text-sm text-slate-600 mt-1">
+                     <h3 class="text-lg text-slate-900 font-semibold">Naslov</h3>
+                     <p class="text-me text-slate-600 mt-1">
                         Koroška cesta 46, 2000 Maribor
                      </p>
                   </div>
@@ -65,9 +63,9 @@
                      ☎
                   </div>
                   <div>
-                     <h3 class="text-slate-900 font-semibold">Pokličite nas</h3>
-                     <p class="text-sm text-slate-600 mt-1">
-                        (02) 220 70 00
+                     <h3 class="text-lg text-slate-900 font-semibold">Pokličite nas</h3>
+                     <p class="text-me text-slate-600 mt-1">
+                        041 478 854
                      </p>
                   </div>
                </div>
@@ -77,8 +75,8 @@
                      ✉
                   </div>
                   <div>
-                     <h3 class="text-slate-900 font-semibold">Pišite nam</h3>
-                     <p class="text-sm text-slate-600 mt-1">
+                     <h3 class="text-lg text-slate-900 font-semibold">Pišite nam</h3>
+                     <p class="text-me text-slate-600 mt-1">
                         sportnodrustvoferi@gmail.com
                      </p>
                   </div>
